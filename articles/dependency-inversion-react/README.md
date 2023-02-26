@@ -227,7 +227,7 @@ const CustomItem: RenderListItem = ({ id, title }) => (
   </li>
 );
 
-<SearchableList items={items}>{CustomItem}</List>;
+<SearchableList items={items}>{CustomItem}</SearchableList>;
 ```
 
 Таким образом все наши компоненты не имеют прямых связей между собой, а зависят от одного общего интерфейса.
@@ -352,11 +352,15 @@ export const ComponentsProvider = ({
   children,
   ...overrides
 }: ComponentsProviderProps) => {
-  // Получаем переопределения из вышестоящего контекста
-  const currentComponents = useComponents();
+  const components = {
+    // Получаем переопределения из вышестоящего контекста
+    ...useComponents(),
+    // И переопределяем их новыми
+    ...overrides
+  }
 
   return (
-    <ComponentsContext.Provider value={{ ...currentComponents, ...overrides }}>
+    <ComponentsContext.Provider value={components}>
       {children}
     </ComponentsContext.Provider>
   );
