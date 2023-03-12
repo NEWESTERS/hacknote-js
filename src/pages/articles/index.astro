@@ -5,7 +5,7 @@ import ArticleList from "../../components/ArticleList.astro";
 import DefaultPage from "../../layouts/DefaultPage.astro";
 
 const articles = (await getCollection("articles")).sort(
-  (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 ---
 
