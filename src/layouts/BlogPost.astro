@@ -5,7 +5,7 @@ import DefaultPage from "./DefaultPage.astro";
 
 type Props = CollectionEntry<"articles">["data"];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, heroImage } = Astro.props;
 ---
 
 <style>
@@ -30,7 +30,12 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
   }
 </style>
 
-<DefaultPage title={title} description={description} image={heroImage}>
+<DefaultPage
+  title={title}
+  description={description}
+  image={heroImage}
+  type="article"
+>
   <article>
     <time datetime={pubDate.toISOString()}
       >{
