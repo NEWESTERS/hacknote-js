@@ -1,22 +1,25 @@
 ---
 import { CollectionEntry, getCollection } from "astro:content";
-import { Header } from "../../components/Header2";
 import BlogPost from "../../layouts/BlogPost.astro";
+import A from "../../components/markdown/A.astro";
+import Code from "../../components/markdown/Code.astro";
+import Img from "../../components/markdown/Img.astro";
+import Pre from "../../components/markdown/Pre.astro";
+import H2 from "../../components/markdown/H2.astro";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: post,
+  const articles = await getCollection("articles");
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: article,
   }));
 }
-type Props = CollectionEntry<"blog">;
+type Props = CollectionEntry<"articles">;
 
-const post = Astro.props;
-const { Content } = await post.render();
+const article = Astro.props;
+const { Content } = await article.render();
 ---
 
-<BlogPost {...post.data}>
-  <!-- <h1>{post.data.title}</h1> -->
-  <Content components={{ h2: Header }} />
+<BlogPost {...article.data}>
+  <Content components={{ a: A, code: Code, img: Img, pre: Pre, h2: H2 }} />
 </BlogPost>

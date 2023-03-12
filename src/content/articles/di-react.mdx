@@ -2,7 +2,7 @@
 title: "Инверсия зависимостей в React"
 description: "Инверсия зависимостей в React"
 pubDate: "Feb 25 2023"
-heroImage: "/images/di-react/hero.png"
+heroImage: "/hacknote-js/images/di-react/hero.svg"
 ---
 
 Старые добрые принципы [SOLID](<https://ru.wikipedia.org/wiki/SOLID_(объектно-ориентированное_программирование)>) могут быть полезны в любой области разработки. Особенно важным я считаю принцип [инверсии зависимостей](https://ru.wikipedia.org/wiki/Принцип_инверсии_зависимостей). В React существуют механизмы, позволяющие реализовать этот принцип, и в этом очень помогает Typescript.
@@ -11,7 +11,7 @@ heroImage: "/images/di-react/hero.png"
 
 Предположим, что нам досталась задача разработать компонент `List`, отображающий список из нескольких `ListItem`.
 
-![Компонент, отображающий список элементов](/images/di-react/list-component.png)
+![Компонент, отображающий список элементов](/hacknote-js/images/di-react/list-component.png)
 
 ```tsx
 import { ListItem } from "@components/ListItem";
@@ -33,7 +33,7 @@ export const List = ({ items }: ListProps): ReactElement => {
 
 Некоторое время спустя в другом месте понадобился похожий компонент, но без иконок и с бейджами.
 
-![Кастомизированный список](/images/di-react/customized-list.png)
+![Кастомизированный список](/hacknote-js/images/di-react/customized-list.png)
 
 Чтобы не дублировать код, мы реализовали механизм кастомизации `List` с помощью пропсов, позволяющих включать/выключать определённые параметры элементов списка.
 
@@ -65,11 +65,11 @@ export const List = ({ items, hasBadge, hasIcon }: ListProps): ReactElement => {
 
 API компонента получается недостаточно гибким. Например, если в какой-то момент нам понадобится скрыть иконку у отдельно взятых `ListItem`, мы не сможем этого сделать, поскольку пропса у `List` позволяет сделать это только для всех элементов сразу.
 
-![Кастомизация отдельно взятых элементов](/images/di-react/customized-list-item.png)
+![Кастомизация отдельно взятых элементов](/hacknote-js/images/di-react/customized-list-item.png)
 
 При текущем подходе реализация `List` напрямую зависит от конкретной реализации `ListItem`.
 
-![Прямая зависимость](/images/di-react/direct-dependency.png)
+![Прямая зависимость](/hacknote-js/images/di-react/direct-dependency.png)
 
 ## Инвертируем зависимости
 
@@ -106,13 +106,13 @@ import { ListItem } from "@components/ListItem";
 
 Тем самым мы сделали список зависимым не от конкретной реализации, а от абстракции в виде интерфейса `ReactNode`.
 
-![Инвертированные зависимости](/images/di-react/inverted-depndency.png)
+![Инвертированные зависимости](/hacknote-js/images/di-react/inverted-depndency.png)
 
 ## Расширяем поведение компонента
 
 Следующей задачей стала реализация поиска в этом списке.
 
-![Список с поиском](/images/di-react/searchable-list.png)
+![Список с поиском](/hacknote-js/images/di-react/searchable-list.png)
 
 Для этого создадим на основе уже имеющихся компонентов новый — `SearchableList`.
 
@@ -237,7 +237,7 @@ const CustomItem: RenderListItem = ({ id, title }) => (
 
 Таким образом все наши компоненты не имеют прямых связей между собой, а зависят от одного общего интерфейса.
 
-![Зависимость от общей абстракции](/images/di-react/common-abstraction.png)
+![Зависимость от общей абстракции](/hacknote-js/images/di-react/common-abstraction.png)
 
 Помимо гибкости разработки этот подход также упрощает тестирование за счёт того, что мы можем замокать реализацию элементов списка и протестировать сам список изолированно.
 
@@ -419,7 +419,7 @@ const AwesomeItem: RenderItem = ({ id, title }) => (
 
 Зависимости у нас остаются инвертированными, но теперь компоненты зависят не от интерфейсов, а от контекста.
 
-![Зависимость от контекста](/images/di-react/context-dependency.png)
+![Зависимость от контекста](/hacknote-js/images/di-react/context-dependency.png)
 
 ## Заключение
 

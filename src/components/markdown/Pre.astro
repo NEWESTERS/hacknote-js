@@ -1,0 +1,28 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+}
+
+const { class: className, style } = Astro.props;
+---
+
+<pre class={className} style={style}><slot /></pre>
+<style>
+  pre {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  pre::-webkit-scrollbar {
+    background-color: transparent;
+    width: 8px;
+    height: 8px;
+  }
+
+  pre::-webkit-scrollbar-thumb {
+    background-color: var(--color_background-light);
+    border-radius: 8px;
+    background-clip: content-box;
+  }
+</style>
