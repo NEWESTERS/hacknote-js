@@ -1,19 +1,40 @@
 ---
+import { getCollection } from "astro:content";
+
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import DefaultPage from "../layouts/DefaultPage.astro";
 import A from "../components/markdown/A.astro";
+import ArticleCard from "../components/ArticleCard.astro";
+
+const latestArticle = (await getCollection("articles")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+)[0];
 ---
 
 <DefaultPage title={SITE_TITLE} description={SITE_DESCRIPTION}>
-  <img src="/hacknote-js/images/logo.svg" />
+  <figure>
+    <img src="/hacknote-js/images/logo.svg" />
+  </figure>
 
   <p>
-    Блог со статьями для Telegram-канала
+    Блог Telegram-канала
     <A href="https://t.me/hacknote_js">Hacknote.js</A>.
   </p>
+
+  <h1>Последняя статья</h1>
+
+  <a href={`/hacknote-js/articles/${latestArticle.slug}`}>
+    <ArticleCard {...latestArticle.data} />
+  </a>
 </DefaultPage>
 
 <style>
+  figure {
+    margin: 0;
+    width: 100%;
+    background-color: var(--color_accent-yellow);
+    border-radius: 16px;
+  }
   img {
     display: block;
     margin: auto;
@@ -22,5 +43,13 @@ import A from "../components/markdown/A.astro";
 
   p {
     text-align: center;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  a {
+    text-decoration: none;
   }
 </style>

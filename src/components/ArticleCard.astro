@@ -38,6 +38,11 @@ const { pubDate, title, heroImage, class: className } = Astro.props;
     box-shadow: var(--shadow_default);
     height: 200px;
     box-sizing: border-box;
+    transition: transform 0.2s ease;
+  }
+
+  .card:hover {
+    transform: scale(1.05);
   }
 
   .title {
