@@ -23,14 +23,15 @@ const { pubDate, title, heroImage, class: className } = Astro.props;
     </time>
   </div>
 
-  <img class="image" src={heroImage} width={180} height={130} />
+  <img class="image" src={heroImage} width={180} height={130} alt={title} />
 </div>
 
 <style>
   .card {
     display: flex;
     flex-direction: row;
-    gap: 16px;
+    align-items: center;
+    gap: 32px;
     padding: 32px;
     border-radius: 16px;
     background-color: var(--color_background-regular);
@@ -64,8 +65,9 @@ const { pubDate, title, heroImage, class: className } = Astro.props;
   }
 
   .image {
-    width: 180px;
-    height: 130px;
+    width: 196px;
+    height: 160px;
     object-fit: contain;
+    border-radius: 16px;
   }
 </style>
