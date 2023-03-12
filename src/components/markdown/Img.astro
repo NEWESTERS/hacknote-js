@@ -7,10 +7,28 @@ interface Props {
 const { src, alt } = Astro.props;
 ---
 
-<img src={src} alt={alt} />
+<figure>
+  <img src={src} alt={alt} />
+  <figcaption>{alt}</figcaption>
+</figure>
 <style>
   img {
-    max-width: 100%;
+    width: 100%;
+    height: auto;
     border-radius: 16px;
+  }
+
+  figcaption {
+    font-size: 14px;
+    margin-top: 8px;
+    opacity: 0.5;
+  }
+
+  figure {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 </style>
