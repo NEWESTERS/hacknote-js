@@ -6,7 +6,12 @@ import Code from "../../components/markdown/Code.astro";
 import Img from "../../components/markdown/Img.astro";
 import Pre from "../../components/markdown/Pre.astro";
 import H2 from "../../components/markdown/H2.astro";
+import H3 from "../../components/markdown/H3.astro";
 import Blockquote from "../../components/markdown/Blockquote.astro";
+import Table from "../../components/markdown/Table.astro";
+import Tr from "../../components/markdown/Tr.astro";
+import Th from "../../components/markdown/Th.astro";
+import Td from "../../components/markdown/Td.astro";
 
 export async function getStaticPaths() {
   const articles = await getCollection("articles");
@@ -29,6 +34,11 @@ const { Content } = await article.render();
       img: Img,
       pre: Pre,
       h2: H2,
+      h3: H3,
+      table: Table,
+      tr: Tr,
+      th: Th,
+      td: Td,
       blockquote: Blockquote,
     }}
   />

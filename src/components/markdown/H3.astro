@@ -8,16 +8,16 @@ interface Props {
 const { id } = Astro.props;
 ---
 
-<h2 id={id}>
+<h3 id={id}>
   <a href={`#${id}`}><img src={anchorIcon} /></a><slot />
-</h2>
+</h3>
 <style>
   img {
     width: 24px;
     height: 24px;
   }
 
-  h2 {
+  h3 {
     position: relative;
   }
 
@@ -29,7 +29,7 @@ const { id } = Astro.props;
     display: none;
   }
 
-  h2:hover > a {
+  h3:hover > a {
     display: inline;
   }
 </style>
