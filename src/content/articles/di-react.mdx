@@ -1,12 +1,17 @@
-# Инверсия зависимостей в React
+---
+title: "Инверсия зависимостей в React"
+description: "Инверсия зависимостей в React"
+pubDate: "Feb 25 2023"
+heroImage: "/hacknote-js/images/di-react/hero.svg"
+---
 
-Старые добрые принципы [SOLID](https://ru.wikipedia.org/wiki/SOLID_(объектно-ориентированное_программирование)) могут быть полезны в любой области разработки. Особенно важным я считаю принцип [инверсии зависимостей](https://ru.wikipedia.org/wiki/Принцип_инверсии_зависимостей). В React существуют механизмы, позволяющие реализовать этот принцип, и в этом очень помогает Typescript.
+Старые добрые принципы [SOLID](<https://ru.wikipedia.org/wiki/SOLID_(объектно-ориентированное_программирование)>) могут быть полезны в любой области разработки. Особенно важным я считаю принцип [инверсии зависимостей](https://ru.wikipedia.org/wiki/Принцип_инверсии_зависимостей). В React существуют механизмы, позволяющие реализовать этот принцип, и в этом очень помогает Typescript.
 
 ## Мотивация
 
 Предположим, что нам досталась задача разработать компонент `List`, отображающий список из нескольких `ListItem`.
 
-![Компонент, отображающий список элементов](./images/list-component.png)
+![Компонент, отображающий список элементов](/hacknote-js/images/di-react/list-component.png)
 
 ```tsx
 import { ListItem } from "@components/ListItem";
@@ -28,9 +33,9 @@ export const List = ({ items }: ListProps): ReactElement => {
 
 Некоторое время спустя в другом месте понадобился похожий компонент, но без иконок и с бейджами.
 
-![Кастомизированный список](./images/customized-list.png)
+![Кастомизированный список](/hacknote-js/images/di-react/customized-list.png)
 
-Чтобы не дублировать код, мы реализовали механизм кастомизации `List` с  помощью пропсов, позволяющих включать/выключать определённые параметры элементов списка.
+Чтобы не дублировать код, мы реализовали механизм кастомизации `List` с помощью пропсов, позволяющих включать/выключать определённые параметры элементов списка.
 
 ```tsx
 import { ListItem } from "@components/ListItem";
@@ -60,11 +65,11 @@ export const List = ({ items, hasBadge, hasIcon }: ListProps): ReactElement => {
 
 API компонента получается недостаточно гибким. Например, если в какой-то момент нам понадобится скрыть иконку у отдельно взятых `ListItem`, мы не сможем этого сделать, поскольку пропса у `List` позволяет сделать это только для всех элементов сразу.
 
-![Кастомизация отдельно взятых элементов](./images/customized-list-item.png)
+![Кастомизация отдельно взятых элементов](/hacknote-js/images/di-react/customized-list-item.png)
 
 При текущем подходе реализация `List` напрямую зависит от конкретной реализации `ListItem`.
 
-![Прямая зависимость](./images/direct-dependency.png)
+![Прямая зависимость](/hacknote-js/images/di-react/direct-dependency.png)
 
 ## Инвертируем зависимости
 
@@ -87,9 +92,7 @@ import { List } from "@components/List";
 import { ListItem } from "@components/ListItem";
 
 <List>
-  <ListItem hasBadge>
-    React
-  </ListItem>
+  <ListItem hasBadge>React</ListItem>
 
   <ListItem hasBadge hasIcon>
     Angular
@@ -98,18 +101,18 @@ import { ListItem } from "@components/ListItem";
   <ListItem hasBadge hasIcon>
     Vue
   </ListItem>
-</List>
+</List>;
 ```
 
 Тем самым мы сделали список зависимым не от конкретной реализации, а от абстракции в виде интерфейса `ReactNode`.
 
-![Инвертированные зависимости](./images/inverted-depndency.png)
+![Инвертированные зависимости](/hacknote-js/images/di-react/inverted-depndency.png)
 
 ## Расширяем поведение компонента
 
 Следующей задачей стала реализация поиска в этом списке.
 
-![Список с поиском](./images/searchable-list.png)
+![Список с поиском](/hacknote-js/images/di-react/searchable-list.png)
 
 Для этого создадим на основе уже имеющихся компонентов новый — `SearchableList`.
 
@@ -121,7 +124,9 @@ export interface SearchableListProps {
   items: Item[]; // <- компонент принимает данные элементов, поскольку они нужны для фильтрации
 }
 
-export const SearchableList = ({ items }: SearchableListProps): ReactElement => {
+export const SearchableList = ({
+  items,
+}: SearchableListProps): ReactElement => {
   const { items } = props;
 
   const [searchString, setSearchString] = useState("");
@@ -232,7 +237,7 @@ const CustomItem: RenderListItem = ({ id, title }) => (
 
 Таким образом все наши компоненты не имеют прямых связей между собой, а зависят от одного общего интерфейса.
 
-![Зависимость от общей абстракции](./images/common-abstraction.png)
+![Зависимость от общей абстракции](/hacknote-js/images/di-react/common-abstraction.png)
 
 Помимо гибкости разработки этот подход также упрощает тестирование за счёт того, что мы можем замокать реализацию элементов списка и протестировать сам список изолированно.
 
@@ -243,10 +248,7 @@ const CustomItem: RenderListItem = ({ id, title }) => (
 Для этого опишем интерфейс, описывающий логику:
 
 ```tsx
-export type SearchLogic = (
-    items: Item[],
-    searchString: string
-) => Item[];
+export type SearchLogic = (items: Item[], searchString: string) => Item[];
 ```
 
 И сделаем компонент зависимым от этого интерфейса.
@@ -289,21 +291,16 @@ const CustomItem: RenderListItem = ({ id, title }) => (
 );
 
 const useSearch: SearchLogic = (items, searchString) =>
-    useMemo(
-        () =>
-            items.filter(
-                ({ title, subtitle }) =>
-                    title.includes(searchString)
-                    || subtitle.includes(searchString)
-            ),
-        [items, searchString]
-    );
+  useMemo(
+    () =>
+      items.filter(
+        ({ title, subtitle }) =>
+          title.includes(searchString) || subtitle.includes(searchString)
+      ),
+    [items, searchString]
+  );
 
-<SearchableList
-    items={items}
-    renderItem={CustomItem}
-    useSearch={useSearch}
-/>
+<SearchableList items={items} renderItem={CustomItem} useSearch={useSearch} />;
 ```
 
 ## Внедряем зависимости
@@ -356,8 +353,8 @@ export const ComponentsProvider = ({
     // Получаем переопределения из вышестоящего контекста
     ...useComponents(),
     // И переопределяем их новыми
-    ...overrides
-  }
+    ...overrides,
+  };
 
   return (
     <ComponentsContext.Provider value={components}>
@@ -370,7 +367,7 @@ export const ComponentsProvider = ({
 Для получения компонентов из контекста просто используем созданный хук:
 
 ```tsx
-import { useComponents } from "@components/context"
+import { useComponents } from "@components/context";
 
 export interface ListProps {
   items: Item[];
@@ -417,13 +414,13 @@ const AwesomeItem: RenderItem = ({ id, title }) => (
       <List items={items} />
     </ComponentsProvider>
   </ComponentsProvider>
-</div>
+</div>;
 ```
 
 Зависимости у нас остаются инвертированными, но теперь компоненты зависят не от интерфейсов, а от контекста.
 
-![Зависимость от контекста](./images/context-dependency.png)
+![Зависимость от контекста](/hacknote-js/images/di-react/context-dependency.png)
 
 ## Заключение
 
-Принцип инверсии зависимостей достаточно прост и его реализация не потребует больших трудозатрат, но существенно снизит [связанность](https://ru.wikipedia.org/wiki/Зацепление_(программирование)) кодовой базы, что положительно скажется на её гибкости и снизит количество кода, которое понадобится изменить, чтобы внедрить новую функциональность.
+Принцип инверсии зависимостей достаточно прост и его реализация не потребует больших трудозатрат, но существенно снизит [связанность](<https://ru.wikipedia.org/wiki/Зацепление_(программирование)>) кодовой базы, что положительно скажется на её гибкости и снизит количество кода, которое понадобится изменить, чтобы внедрить новую функциональность.

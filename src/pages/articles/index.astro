@@ -1,0 +1,24 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import { getCollection } from "astro:content";
+import ArticleList from "../../components/ArticleList.astro";
+import DefaultPage from "../../layouts/DefaultPage.astro";
+
+const articles = (await getCollection("articles")).sort(
+  (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+);
+---
+
+<style>
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+</style>
+
+<DefaultPage title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <section>
+    <ArticleList articles={articles} path="/hacknote-js/articles" />
+  </section>
+</DefaultPage>

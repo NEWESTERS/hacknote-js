@@ -1,0 +1,25 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import DefaultPage from "../layouts/DefaultPage.astro";
+import A from "../components/markdown/A.astro";
+---
+
+<DefaultPage title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <img src="/hacknote-js/images/logo.svg" />
+
+  <p>
+    Блог со статьями для Telegram-канала
+    <A href="https://t.me/hacknote_js">Hacknote.js</A>.
+  </p>
+</DefaultPage>
+
+<style>
+  img {
+    display: block;
+    margin: auto;
+  }
+
+  p {
+    text-align: center;
+  }
+</style>

@@ -1,0 +1,51 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+import DefaultPage from "./DefaultPage.astro";
+
+type Props = CollectionEntry<"articles">["data"];
+
+const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+---
+
+<style>
+  article {
+    width: 100%;
+    padding: 32px;
+    box-sizing: border-box;
+    background-color: var(--color_background-regular);
+    border-radius: 16px;
+    box-shadow: var(--shadow_default);
+  }
+
+  h1,
+  time {
+    display: block;
+    text-align: center;
+  }
+
+  img {
+    display: block;
+    margin: auto;
+  }
+</style>
+
+<DefaultPage title={title} description={description} image={heroImage}>
+  <article>
+    <time datetime={pubDate.toISOString()}
+      >{
+        pubDate.toLocaleDateString("ru-ru", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      }</time
+    >
+
+    <h1>{title}</h1>
+
+    <img src={heroImage} width="180" />
+
+    <slot />
+  </article>
+</DefaultPage>

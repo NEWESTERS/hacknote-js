@@ -1,0 +1,17 @@
+---
+import A from "./markdown/A.astro";
+
+const today = new Date();
+---
+
+<footer>
+  &copy; {today.getFullYear()}
+  <A href="https://github.com/NEWESTERS/hacknote-js">Hacknote.js</A>.
+</footer>
+<style>
+  footer {
+    padding: 25px;
+    text-align: center;
+    color: var(--color_text-white);
+  }
+</style>

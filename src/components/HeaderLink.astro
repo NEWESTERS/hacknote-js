@@ -1,0 +1,32 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"a">;
+
+const { href, class: className, ...props } = Astro.props;
+
+const { pathname } = Astro.url;
+const isActive =
+  href &&
+  (href === pathname ||
+    (href !== "/hacknote-js/" && pathname.startsWith(href.toString())));
+---
+
+<a href={href} class:list={[className, { active: isActive }]} {...props}>
+  <slot />
+</a>
+
+<style>
+  a {
+    padding: 8px;
+    text-decoration: none;
+    font-weight: regular;
+    font-size: 16px;
+    color: var(--color_text-white);
+    border-bottom: solid 1px transparent;
+    box-sizing: border-box;
+  }
+  a.active {
+    border-color: var(--color_accent-yellow);
+  }
+</style>

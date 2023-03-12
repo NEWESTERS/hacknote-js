@@ -1,0 +1,80 @@
+/*
+  The CSS in this style tag is based off of Bear Blog's default CSS.
+  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
+  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
+ */
+
+:root {
+	--color_background-regular: #272727;
+	--color_background-dark: #1F1F1F;
+	--color_background-light: #3C3B3D;
+	--color_text-white: #F7F0FF;
+	--color_text-black: #272727;
+	--color_accent-red: #FF6287;
+	--color_accent-yellow: #FFD865;
+	--color_accent-green: #A6DC75;
+	--color_accent-blue: #75DBE7;
+	--color_language-ts: #0078CB;
+	--color_language-js: #F5DE1C;
+	--color_language-dts: #00A13E;
+
+	--shadow_default: 0px 10px 34px rgba(0, 0, 0, 0.35);
+}
+
+body {
+	font-family: Menlo, Verdana, sans-serif;
+	background-color: var(--color_background-dark);
+	color: var(--color_text-white);
+	font-size: 18px;
+	line-height: 1.5;
+}
+/* h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong,
+b {
+	color: #222;
+}
+a {
+	color: #3273dc;
+}
+nav a {
+	margin-right: 10px;
+}
+textarea {
+	width: 100%;
+	font-size: 16px;
+}
+input {
+	font-size: 16px;
+}
+content {
+	line-height: 1.6;
+}
+table {
+	width: 100%;
+}
+img {
+	max-width: 100%;
+	height: auto;
+}
+code {
+	padding: 2px 5px;
+	background-color: #f2f2f2;
+}
+pre {
+	padding: 1rem;
+}
+pre > code {
+	all: unset;
+}
+blockquote {
+	border: 1px solid #999;
+	color: #222;
+	padding: 2px 0px 2px 20px;
+	margin: 0px;
+	font-style: italic;
+} */

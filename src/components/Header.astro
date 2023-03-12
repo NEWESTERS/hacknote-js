@@ -1,0 +1,33 @@
+---
+import HeaderLink from "./HeaderLink.astro";
+import { SITE_TITLE } from "../consts";
+---
+
+<header>
+  <h1>
+    {SITE_TITLE}
+  </h1>
+  <nav>
+    <HeaderLink href="/hacknote-js/">Главная</HeaderLink>
+    <HeaderLink href="/hacknote-js/articles">Статьи</HeaderLink>
+  </nav>
+</header>
+
+<style>
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  h1 {
+    color: var(--color_text-white);
+    margin: 0;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+  }
+</style>

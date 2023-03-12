@@ -1,0 +1,31 @@
+---
+import anchorIcon from "../icons/link.svg";
+
+interface Props {
+  id?: string;
+}
+
+const { id } = Astro.props;
+---
+
+<h2 id={id}><a href={`#${id}`}><img src={anchorIcon} /></a><slot /></h2>
+<style>
+  img {
+    width: 24px;
+    height: 24px;
+  }
+
+  a {
+    margin-left: -28px;
+    padding-right: 4px;
+  }
+
+  a {
+    opacity: 0;
+    transition: opacity 0.1s ease-out;
+  }
+
+  h2:hover > a {
+    opacity: 1;
+  }
+</style>
