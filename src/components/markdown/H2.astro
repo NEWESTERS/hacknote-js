@@ -9,19 +9,13 @@ const { id } = Astro.props;
 ---
 
 <h2 id={id}>
-  <a href={`#${id}`}><img src={anchorIcon} /></a><slot />
+  <a href={`#${id}`}><img src={anchorIcon} /><slot /></a>
 </h2>
 <style>
   img {
     width: 24px;
     height: 24px;
-  }
 
-  h2 {
-    position: relative;
-  }
-
-  a {
     position: absolute;
     left: -28px;
     height: 100%;
@@ -29,7 +23,16 @@ const { id } = Astro.props;
     display: none;
   }
 
-  h2:hover > a {
+  h2 {
+    position: relative;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--color_text-white);
+  }
+
+  a:hover > img {
     display: inline;
   }
 </style>

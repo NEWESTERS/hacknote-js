@@ -10,8 +10,10 @@ const { class: className, style } = Astro.props;
 <pre class={className} style={style}><slot /></pre>
 <style>
   pre {
-    margin: 0 -32px;
+    margin: 16px -32px;
     padding: 32px;
+    font-family: var(--font-family);
+    font-size: 14px;
   }
 
   pre::-webkit-scrollbar {

@@ -76,6 +76,14 @@ const { pubDate, title, heroImage, class: className } = Astro.props;
   }
 
   @media screen and (max-width: 375px) {
+    .title {
+      text-align: center;
+    }
+
+    .description {
+      align-items: center;
+    }
+
     .card {
       flex-direction: column;
     }

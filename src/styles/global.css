@@ -13,10 +13,12 @@
 	--color_language-dts: #00A13E;
 
 	--shadow_default: 0px 10px 34px rgba(0, 0, 0, 0.35);
+
+	--font-family: Menlo, Verdana, sans-serif;
 }
 
 body {
-	font-family: Menlo, Verdana, sans-serif;
+	font-family: var(--font-family);
 	background-color: var(--color_background-dark);
 	color: var(--color_text-white);
 	font-size: 18px;
@@ -25,4 +27,5 @@ body {
 
 *::selection {
 	background-color: #999999;
+	background-color: var(--color_background-light);
 }
