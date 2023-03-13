@@ -1,9 +1,15 @@
-<table><slot /></table>
+<figure><table><slot /></table></figure>
 <style>
-  table {
-    width: calc(100% + 64px);
+  figure {
     margin: 0 -32px;
+    padding: 0 32px;
+    box-sizing: border-box;
+    width: calc(100% + 64px);
     background-color: var(--color_background-dark);
+    overflow-x: auto;
+  }
+
+  table {
     border-collapse: collapse;
   }
 </style>

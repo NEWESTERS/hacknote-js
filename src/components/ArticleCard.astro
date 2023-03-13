@@ -23,7 +23,7 @@ const { pubDate, title, heroImage, class: className } = Astro.props;
     </time>
   </div>
 
-  <img class="image" src={heroImage} width={180} height={130} alt={title} />
+  <img class="image" src={heroImage} width={196} height={160} alt={title} />
 </div>
 
 <style>
@@ -36,7 +36,6 @@ const { pubDate, title, heroImage, class: className } = Astro.props;
     border-radius: 16px;
     background-color: var(--color_background-regular);
     box-shadow: var(--shadow_default);
-    height: 200px;
     box-sizing: border-box;
     transition: transform 0.2s ease;
   }
@@ -74,5 +73,16 @@ const { pubDate, title, heroImage, class: className } = Astro.props;
     height: 160px;
     object-fit: contain;
     border-radius: 16px;
+  }
+
+  @media screen and (max-width: 375px) {
+    .card {
+      flex-direction: column;
+    }
+
+    .image {
+      width: 100%;
+      height: auto;
+    }
   }
 </style>
