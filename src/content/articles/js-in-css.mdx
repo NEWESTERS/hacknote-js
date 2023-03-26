@@ -1,0 +1,44 @@
+---
+title: "JS-in-CSS"
+description: "TODO"
+pubDate: "Mar 25 2023"
+heroImage: "/hacknote-js/images/di-react/hero.png"
+---
+
+import ColorPicker from "../../articleAssets/js-in-css/ColorPicker.astro";
+
+<ColorPicker />
+
+```html
+<a href="/" class="my-nav-link">Главная</a>
+<a href="/articles" class="my-nav-link current">Статьи</a>
+```
+
+```css
+.my-nav-link {
+  background-color: transparent;
+  color: blue;
+}
+
+.my-nav-link.current {
+  background-color: blue;
+  color: white;
+}
+```
+
+```html
+<a href="/" class="my-nav-link">Главная</a>
+<a href="/articles" class="my-nav-link" aria-current="page">Статьи</a>
+```
+
+```css
+.my-nav-link {
+  background-color: transparent;
+  color: blue;
+}
+
+.my-nav-link[aria-current="primary"] {
+  background-color: blue;
+  color: white;
+}
+```

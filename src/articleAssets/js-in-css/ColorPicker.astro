@@ -1,0 +1,74 @@
+<form id="color-picker">
+  <label>
+    <span>Red</span>
+    <input
+      type="range"
+      min="0"
+      max="255"
+      value="255"
+      class="color-picker__field"
+      name="color-red"
+    />
+  </label>
+
+  <label>
+    <span>Green</span>
+    <input
+      type="range"
+      min="0"
+      max="255"
+      value="255"
+      class="color-picker__field"
+      name="color-green"
+    />
+  </label>
+
+  <label>
+    <span>Blue</span>
+    <input
+      type="range"
+      min="0"
+      max="255"
+      value="255"
+      class="color-picker__field"
+      name="color-blue"
+    />
+  </label>
+
+  <span class="preview">Hacknote.js</span>
+</form>
+
+<div>
+  <span style="color: #8b888f;"><</span><span
+    style="color: var(--color_accent-red)">form</span
+  ><span style="color: var(--color_accent-blue)"> style</span><span
+    style="color: #8b888f;"
+  >
+    /></span
+  >
+</div>
+
+<style>
+  .preview {
+    color: rgb(var(--color-red), var(--color-green), var(--color-blue));
+  }
+</style>
+<script>
+  const form = document.getElementById("color-picker") as HTMLFormElement;
+
+  function syncInput(input: HTMLInputElement) {
+    form.style.setProperty(`--${input.name}`, input.value);
+  }
+
+  form.querySelectorAll(".color-picker__field").forEach((element) => {
+    if (element instanceof HTMLInputElement) {
+      syncInput(element);
+    }
+  });
+
+  form.addEventListener("input", (event) => {
+    if (event.target instanceof HTMLInputElement) {
+      syncInput(event.target);
+    }
+  });
+</script>
