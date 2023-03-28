@@ -1,0 +1,88 @@
+---
+import moonSrc from "../../components/icons/moon-outline.svg";
+import sunSrc from "../../components/icons/sun-outline.svg";
+---
+
+<div id="theming-demo" class="container" data-theme="dark">
+  <button class="theme-toggle">
+    <div class="theme-toggle__icon"></div>
+  </button>
+
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis cumque sit
+    totam. Id repudiandae corporis quas excepturi ab laborum non soluta cumque
+    aut? Minus sit a autem atque eligendi adipisci?
+  </p>
+</div>
+
+<style define:vars={{ moonSrc: `url(${moonSrc})`, sunSrc: `url(${sunSrc})` }}>
+  #theming-demo[data-theme="light"] {
+    --text-color: var(--color_text-black);
+    --bg-color: var(--color_text-white);
+    --theme-icon: var(--sunSrc);
+    --is-dark-mode: 0;
+  }
+
+  #theming-demo[data-theme="dark"] {
+    --text-color: var(--color_text-white);
+    --bg-color: var(--color_background-dark);
+    --theme-icon: var(--moonSrc);
+    --is-dark-mode: 1;
+  }
+
+  #theming-demo,
+  #theming-demo > * {
+    transition: color 0.2s ease-out, background-color 0.2s ease-out,
+      transform 0.2s ease-out;
+  }
+
+  .theme-toggle {
+    border: none;
+    border-radius: 32px;
+    width: 64px;
+    height: 64px;
+    box-sizing: border-box;
+    background-color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transform: rotate(calc((1 - var(--is-dark-mode)) * 45deg));
+  }
+
+  .theme-toggle__icon {
+    width: 40px;
+    height: 40px;
+    -webkit-mask-size: cover;
+    -webkit-mask-image: var(--theme-icon);
+    background-color: var(--bg-color);
+  }
+
+  .container {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: -32px;
+    padding: 32px;
+    width: 100%;
+    border-radius: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+  }
+</style>
+
+<script>
+  const demo = document.getElementById("theming-demo")!;
+
+  const toggleTheme = demo.querySelector(".theme-toggle")!;
+
+  toggleTheme.addEventListener("click", () => {
+    if (demo.dataset.theme === "light") {
+      demo.setAttribute("data-theme", "dark");
+    } else {
+      demo.setAttribute("data-theme", "light");
+    }
+  });
+</script>

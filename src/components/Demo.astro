@@ -1,0 +1,42 @@
+---
+interface Props {
+  class?: string;
+  style?: string;
+  title: string;
+}
+
+const { class: className, style, title } = Astro.props;
+---
+
+<figure class={className} style={style}>
+  <div class="content">
+    <slot />
+  </div>
+
+  <figcaption>{title}</figcaption>
+</figure>
+
+<style>
+  .content {
+    position: relative;
+    width: 100%;
+    background-color: var(--color_background-dark);
+    border-radius: 16px;
+    padding: 32px;
+    box-sizing: border-box;
+  }
+
+  figcaption {
+    font-size: 14px;
+    margin-top: 8px;
+    opacity: 0.5;
+  }
+
+  figure {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+</style>
