@@ -1,0 +1,374 @@
+---
+title: "Передача данных в CSS"
+description: "При разработке интерфейсов часто возникает необходимость динамически менять стили HTML-элементов в зависимости от текущего состояния приложения. Существует довольно много способов передать данные из Javascript в CSS и в этой статье я предлагаю их рассмотреть."
+pubDate: "Mar 28 2023"
+heroImage: "/hacknote-js/images/js-in-css/hero.png"
+---
+
+import ColorPicker from "../../articleAssets/js-in-css/ColorPicker.astro";
+import Scroll from "../../articleAssets/js-in-css/Scroll.astro";
+import Theming from "../../articleAssets/js-in-css/Theming.astro";
+import Demo from "../../components/Demo.astro";
+
+При разработке интерфейсов часто возникает необходимость динамически менять стили HTML-элементов в зависимости от текущего состояния приложения. Существует довольно много способов передать данные из Javascript в CSS и в этой статье я предлагаю их рассмотреть.
+
+## Инлайн-стили
+
+Самый простой способ стилизовать элемент — указать CSS-свойства прямо в HTML:
+
+```html
+<p style="color: #272727;">Lorem ipsum dolor sit.</p>
+```
+
+Этот древнейший споособ стилизации максимально прост в использовании, но имеет ряд существенных недостатков:
+
+- Смешивается структура страницы и её оформление (мы же не пишем Javascript прямо в HTML);
+
+- Нет возможности использовать каскад, медиа-выражения и некоторые другие инструменты, доступные в CSS;
+
+- Нет возможности переиспользовать стили для одинаковых элементов.
+
+В JSX последний пункт можно решить с помощью создания переменной:
+
+```jsx
+const paragraphStyles = { color: "#272727" };
+
+const MyComponent = () => (
+  <div>
+    <p style={paragraphStyles}>Lorem ipsum dolor sit amet</p>
+    <p style={paragraphStyles}>Lorem ipsum dolor sit amet</p>
+  </div>
+);
+```
+
+Похожий подход применяется в [React Native](https://reactnative.dev/docs/stylesheet), но там каскада нет и возможности CSS довольно сильно ограничены, но в игнорировать возможности CSS в бразуере было бы неразумно.
+
+## CSS-классы
+
+Проблема выше решается путём выноса стилей из HTML:
+
+```html
+<style>
+  .my-paragraph {
+    color: #272727;
+  }
+</style>
+
+<div>
+  <p class="my-paragraph">Lorem ipsum dolor sit amet</p>
+  <p class="my-paragraph">Lorem ipsum dolor sit amet</p>
+</div>
+```
+
+Придумывая название класса, мы создаём некую абстракцию, которую зачастую наделяем смыслом. Вероятно этот класс будет представлять собой некий компонент, но у компонентов в привычном нам понимании бывают свойства, которые можно менять при необходиости. И это не CSS свойства — мы создали абстракцию в виде класса над стилями, не будем спешить её ломать, смешивая её с конкретными стилевыми параметрами.
+
+## CSS in JS
+
+Раз речь зашла о компонентах, попробуем вернуться к React и посмотреть, как подобная задача решается там.
+
+В общем-то очень остроумно проблему решают CSS-in-JS фреймворки: чтобы не передавать данные из JS в CSS, мы перенесли CSS в JS:
+
+```jsx
+import styled from "styled-components";
+
+const Paragraph = styled.p`
+  color: #272727;
+`;
+
+const MyComponent = () => (
+  <div>
+    <Paragraph>Lorem ipsum dolor sit amet</Paragraph>
+    <Paragraph>Lorem ipsum dolor sit amet</Paragraph>
+  </div>
+);
+```
+
+Если нам понадобится передать данные из JS в CSS, мы можем сделать это так же, как и с любым другим React-компонентом:
+
+```tsx
+import styled, { css } from "styled-components";
+
+interface ParagraphProps {
+  type?: "regular" | "important";
+}
+
+const paragraphTypeStyles = {
+  regular: css`
+    color: #272727;
+  `,
+  important: css`
+    background-color: #ff6287;
+    font-weight: bold;
+  `,
+};
+
+const Paragraph = styled.p<ParagraphProps>`
+  ${({ type = "regular" }) => paragraphTypeStyles[type]}
+`;
+
+const MyComponent = () => (
+  <div>
+    <Paragraph>Lorem ipsum dolor sit amet</Paragraph>
+    <Paragraph type="important">Lorem ipsum dolor sit amet</Paragraph>
+  </div>
+);
+```
+
+Мы передаём некий дискретный набор данных в компонент и для каждой новой их комбинации [styled-components](https://styled-components.com) будет создавать уникальный класс и вставлять его в DOM. Но что, если параметр не дискретный и меняется часто?
+
+```tsx
+import { useEffect, useState } from "react";
+import styled from "styled-components";
+
+interface BallProps {
+  position: [x: number, y: number];
+}
+
+const Ball = styled.div<BallProps>`
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  background-color: #ff6287;
+  transform: ${({ position }) =>
+    `translate(${position[0]}px, ${position[1]}px)`};
+`;
+
+const MyComponent = () => {
+  const [position, setPosition] = useState([0, 0]);
+
+  useEffect(() => {
+    let rafId;
+
+    /** Меняем позицию 60 раз в секунду */
+    const update = (time: number) => {
+      setPosition([Math.sin(time * 30), Math.cos(time * 30)]);
+
+      rafId = window.requestAnimationFrame(update);
+    };
+
+    rafId = window.requestAnimationFrame(update);
+
+    return () => {
+      window.cancelAnimationFrame(rawId);
+    };
+  }, []);
+
+  return <Ball position={position} />;
+};
+```
+
+Спустя некоторое время styled-components вежливо намекнёт, что так делать не стоит, прямо в консоли браузера:
+
+![Слишком много сгенерированных классов](/hacknote-js/images/js-in-css/too-many-classes.webp)
+
+Для этого случая нам предлагают использовать инлайновые стили, но по прежнему они спрятаны за абстракцией в виде пропсы `position`, за счёт чего стили отделены от логики:
+
+```tsx
+import { useEffect, useState } from "react";
+import styled from "styled-components";
+
+interface BallProps {
+  position: [x: number, y: number];
+}
+
+const Ball = styled.div<BallProps>.attrs(({ position }: BallProps) => ({
+  style: {
+    transform: `translate(${position[0]}px, ${position[1]}px)`
+  }
+}))`
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  background-color: #ff6287;
+`;
+
+const MyComponent = () => {
+  const [position, setPosition] = useState([0, 0]);
+
+  // ...
+
+  return <Ball position={position} />;
+};
+```
+
+Но что если СSS-in-JS решение не подходит?
+
+## Решаем задачу нативно
+
+[Методология БЭМ](https://telegra.ph/Mifologiya-BEHM-01-15) предлагает [модификаторы](https://ru.bem.info/methodology/quick-start/#модификатор), которые могут быть:
+
+- булевыми
+
+  ```html
+  <input class="input input_invalid" />
+
+  <style>
+    .input__invalid {
+      border-color: red;
+    }
+  </style>
+  ```
+
+- ключ-значение
+
+  ```html
+  <p class="paragraph paragraph_type_important">Lorem ipsum</p>
+  ```
+
+Аналогично можно использовать data-атрибуты:
+
+```html
+<input class="input" data-invalid="true" />
+
+<style>
+  .input[data-invalid="true"] {
+    border-color: red;
+  }
+</style>
+```
+
+Во многих случаях, кстати, data-атрибуты можно заменить на [aria-атрибуты](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes) и таким образом убить сразу двух зайцев: стили и доступность:
+
+```html
+<input class="input" aria-invalid="true" />
+
+<style>
+  .input[aria-invalid="true"] {
+    border-color: red;
+  }
+</style>
+```
+
+Перечисленные выше решения опять же позволяют создавать конечные наборы значений. Вот бы был способ передать Javascript-переменную в CSS.
+
+Что? Такой способ уже есть?
+
+## CSS Custom Properties
+
+[CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*) (или СSS-переменные) появились уже довольно давно и имеют [весьма широкую браузерную поддержку](https://caniuse.com/css-variables).
+
+С их помощью можно в том числе организовать API между бизнес-логикой и визуалом:
+
+```html
+<div class="ball" style="--position-x: 35px; --position-y: 54px;"></div>
+
+<style>
+  .ball {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    background-color: #ff6287;
+    transform: translate(var(--position-x), var(--position-y));
+  }
+</style>
+```
+
+То же самое возможно и в JSX ([понадобится пара дополнительных действий для Typescript](https://github.com/frenic/csstype#what-should-i-do-when-i-get-type-errors)):
+
+```jsx
+const MyComponent = () => {
+  const [position, setPosition] = useState([0, 0]);
+
+  // ...
+
+  return (
+    <div
+      className="ball"
+      style={{
+        "--position-x": position[0],
+        "--position-y": position[1],
+      }}
+    />
+  );
+};
+```
+
+И самая главная мощь тут заключается в том, что CSS-переменные действуют каскадно!
+
+То есть мы можем разработать компонент, состоящий из нескольких вложенных друг в друга HTML-элементов, установить значение СSS-переменной на корневом элементе и использовать его в потомках:
+
+```html
+<div id="cube-demo" class="viewport" style="--scroll-top: 0">
+  <div class="cube">
+    <div class="cube-edge cube-edge_front"></div>
+    <div class="cube-edge cube-edge_left"></div>
+    <div class="cube-edge cube-edge_back"></div>
+    <div class="cube-edge cube-edge_right"></div>
+    <div class="cube-edge cube-edge_top"></div>
+  </div>
+</div>
+
+<style>
+  .cube {
+    transform: rotateY(
+      calc(var(--scroll-top) * 1deg) /* Не забудем о единицах измерения */
+    );
+  }
+</style>
+
+<script>
+  document.addEventListener("scroll", ({ event }) => {
+    document
+      .getElementById("cube-demo")
+      .style.setAttribute("--scroll-top", event.target.scrollTop.toString());
+  });
+</script>
+```
+
+<Demo title="Кручу-верчу...">
+  <Scroll />
+</Demo>
+
+При большом желании можно даже сохранять данные в СSS-переменных:
+
+```html
+<form
+  id="color-picker-demo"
+  style="--color-red: 255; --color-green: 216; --color-blue: 101;"
+>
+  <input type="range" name="color-red" />
+  <input type="range" name="color-green" />
+  <input type="range" name="color-blue" />
+  <div class="preview">Hacknote.js</div>
+</form>
+
+<script>
+  const demo = document.getElementById("color-picker-demo");
+
+  demo.addEventListener("input", ({ target }) => {
+    demo.style.setProperty(`--${target.name}`, target.value);
+  });
+</script>
+```
+
+<Demo title="Колорпикер">
+  <ColorPicker />
+</Demo>
+
+За счёт каскада довольно удобно делать темизацию:
+
+```html
+<body data-theme="dark">
+  <p>Lorem ipsum dolor sit</p>
+</body>
+
+<style>
+  body[data-theme="light"] {
+    --text-color: back;
+    --bg-color: white;
+  }
+
+  body[data-theme="dark"] {
+    --text-color: white;
+    --bg-color: black;
+  }
+</style>
+```
+
+<Demo title="Темизация">
+  <Theming />
+</Demo>
+
+## Заключение
+
+На самом деле вся статья задумывалась, чтобы показать, что в 2023 году у СSS-in-JS решений практически не осталось преимуществ перед обычным СSS в отдельном файлике и их использование не всегда оправдано.

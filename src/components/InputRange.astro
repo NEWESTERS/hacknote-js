@@ -1,0 +1,36 @@
+---
+interface Props extends astroHTML.JSX.InputHTMLAttributes {}
+
+const { class: className, name, min, max, value } = Astro.props;
+---
+
+<input
+  type="range"
+  class={className}
+  name={name}
+  value={value}
+  min={min}
+  max={max}
+/>
+
+<style>
+  input[type="range"] {
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-runnable-track {
+    background-color: var(--color_background-light);
+    border-radius: 8px;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    margin: -4px 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    background-color: var(--color_text-white);
+    box-shadow: var(--shadow_default);
+  }
+</style>

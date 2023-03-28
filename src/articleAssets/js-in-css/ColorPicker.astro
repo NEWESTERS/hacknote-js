@@ -1,0 +1,138 @@
+---
+import InputRange from "../../components/InputRange.astro";
+---
+
+<div
+  id="color-picker-demo"
+  style="--color-red: 255; --color-green: 216; --color-blue: 101;"
+>
+  <form>
+    <label>
+      <span>R</span>
+      <InputRange
+        min="0"
+        max="255"
+        value="255"
+        class="color-picker__field"
+        name="color-red"
+      />
+    </label>
+
+    <label>
+      <span>G</span>
+      <InputRange
+        min="0"
+        max="255"
+        value="216"
+        class="color-picker__field"
+        name="color-green"
+      />
+    </label>
+
+    <label>
+      <span>B</span>
+      <InputRange
+        min="0"
+        max="255"
+        value="101"
+        class="color-picker__field"
+        name="color-blue"
+      />
+    </label>
+  </form>
+
+  <button class="preview" title="НИ В КОЕМ СЛУЧАЕ НЕ НАЖИМАТЬ!">
+    <span class="preview-text">Hacknote.js</span>
+  </button>
+</div>
+
+<style>
+  #color-picker-demo {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .color-picker__field[name="color-red"]::-webkit-slider-runnable-track {
+    background-color: rgba(var(--color-red), 0, 0);
+  }
+
+  .color-picker__field[name="color-green"]::-webkit-slider-runnable-track {
+    background-color: rgba(0, var(--color-green), 0);
+  }
+
+  .color-picker__field[name="color-blue"]::-webkit-slider-runnable-track {
+    background-color: rgba(0, 0, var(--color-blue));
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .preview {
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    padding: 16px;
+    border-radius: 16px;
+    color: rgb(
+      calc(255 - var(--color-red)),
+      calc(255 - var(--color-green)),
+      calc(255 - var(--color-blue))
+    );
+    font-weight: bold;
+    background-color: rgb(
+      var(--color-red),
+      var(--color-green),
+      var(--color-blue)
+    );
+  }
+</style>
+<script>
+  const demo = document.getElementById("color-picker-demo") as HTMLDivElement;
+
+  function syncInput(input: HTMLInputElement) {
+    demo.style.setProperty(`--${input.name}`, input.value);
+  }
+
+  demo.querySelectorAll(".color-picker__field").forEach((element) => {
+    if (element instanceof HTMLInputElement) {
+      syncInput(element);
+    }
+  });
+
+  demo.addEventListener("input", (event) => {
+    if (event.target instanceof HTMLInputElement) {
+      syncInput(event.target);
+    }
+  });
+
+  function getCurrentColor(): [string, string, string] {
+    return [
+      demo.style.getPropertyValue("--color-red"),
+      demo.style.getPropertyValue("--color-green"),
+      demo.style.getPropertyValue("--color-blue"),
+    ];
+  }
+
+  demo.querySelector(".preview")?.addEventListener("click", () => {
+    const [red, green, blue] = getCurrentColor();
+
+    document.body.style.setProperty(
+      "background-color",
+      `rgb(${red}, ${green}, ${blue})`
+    );
+
+    document.body
+      .querySelector("h1")
+      ?.style.setProperty(
+        "color",
+        `rgb(${255 - Number(red)}, ${255 - Number(green)}, ${
+          255 - Number(blue)
+        })`
+      );
+  });
+</script>

@@ -1,0 +1,77 @@
+<div id="scroll-demo" style="--scroll-top: 180;">
+  <div class="cube">
+    <div class="edge left"></div>
+    <div class="edge right"></div>
+    <div class="edge front"></div>
+    <div class="edge back"></div>
+    <div class="edge top"></div>
+  </div>
+</div>
+
+<style>
+  #scroll-demo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    perspective: 500px;
+  }
+
+  .cube {
+    --size: 180px;
+    transform-style: preserve-3d;
+    position: relative;
+    will-change: transform;
+    transform: rotateX(-45deg) rotateY(calc(var(--scroll-top) * 0.25deg))
+      translateX(calc(var(--size) * -0.5)) translateY(calc(var(--size) * -0.5));
+  }
+
+  .edge {
+    position: absolute;
+    width: var(--size);
+    height: var(--size);
+    background: hsl(calc(var(--scroll-top) * 0.25deg), 80%, 60%)
+      linear-gradient(
+        calc(var(--scroll-top) * 0.25deg),
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0.5)
+      );
+  }
+
+  .left {
+    transform: translateX(calc(var(--size) * -0.5)) rotateY(90deg);
+  }
+
+  .right {
+    transform: translateX(calc(var(--size) * 0.5)) rotateY(90deg);
+  }
+
+  .front {
+    transform: translateZ(calc(var(--size) * -0.5));
+  }
+
+  .back {
+    transform: translateZ(calc(var(--size) * 0.5));
+  }
+
+  .top {
+    transform: translateY(calc(var(--size) * -0.5)) rotateX(90deg);
+  }
+</style>
+
+<script>
+  const demo = document.getElementById("scroll-demo") as HTMLDivElement;
+
+  function syncStyles() {
+    demo.style.setProperty(
+      "--scroll-top",
+      demo.getBoundingClientRect().top.toString()
+    );
+  }
+
+  syncStyles();
+
+  document.addEventListener("scroll", () => {
+    syncStyles();
+  });
+</script>
