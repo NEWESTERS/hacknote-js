@@ -1,12 +1,14 @@
 ---
-import A from "./markdown/A.astro";
+import BaseLink from "./BaseLink.astro";
 
 const today = new Date();
 ---
 
 <footer>
   &copy; {today.getFullYear()}
-  <A href="https://github.com/NEWESTERS/hacknote-js">Hacknote.js</A>.
+  <BaseLink href="https://github.com/NEWESTERS/hacknote-js">
+    Hacknote.js
+  </BaseLink>
 </footer>
 <style>
   footer {

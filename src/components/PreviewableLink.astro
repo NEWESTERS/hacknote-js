@@ -1,0 +1,130 @@
+---
+import { getLinkPreviewLoader } from "@api/linkPreview";
+import { toBase64 } from "@utils/string";
+
+import BaseLink, { Props as BaseLinkProps } from "./BaseLink.astro";
+
+export interface Props extends Omit<BaseLinkProps, "iconUrl"> {}
+
+const { class: className, href, ...props } = Astro.props;
+
+const loader = href ? getLinkPreviewLoader(href) : undefined;
+
+const previewData = loader ? await loader.linkPreviewData : undefined;
+
+const id = href ? toBase64(href.toString()) : undefined;
+---
+
+<style>
+  .previewable-link[aria-description] {
+    padding: 2px 4px;
+    border-radius: 8px;
+    margin: 0 -4px;
+  }
+
+  .previewable-link[aria-description]:hover {
+    background-color: var(--color_background-light);
+  }
+</style>
+<script>
+  import type { LinkPreviewData } from "@api/linkPreview";
+
+  export class PreviewableLink extends HTMLElement {
+    public get link(): HTMLAnchorElement {
+      return this.querySelector("a") as HTMLAnchorElement;
+    }
+
+    private _popup: HTMLElement | undefined;
+
+    public get popup(): HTMLElement {
+      if (!this._popup) {
+        this._popup = document.createElement("hjs-popup");
+        this._popup.style.setProperty("pointer-events", "none");
+        this._popup.setAttribute("anchor", this.link.id);
+      }
+
+      return this._popup;
+    }
+
+    private _linkPreview: HTMLElement | undefined;
+
+    public get linkPreview(): HTMLElement {
+      if (!this._linkPreview) {
+        this._linkPreview = document.createElement("hjs-link-preview");
+        this.popup.appendChild(this.linkPreview);
+      }
+
+      return this._linkPreview;
+    }
+
+    public get linkPreviewData(): LinkPreviewData | undefined {
+      const link = this.link;
+
+      const title = link.getAttribute("aria-label");
+      const description = link.getAttribute("aria-description");
+      const image = link.dataset["thumbnail"];
+
+      if (title && description) {
+        return {
+          title,
+          description,
+          image,
+        };
+      }
+    }
+
+    private _unmount = () => {
+      this.popup.remove();
+    };
+
+    private _mount = () => {
+      document.body.appendChild(this.popup);
+    };
+
+    private _handleMouseEnter = () => {
+      const linkPreviewData = this.linkPreviewData;
+
+      if (!linkPreviewData) {
+        return;
+      }
+
+      this.linkPreview.setAttribute("title", linkPreviewData.title);
+      this.linkPreview.setAttribute("description", linkPreviewData.description);
+      this.linkPreview.setAttribute("source-url", this.link.href);
+      if (linkPreviewData.image) {
+        this.linkPreview.setAttribute("thumbnail-url", linkPreviewData.image);
+      }
+
+      this._mount();
+
+      this.link.addEventListener("mouseleave", this._unmount, {
+        once: true,
+      });
+    };
+
+    public connectedCallback() {
+      this.link.addEventListener("mouseenter", this._handleMouseEnter);
+    }
+
+    public disconnectedCallback() {
+      this._unmount();
+      this.link.removeEventListener("mouseenter", this._handleMouseEnter);
+      this.link.removeEventListener("mouseleave", this._unmount);
+    }
+  }
+
+  customElements.define("hjs-previewable-link", PreviewableLink);
+</script>
+<hjs-previewable-link
+  ><BaseLink
+    id={id}
+    class:list={[className, "previewable-link"]}
+    href={href}
+    aria-label={previewData?.title}
+    aria-description={previewData?.description}
+    data-thumbnail={previewData?.image}
+    {...props}
+  >
+    <slot />
+  </BaseLink></hjs-previewable-link
+>
