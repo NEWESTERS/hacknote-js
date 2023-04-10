@@ -1,0 +1,139 @@
+---
+const Slot = "slot";
+---
+
+<template id="hjs-popup-template">
+  <style is:inline>
+    @keyframes appearance {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    #container {
+      position: absolute;
+      left: calc((var(--link-x) + var(--link-width) / 2) * 1px);
+      opacity: 0;
+      animation: appearance 0.2s ease-out forwards;
+      animation-delay: 200ms;
+
+      box-sizing: border-box;
+      padding: 16px;
+      border-radius: 16px;
+
+      background-color: var(--color_background-light);
+      box-shadow: var(--shadow_default);
+    }
+
+    #container[data-direction="down"] {
+      top: calc((var(--link-y) + var(--link-height)) * 1px + 4px);
+      transform: translateX(-50%);
+    }
+
+    #container[data-direction="up"] {
+      top: calc(var(--link-y) * 1px - 4px);
+      transform: translate(-50%, -100%);
+    }
+  </style>
+  <div id="container">
+    <Slot />
+  </div>
+</template>
+
+<script>
+  const popupTemplate = document.getElementById(
+    "hjs-popup-template"
+  ) as HTMLTemplateElement;
+
+  class Popup extends HTMLElement {
+    public constructor() {
+      super();
+
+      const content = document.importNode(popupTemplate.content, true);
+
+      const shadowRoot = this.attachShadow({ mode: "open" });
+
+      shadowRoot.appendChild(content);
+
+      this.container = shadowRoot.getElementById("container") as HTMLDivElement;
+    }
+
+    public readonly container: HTMLDivElement;
+
+    private _anchor: HTMLElement | undefined;
+
+    public set anchor(anchor: HTMLElement) {
+      this._anchor = anchor;
+
+      this._updateDirection();
+      this._updateLinkPosition();
+    }
+
+    private _updateDirection(): void {
+      if (!this._anchor) {
+        return;
+      }
+
+      const anchorRect = this._anchor.getBoundingClientRect();
+      const anchorBottom =
+        window.innerHeight - anchorRect.top - anchorRect.height;
+
+      this.container.dataset["direction"] =
+        anchorRect.top > anchorBottom ? "up" : "down";
+    }
+
+    private _updateLinkPosition(): void {
+      if (!this._anchor) {
+        return;
+      }
+
+      const anchorRect = this._anchor.getBoundingClientRect();
+
+      this.container.style.setProperty("--link-x", String(anchorRect.left));
+      this.container.style.setProperty(
+        "--link-y",
+        String(this._anchor.offsetTop)
+      );
+      this.container.style.setProperty(
+        "--link-width",
+        String(anchorRect.width)
+      );
+      this.container.style.setProperty(
+        "--link-height",
+        String(anchorRect.height)
+      );
+    }
+
+    public connectedCallback() {
+      this._updateDirection();
+    }
+
+    public static observedAttributes = ["anchor"];
+
+    public attributeChangedCallback(
+      property: string,
+      oldValue: string,
+      newValue: string
+    ): void {
+      if (newValue === oldValue) {
+        return;
+      }
+
+      if (property === "anchor") {
+        const anchor = document.getElementById(newValue);
+
+        if (!anchor) {
+          throw new Error(`Element with id "${newValue}" not found`);
+        }
+
+        this.anchor = anchor;
+      }
+    }
+  }
+
+  customElements.define("hjs-popup", Popup);
+</script>

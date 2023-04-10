@@ -1,0 +1,138 @@
+<template id="hjs-link-preview-template">
+  <style is:inline>
+    #layout {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    #content {
+      display: flex;
+      flex-direction: column;
+      width: 250px;
+      gap: 8px;
+    }
+
+    #title {
+      color: var(--color_text-white);
+      font-weight: bold;
+      font-size: 16px;
+      margin: 0;
+    }
+
+    #description {
+      color: var(--color_text-white);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    #source {
+      color: var(--color_accent-yellow);
+      font-size: 14px;
+    }
+
+    #source::before {
+      content: attr(href);
+    }
+
+    #thumbnail {
+      background-color: white;
+      border-radius: 16px;
+      padding: 8px;
+      height: 100px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    #thumbnail:not([src]) {
+      display: none;
+    }
+  </style>
+  <article id="layout">
+    <div id="content">
+      <h2 id="title"></h2>
+      <p id="description"></p>
+      <a id="source"></a>
+    </div>
+    <img id="thumbnail" />
+  </article>
+</template>
+
+<script>
+  const linkPreviewTemplate = document.getElementById(
+    "hjs-link-preview-template"
+  ) as HTMLTemplateElement;
+
+  class LinkPreview extends HTMLElement {
+    public constructor() {
+      super();
+
+      const content = document.importNode(linkPreviewTemplate.content, true);
+
+      const shadowRoot = this.attachShadow({ mode: "open" });
+
+      shadowRoot.appendChild(content);
+
+      this.linkTitle = shadowRoot.getElementById("title") as HTMLHeadingElement;
+      this.linkDescription = shadowRoot.getElementById(
+        "description"
+      ) as HTMLParagraphElement;
+      this.linkSource = shadowRoot.getElementById(
+        "source"
+      ) as HTMLAnchorElement;
+      this.linkThumbnail = shadowRoot.getElementById(
+        "thumbnail"
+      ) as HTMLImageElement;
+    }
+
+    public readonly linkTitle: HTMLHeadingElement;
+
+    public readonly linkDescription: HTMLParagraphElement;
+
+    public readonly linkSource: HTMLAnchorElement;
+
+    public readonly linkThumbnail: HTMLImageElement;
+
+    public static observedAttributes = [
+      "title",
+      "description",
+      "source-url",
+      "thumbnail-url",
+    ];
+
+    public attributeChangedCallback(
+      property: string,
+      previousValue: string,
+      newValue: string
+    ): void {
+      if (previousValue === newValue) {
+        return;
+      }
+
+      switch (property) {
+        case "title": {
+          this.linkTitle.textContent = newValue;
+          break;
+        }
+
+        case "description": {
+          this.linkDescription.textContent = newValue;
+          break;
+        }
+
+        case "source-url": {
+          this.linkSource.href = new URL(newValue).host;
+          break;
+        }
+
+        case "thumbnail-url": {
+          this.linkThumbnail.src = newValue;
+          break;
+        }
+      }
+    }
+  }
+
+  customElements.define("hjs-link-preview", LinkPreview);
+</script>

@@ -1,0 +1,399 @@
+---
+title: "Генерация превью для ссылок: получаем данные"
+description: "В статьях я стараюсь оставлять максимальное количество ссылок на ресурсы, которые помогли мне подробнее ознакомиться с рассматриваемой темой. Мне кажется, не всегда из контекста понятно, какую именно информацию даст та или иная ссылка, поэтому я подумал о добавлении механизма их предпросмотра."
+pubDate: "Apr 10 2023"
+heroImage: "/hacknote-js/images/link-preview/hero.png"
+---
+
+import Aside from "@components/Aside.astro";
+
+В статьях я стараюсь оставлять максимальное количество ссылок на ресурсы, которые помогли мне подробнее ознакомиться с рассматриваемой темой. Мне кажется, не всегда из контекста понятно, какую именно информацию даст та или иная ссылка, поэтому я подумал о добавлении механизма их предпросмотра.
+
+Самым очевидным может показаться отображение страницы, расположенной по ссылке, в `iframe` — это могло быть неким аналогом функции [предварительного просмотра ссылок в Safari](https://support.apple.com/ru-ru/guide/safari/ibrw49c06cd2/mac). Такой вариант выглядит максимально универсальным, но он слишком громоздкий и весьма неинформативный, поскольку необходимо сориентироваться на странице в маленьком окошке превью и найти ключевую мысль среди прочего контента, хотя вместо этого можно просто открыть ссылку в новой вкладке, но это всё может сильно отвлекать от прочтения исходной статьи.
+
+Разумеется среди прочих ресурсов я нередко упоминаю википедию, особенно когда использую какие-либо термины в статье, — именно для этого кейса предпросмотр ссылок мне показался самым полезным. Зайдя в саму википедию я обнаружил, что в ней уже есть такая функциональность, и решил вдохновиться ей.
+
+![Превью ссылок в Wikipedia](/hacknote-js/images/link-preview/wikipedia-links.webp)
+
+## Wikipedia API
+
+Первым делом я полез в веб-инспектор, чтобы выяснить, как работает превью ссылок в википедии. Оказалось, что для этого в ней используется [собственный API](https://www.mediawiki.org/wiki/API), который позволяет получить некоторые данные о конкретной статье в общем формате. Например, по запросу "https://ru.wikipedia.org/api/rest_v1/page/summary/JavaScript" она отдаёт ответ примерно следующего содержания:
+
+```json
+{
+  "title": "JavaScript",
+  "thumbnail": {
+    "source": "https://upload.wikimedia.org/wikipedia/commons/..."
+  },
+  "extract": "JavaScript — мультипарадигменный язык программирования..."
+}
+```
+
+В примере выше я продемонстрировал только поля, которые нам нужны в рамках текущей задачи, на самом деле их там больше.
+
+Теперь реализуем механизм запроса данных для ссылок на википедию.
+
+Адреса статей в википедии имеют такой формат: `https://<LANG>.wikipedia.org/wiki/<ARTICLE_ID>`, а адреса для получения данных о статье из API такой: `https://<LANG>.wikipedia.org/api/rest_v1/page/summary/<ARTICLE_ID>`, где `LANG` это язык, на котором написана статья, а `ARTICLE_ID` — её идентификатор.
+
+В первую очередь реализуем преобразование одного адреса в другой:
+
+```ts
+export const WIKIPEDIA_URL_REGEXP =
+  /https:\/\/(.+)\.wikipedia\.org\/wiki\/(.+)/;
+
+export function getWikipediaApiUrl(articleUrl: string): string | undefined {
+  const articleLinkMatch = href.match(WIKIPEDIA_URL_REGEXP);
+
+  if (!articleLinkMatch) {
+    return undefined;
+  }
+
+  const [_, lang, articleId] = articleLinkMatch;
+
+  return `https://${lang}.wikipedia.org/api/rest_v1/page/summary/${articleId}`;
+}
+```
+
+Теперь можем реализовать функцию получения данных о статье:
+
+```ts
+export interface LinkPreviewData {
+  title: string;
+  description: string;
+  image?: string;
+}
+
+export async function fetchWikipediaLinkPreviewData(
+  href: string
+): Promise<LinkPreviewData | undefined> {
+  const apiUrl = getWikipediaApiUrl(href);
+
+  if (!apiUrl) {
+    throw new Error(`"${href}" is not Wikipedia article url`);
+  }
+
+  const { title, thumbnail, extract } = await fetch(apiUrl).then((response) =>
+    response.json()
+  );
+
+  // Для статей без заголовка или краткого описания отображать превью нет смысла
+  if (title && extract) {
+    return {
+      title,
+      description: extract,
+      image: thumbnail?.source,
+    };
+  }
+}
+```
+
+С википедией всё получилось довольно просто и я подумал, что было бы круто сделать превью для всех ссылок в статьях, но подобный API есть явно не у всех сайтов в интернете. Так как же быть в таком случае?
+
+## Open Graph
+
+Существует инструмент, созданный именно для задачи предпросмотра ссылок — [протокол Open Graph](https://ogp.me). Его использует, например, Telegram, чтобы генерировать [превью ссылок в сообщениях](https://telegram.org/blog/link-preview).
+
+<Aside title="Кстати, о Telegram">
+В Telegram есть [Webpage Bot](https://t.me/WebpageBot), позволяющий вручную
+инвалидировать кеш для превью страниц.
+
+Также есть специальный редактор для настройки [Instant View](https://instantview.telegram.org), но, к сожалению, в нём на данный момент не поддерживается подсветка синтаксиса в статьях, поэтому я его не использую. Зато там можно настраивать и превьюшки для страниц, на которых нет Open Graph разметки.
+
+</Aside>
+
+Open Graph разметка представляет собой `meta`-теги с атрибутами `property` и `content`, расположенные внутри `head`:
+
+```html
+<head>
+  <meta property="og:title" content="Hacknote.js" />
+</head>
+```
+
+Среди всех возможных тегов для генерации превью будет достаточно всего трёх:
+
+- `og:title` — заголовок страницы
+
+- `og:description` — краткое описание страницы
+
+- `og:image` — превью-картинка страницы
+
+Эти теги встречаются на большинстве сайтов, но, к моему удивлению, их нет в википедии, поэтому для неё оставляем механизм, реализованный ранее, а для остальных ссылок сделаем отдельную реализацию.
+
+Для начала выделим общий интерфейс для получения данных о ссылке, чтобы одинаковым образом получать данные из любого источника:
+
+```ts
+/**
+ * Получить данные для превью ссылки
+ *
+ * @param href - адрес, на который ведёт ссылка
+ * @returns промис с данными для превью ссылки, если этих данных достаточно
+ */
+export type FetchLinkPreviewData = (
+  href: string
+) => Promise<LinkPreviewData | undefined>;
+```
+
+Теперь перейдём к реализации.
+
+Задача заключается в том, чтобы получить HTML и найти в нём Open Graph теги. Можно было бы поискать их регуляркой, но к счастью наш код предназаначен для браузера, который в свою очередь уже умеет парсить HTML в DOM, по которому мы можем искать данные с помощью селекторов. Для этого есть класс [DOMParser](https://developer.mozilla.org/ru/docs/Web/API/DOMParser):
+
+```ts
+export const fetchDefaultLinkPreviewData: FetchLinkPreviewData = async (
+  href
+) => {
+  const html = await fetch(href).then((response) => response.text());
+
+  const parser = new DOMParser();
+
+  const dom = parser.parseFromString(html, "text/html");
+
+  const title = dom
+    .querySelector('meta[property="og:title"]')
+    ?.getAttribute?.("content");
+
+  const description = dom
+    .querySelector('meta[property="og:description"]')
+    ?.getAttribute?.("content");
+
+  const image = dom
+    .querySelector('meta[property="og:image"]')
+    ?.getAttribute?.("content");
+
+  if (title && description) {
+    return {
+      title,
+      description,
+      image,
+    };
+  }
+};
+```
+
+Теперь реализуем итоговую функцию, которая будет получать данные для превью любой ссылки:
+
+```ts
+export const fetchLinkPreviewData: FetchLinkPreviewData = (href) => {
+  // Выбираем способ получения данных на основе адреса
+  if (WIKIPEDIA_URL_REGEXP.test(href)) {
+    return fetchWikipediaLinkPreviewData(href);
+  } else {
+    return fetchDefaultLinkPreviewData(href);
+  }
+};
+```
+
+Вроде бы всё просто и логично...
+
+...было, пока я не запустил этот код.
+
+## CORS
+
+С общедоступным API википедии всё отлично, но вот делать `fetch` большинства чужих сайтов не позволяет [CORS](https://developer.mozilla.org/ru/docs/Web/HTTP/CORS).
+
+![Ошибка СORS](/hacknote-js/images/link-preview/cors-error.webp)
+
+CORS — это механизм, работающий исключительно на стороне клиента, то есть пройтись по ссылкам можно в среде, над которой я имею больше контроля — на сервере. Можно, конечно, воспользоваться сервисом вроде [opengraph.io](https://www.opengraph.io), но зачем платить больше, если у меня уже есть своего рода сервер, хоть и одноразовый, поскольку работает только на этапе сборки.
+
+## Сёрфим по интернету на бекенде
+
+Формулируем задачу: необходимо пройтись по всем ссылкам во всех статьях во время сборки и сохранить информацию для превью ссылок в каком-то месте, доступном на клиенте.
+
+Для всех ссылок в статьях у меня реализован [Astro-компонент](https://docs.astro.build/en/core-concepts/astro-syntax/), код которого выполняется исключительно на сервере (в случае SSG — во время сборки) и может совершать сетевые запросы, а значит каждая ссылка может самостоятельно запросить данные для своего превью.
+
+Можно было бы использовать написанную ранее функцию `fetchLinkPreviewData`, но, к сожалению, Node.js сообщает, что <span style="color: var(--color_accent-red)">«DOMParser is not defined»</span>, поэтому придётся искать другой способ парсинга HTML.
+
+В результате недолгих поисков я наткнулся на [cheerio](https://cheerio.js.org) — библиотеку для парсинга HTML в Node.js.
+
+API этой библиотеки несколько отличается от браузерного `DOMParser`, поэтому для максимально бесшовного перехода я решил реализовать адаптер.
+
+Для начала опишем интерфейс, содержащий методы `DOMParser`, которые нужны для решения текущей задачи:
+
+```ts
+export interface HtmlElementApi {
+  getAttribute(name: string): string | undefined;
+  getText(): string | undefined;
+}
+
+export interface HtmlDocumentApi {
+  querySelector(selector: string): HtmlElementApi | undefined;
+}
+
+export interface HtmlParser {
+  parse(html: string): HtmlDocumentApi;
+}
+```
+
+Тогда браузерная реализация этого интерфейса будет максимально простой:
+
+```ts
+import type { HtmlDocumentApi, HtmlParser } from "./HTMLParser";
+
+export class BrowserHtmlParser implements HtmlParser {
+  private _domParser = new DOMParser();
+
+  public parse(html: string): HtmlDocumentApi {
+    return this._domParser.parseFromString(html, "text/html");
+  }
+}
+```
+
+Теперь реализуем парсер на основе cheerio:
+
+```ts
+import { load as loadHtml } from "cheerio";
+
+import type { HtmlDocumentApi, HtmlParser } from "./HTMLParser";
+
+export class NodeHtmlParser implements HtmlParser {
+  public parse(html: string): HtmlDocumentApi {
+    const cheerio = loadHtml(html);
+
+    return {
+      querySelector(selector) {
+        const element = cheerio(selector);
+
+        return {
+          getAttribute(name) {
+            return element.attr(name);
+          },
+          getText() {
+            return element.text();
+          },
+        };
+      },
+    };
+  }
+}
+```
+
+И сделаем инверсию зависимостей для `fetchDefaultLinkPreviewData`:
+
+```ts
+export function fetchDefaultLinkPreviewData(
+  href: string,
+  // Теперь функция получения данных из Open Graph разметки
+  // зависит от парсера HTML не напрямую, а через абстракцию
+  parser: HTMLParser
+): LinkPreviewData {
+  // ...
+}
+```
+
+И будем динамически выбирать парсер в зависимости от окружения, в котором запущен код. Динамически импортировать ES-модули можно [только асинхронно](https://telegra.ph/CommonJS-vs-ESM-12-22), но это не проблема, поскольку текущая поддержка [top Level await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await#top_level_await) меня вполне устраивает:
+
+```ts
+// В Node.js ведь нет глобальной переменной "document" — верно?
+const isBrowser = typeof document !== "undefined";
+
+// Выбираем, откуда импортировать парсер
+const HtmlParser = isBrowser
+  ? await import("./htmlParser/BrowserHtmlParser").then(
+      ({ BrowserHtmlParser }) => BrowserHtmlParser
+    )
+  : await import("./htmlParser/NodeHtmlParser").then(
+      ({ NodeHtmlParser }) => NodeHtmlParser
+    );
+
+// Создаём выбранный парсер
+const parser = new HtmlParser();
+
+export const fetchLinkPreviewData: FetchLinkPreviewData = (href) => {
+  if (WIKIPEDIA_URL_REGEXP.test(href)) {
+    return fetchWikipediaLinkPreviewData(href);
+  } else {
+    return fetchDefaultLinkPreviewData(
+      href,
+      // Передаём выбранный парсер в качестве зависимости
+      parser
+    );
+  }
+};
+```
+
+Такой код называется [изоморфным](https://en.wikipedia.org/wiki/Isomorphic_JavaScript), так как может выполняться и на клиенте и на сервере.
+
+В целом мне теперь вряд ли пригодится парсить HTML на клиенте, но я решил продемонстрировать этот код, как наглядный пример практик, о которых я рассказывал в предыдущих статьях.
+
+Реализация механизма получения данных готова, но есть небольшой нюанс в виде замедления сборки в dev-режиме примерно в 350 раз.
+
+![Небольшое замедление](/hacknote-js/images/link-preview/load-time.webp)
+
+Вызвано оно тем, что dev серверу приходится ходить по всем ссылкам в статье при каждом изменении в коде.
+
+Во время разработки реальные данные не так важны, поэтому можно замокать их получение, реализовав моковую функцию для созданного ранее интерфейса:
+
+```ts
+export const fetchMockLinkPreviewData: FetchLinkPreviewData = async () => {
+  return {
+    title: "Hacknote.js",
+    description: "Lorem ipsum dolor sit amet.",
+    image: "/hacknote-js/images/logo.png",
+  };
+};
+```
+
+И в dev-режиме использовать её вместо настоящих:
+
+```ts
+const isBrowser = typeof document !== "undefined";
+
+const HtmlParser = isBrowser
+  ? await import("./htmlParser/BrowserHtmlParser").then(
+      ({ BrowserHtmlParser }) => BrowserHtmlParser
+    )
+  : await import("./htmlParser/NodeHtmlParser").then(
+      ({ NodeHtmlParser }) => NodeHtmlParser
+    );
+
+const parser = new HtmlParser();
+
+export const fetchLinkPreviewData: FetchLinkPreviewData = (href) => {
+  // Astro добавляет свои переменные окружения в import.meta.url
+  if (import.meta.env.DEV) {
+    return fetchMockLinkPreviewData(href);
+  }
+
+  if (WIKIPEDIA_URL_REGEXP.test(href)) {
+    return fetchWikipediaLinkPreviewData(href);
+  } else {
+    return fetchDefaultLinkPreviewData(href, parser);
+  }
+};
+```
+
+Думаю, вместо этого можно реализовать некий кеш, как это делает Telegram, но, пожалуй, займусь этим позже.
+
+## Рендерим результат
+
+Осталось положить эти данные в HTML во время генерации статики. Делать я это буду в Astro-компоненте, но, думаю, смысл кода будет понятен без какой-либо подготовки:
+
+```astro
+---
+import { fetchLinkPreviewData } from "@api/linkPreview";
+
+export interface Props {
+  href: string;
+}
+
+const { href } = Astro.props;
+
+const previewData = await fetchLinkPreviewData(href);
+---
+
+<a
+  href={href}
+  aria-label={previewData?.title}
+  aria-description={previewData?.description}
+  data-thumbnail={previewData?.image}
+>
+  <slot />
+</a>
+```
+
+Не знаю, насколько это уместно, но часть данных я решил положить в Aria-атрибуты.
+
+## Показываем превью
+
+Теперь клиент обладает всеми необходимыми данными для отображения превью ссылки и можно заняться его вёрсткой, но об этом я расскажу в следующей статье...
+
+![Продолжение следует](/hacknote-js/images/link-preview/to-be-continued.webp)

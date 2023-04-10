@@ -1,4 +1,6 @@
 ---
+import PreviewableLink from "../PreviewableLink.astro";
+
 interface Props {
   href?: string;
 }
@@ -6,9 +8,4 @@ interface Props {
 const { href } = Astro.props;
 ---
 
-<a href={href} target="_blank" rel="noopener noreferrer"><slot /></a>
-<style>
-  a {
-    color: var(--color_accent-yellow);
-  }
-</style>
+<PreviewableLink href={href}><slot /></PreviewableLink>

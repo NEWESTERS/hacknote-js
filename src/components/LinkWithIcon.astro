@@ -1,0 +1,40 @@
+---
+import BaseLink, { Props as BaseLinkProps } from "./BaseLink.astro";
+
+export interface Props extends BaseLinkProps {
+  iconUrl?: string;
+}
+
+const {
+  class: className,
+  "class:list": classList,
+  href,
+  iconUrl,
+  ...props
+} = Astro.props;
+---
+
+<BaseLink
+  class:list={[className, classList, "link-with-icon"]}
+  href={href}
+  {...props}
+>
+  {iconUrl && <img class="link__icon" src={iconUrl} />}<span
+    class="link__content"><slot /></span
+  >
+</BaseLink>
+<style>
+  .link-with-icon {
+    white-space: nowrap;
+  }
+
+  .link__icon {
+    width: 14px;
+    height: 14px;
+    margin-right: 6px;
+  }
+
+  .link__content {
+    white-space: normal;
+  }
+</style>
