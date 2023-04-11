@@ -81,7 +81,11 @@ const id = href ? toBase64(href.toString()) : undefined;
       document.body.appendChild(this.popup);
     };
 
-    private _handleMouseEnter = () => {
+    private _handleMouseEnter = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse") {
+        return;
+      }
+
       const linkPreviewData = this.linkPreviewData;
 
       if (!linkPreviewData) {
@@ -97,19 +101,19 @@ const id = href ? toBase64(href.toString()) : undefined;
 
       this._mount();
 
-      this.link.addEventListener("mouseleave", this._unmount, {
+      this.link.addEventListener("pointerleave", this._unmount, {
         once: true,
       });
     };
 
     public connectedCallback() {
-      this.link.addEventListener("mouseenter", this._handleMouseEnter);
+      this.link.addEventListener("pointerenter", this._handleMouseEnter);
     }
 
     public disconnectedCallback() {
       this._unmount();
-      this.link.removeEventListener("mouseenter", this._handleMouseEnter);
-      this.link.removeEventListener("mouseleave", this._unmount);
+      this.link.removeEventListener("pointerenter", this._handleMouseEnter);
+      this.link.removeEventListener("pointerleave", this._unmount);
     }
   }
 

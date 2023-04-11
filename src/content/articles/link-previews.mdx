@@ -17,7 +17,13 @@ import Aside from "@components/Aside.astro";
 
 ## Wikipedia API
 
-Первым делом я полез в веб-инспектор, чтобы выяснить, как работает превью ссылок в википедии. Оказалось, что для этого в ней используется [собственный API](https://www.mediawiki.org/wiki/API), который позволяет получить некоторые данные о конкретной статье в общем формате. Например, по запросу "https://ru.wikipedia.org/api/rest_v1/page/summary/JavaScript" она отдаёт ответ примерно следующего содержания:
+Первым делом я полез в веб-инспектор, чтобы выяснить, как работает превью ссылок в википедии. Оказалось, что для этого в ней используется [собственный API](https://www.mediawiki.org/wiki/API), который позволяет получить некоторые данные о конкретной статье в общем формате. Например, по запросу
+
+```bash
+https://ru.wikipedia.org/api/rest_v1/page/summary/JavaScript
+```
+
+она отдаёт ответ примерно следующего содержания:
 
 ```json
 {
@@ -33,7 +39,20 @@ import Aside from "@components/Aside.astro";
 
 Теперь реализуем механизм запроса данных для ссылок на википедию.
 
-Адреса статей в википедии имеют такой формат: `https://<LANG>.wikipedia.org/wiki/<ARTICLE_ID>`, а адреса для получения данных о статье из API такой: `https://<LANG>.wikipedia.org/api/rest_v1/page/summary/<ARTICLE_ID>`, где `LANG` это язык, на котором написана статья, а `ARTICLE_ID` — её идентификатор.
+Адреса статей в википедии имеют такой формат:
+
+```bash
+https://<LANG>.wikipedia.org/wiki/<ARTICLE_ID>
+```
+
+Адреса для получения данных о статье из API такой:
+
+```bash
+https://<LANG>.wikipedia.org/api/rest_v1/page/summary/<ARTICLE_ID>
+```
+
+- `LANG` — язык, на котором написана статья
+- `ARTICLE_ID` — её идентификатор
 
 В первую очередь реализуем преобразование одного адреса в другой:
 
@@ -279,7 +298,7 @@ export function fetchDefaultLinkPreviewData(
 }
 ```
 
-И будем динамически выбирать парсер в зависимости от окружения, в котором запущен код. Динамически импортировать ES-модули можно [только асинхронно](https://telegra.ph/CommonJS-vs-ESM-12-22), но это не проблема, поскольку текущая поддержка [top Level await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await#top_level_await) меня вполне устраивает:
+И будем динамически выбирать парсер в зависимости от окружения, в котором запущен код. Динамически импортировать ES-модули можно [только асинхронно](https://telegra.ph/CommonJS-vs-ESM-12-22), но это не проблема, поскольку текущая поддержка [top level await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await#top_level_await) меня вполне устраивает:
 
 ```ts
 // В Node.js ведь нет глобальной переменной "document" — верно?
