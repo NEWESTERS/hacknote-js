@@ -1,0 +1,62 @@
+.Title {
+  font-size: 16px;
+  color: var(--color_text-white);
+  opacity: 0.5;
+}
+
+.Fill {
+  background-color: var(--color_text-white);
+  transform: scaleX(var(--series-progress));
+  transform-origin: left;
+}
+
+.Series {
+  border-radius: 8px;
+  height: 4px;
+  overflow: hidden;
+}
+
+.Series .Fill {
+  width: 100%;
+  height: 100%;
+}
+
+.Timeline {
+  background-color: var(--color_background-light);
+  border-radius: 8px;
+  height: 4px;
+  position: relative;
+}
+
+.Timeline .Point {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: calc(100% * var(--point-time) / var(--diagram-duration));
+}
+
+.Timeline .Series {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: calc(100% * var(--series-start) / var(--diagram-duration));
+  width: calc(100% * var(--series-duration) / var(--diagram-duration));
+}
+
+.Layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding-bottom: 8px;
+  box-sizing: border-box;
+  transition: opacity 0.1s ease-out;
+}
+
+.Layout:not([data-started="true"]) {
+  opacity: 0.3;
+}
+
+.Layout[data-started="true"] {
+  opacity: 1;
+}

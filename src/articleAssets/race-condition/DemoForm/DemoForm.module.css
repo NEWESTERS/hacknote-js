@@ -1,0 +1,21 @@
+.Form {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.Form .Input {
+  flex-grow: 1;
+}
+
+@media screen and (max-width: 375px) {
+  .Form {
+    flex-direction: column;
+  }
+}
+
+.Demo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

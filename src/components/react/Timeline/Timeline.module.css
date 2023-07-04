@@ -1,0 +1,42 @@
+.Range {
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.ArrowIcon {
+  pointer-events: none;
+}
+
+.Range::-webkit-slider-runnable-track {
+  background-color: var(--color_background-light);
+  border-radius: 2px;
+  height: 4px;
+}
+
+.Range::-webkit-slider-thumb {
+  appearance: none;
+  margin: -6px 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  background-color: var(--color_text-white);
+  box-shadow: var(--shadow_default);
+}
+
+.Layout {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
+  position: relative;
+}
+
+.Layout .ArrowIcon {
+  position: absolute;
+  right: -18px;
+}
+
+.Layout .Range {
+  flex-grow: 1;
+}

@@ -1,0 +1,76 @@
+.Author {
+  font-size: 16px;
+}
+
+.Title {
+  font-size: 24px;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.Main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Topic {
+  background-color: var(--color_background-light);
+  padding: 4px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.TopicList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.Count {
+  font-weight: bold;
+}
+
+.StarsCount {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+
+.Card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  text-decoration: none;
+  color: var(--color_text-white);
+  background-color: var(--color_background-regular);
+  padding: 16px;
+  border-radius: 16px;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease-out;
+}
+
+.Card .Main {
+  max-width: 50%;
+}
+
+.Card .TopicList {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+}
+
+@media screen and (max-width: 375px) {
+  .Card .TopicList {
+    display: none;
+  }
+}
+
+.Card:hover {
+  background-color: var(--color_background-light);
+}

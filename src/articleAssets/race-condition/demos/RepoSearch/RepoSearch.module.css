@@ -1,0 +1,44 @@
+.List {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.Filters {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.Filters .Search {
+  flex-grow: 1;
+}
+
+.Scrollable {
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.Scrollable::-webkit-scrollbar {
+  background: none;
+  width: 8px;
+}
+
+.Scrollable::-webkit-scrollbar-thumb {
+  background-color: var(--color_background-light);
+  border-radius: 4px;
+}
+
+.Layout {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.Layout .Filters {
+  width: 100%;
+}

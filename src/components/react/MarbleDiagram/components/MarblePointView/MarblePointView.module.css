@@ -1,0 +1,19 @@
+.MarblePoint {
+  background-color: var(--color_background-regular);
+  border-radius: 16px;
+  transition: transform 0.1s ease-out, background-color 0.2s ease-out;
+  cursor: help;
+}
+
+.MarblePoint:not([data-reached="true"]) {
+  transform: scale(0);
+}
+
+.MarblePoint[data-reached="true"] {
+  transform: scale(1);
+}
+
+.MarblePoint:hover {
+  transform: scale(1.2);
+  background-color: var(--color_background-light);
+}

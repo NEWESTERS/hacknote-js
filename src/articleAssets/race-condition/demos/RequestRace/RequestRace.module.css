@@ -1,0 +1,40 @@
+.List {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.RequestDuration::-webkit-progress-bar {
+  background-color: red;
+}
+
+.ResultListItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.List {
+  gap: 24px;
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
+.List::-webkit-scrollbar {
+  background: none;
+  width: 8px;
+}
+
+.List::-webkit-scrollbar-thumb {
+  background-color: var(--color_background-light);
+  border-radius: 4px;
+}
+
+.Layout {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

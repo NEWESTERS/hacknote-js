@@ -31,4 +31,15 @@ const { src, alt } = Astro.props;
     flex-direction: column;
     align-items: center;
   }
+
+  @media screen and (max-width: 375px) {
+    figure {
+      margin-left: -32px;
+      width: calc(100% + 64px);
+    }
+
+    img {
+      border-radius: 0;
+    }
+  }
 </style>

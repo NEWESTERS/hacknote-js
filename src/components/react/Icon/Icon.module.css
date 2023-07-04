@@ -1,0 +1,7 @@
+.Icon {
+  width: var(--size);
+  height: var(--size);
+  background-color: var(--color);
+  mask-size: cover;
+  -webkit-mask-size: cover;
+}
