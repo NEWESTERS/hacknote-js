@@ -1,0 +1,52 @@
+.Thumb {
+  width: 16px;
+  height: 16px;
+  background-color: var(--color_accent-yellow);
+  border-radius: 8px;
+  border: solid 2px var(--color_background-regular);
+  box-sizing: border-box;
+}
+
+.Filled {
+  transform-origin: left;
+  transform: scaleX(var(--progress));
+  background-color: var(--color_text-white);
+}
+
+.Track {
+  overflow: hidden;
+  border-radius: 8px;
+  height: 4px;
+  background-color: var(--color_background-light);
+}
+
+.Track .Filled {
+  height: 100%;
+  width: 100%;
+}
+
+.Layout {
+  position: relative;
+  height: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.Layout .Track {
+  width: 100%;
+  transition: transform 0.2s ease-out;
+}
+
+.Layout .Thumb {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+  left: calc(100% * var(--progress));
+}
+
+.Layout[data-active="true"] .Track {
+  transform: scaleY(2);
+}

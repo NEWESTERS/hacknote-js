@@ -1,0 +1,42 @@
+.ProgressBarFill {
+  width: calc(100% * var(--value) / var(--max));
+}
+
+.ProgressBar {
+  height: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ProgressBar .ProgressBarFill {
+  height: 100%;
+}
+
+.Item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.Item:not([data-winner="true"]) .WinnerIcon {
+  opacity: 0;
+}
+
+.Item:not([data-winner="true"]) .ProgressBarFill {
+  background-color: var(--color_accent-red);
+}
+
+.Item[data-winner="true"] .ProgressBarFill {
+  background-color: var(--color_accent-green);
+}
+
+.Item .ProgressBar {
+  flex-grow: 1;
+}
+
+.Layout {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}

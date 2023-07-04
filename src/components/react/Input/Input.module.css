@@ -1,0 +1,36 @@
+.Input {
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0;
+
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color_text-white);
+}
+
+.Input::placeholder {
+  color: var(--color_background-light);
+}
+
+.InputBox {
+  height: 48px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--color_background-regular);
+  border-radius: 8px;
+  border: solid 2px var(--color_background-light);
+  transition: border-color 0.1s ease-out;
+}
+
+.InputBox .Input {
+  flex-grow: 1;
+}
+
+.InputBox:has(:focus) {
+  border-color: var(--color_text-white);
+}

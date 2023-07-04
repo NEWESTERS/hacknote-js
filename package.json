@@ -19,8 +19,12 @@
 		"@types/styled-components": "^5.1.26",
 		"astro": "^2.0.16",
 		"cheerio": "1.0.0-rc.12",
+		"clsx": "^1.2.1",
 		"react": "^18.0.0",
 		"react-dom": "^18.0.0",
 		"styled-components": "^5.3.6"
+	},
+	"devDependencies": {
+		"csstype": "^3.1.2"
 	}
 }

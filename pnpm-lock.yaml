@@ -1,4 +1,4 @@
-lockfileVersion: 5.4
+lockfileVersion: 5.3
 
 specifiers:
   '@astrojs/mdx': ^0.17.2
@@ -10,13 +10,15 @@ specifiers:
   '@types/styled-components': ^5.1.26
   astro: ^2.0.16
   cheerio: 1.0.0-rc.12
+  clsx: ^1.2.1
+  csstype: ^3.1.2
   react: ^18.0.0
   react-dom: ^18.0.0
   styled-components: ^5.3.6
 
 dependencies:
   '@astrojs/mdx': 0.17.2_astro@2.0.16
-  '@astrojs/react': 2.0.2_3xleytyzprlgycb2ded54tx72i
+  '@astrojs/react': 2.0.2_ddd64c4f197c566c083a1907de4effd2
   '@astrojs/rss': 2.1.1
   '@astrojs/sitemap': 1.1.0
   '@types/react': 18.0.28
@@ -24,9 +26,13 @@ dependencies:
   '@types/styled-components': 5.1.26
   astro: 2.0.16
   cheerio: 1.0.0-rc.12
+  clsx: 1.2.1
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
-  styled-components: 5.3.6_biqbaboplfbrettd7655fr4n2y
+  styled-components: 5.3.6_react-dom@18.2.0+react@18.2.0
+
+devDependencies:
+  csstype: 3.1.2
 
 packages:
 
@@ -121,7 +127,7 @@ packages:
       prismjs: 1.29.0
     dev: false
 
-  /@astrojs/react/2.0.2_3xleytyzprlgycb2ded54tx72i:
+  /@astrojs/react/2.0.2_ddd64c4f197c566c083a1907de4effd2:
     resolution: {integrity: sha512-UmQNvzJul5M/Q9aZJXnqz4z0ODZXkLuaNvgsYoKB7OdM8c2v85FsTjMZZJ7BvFo4On31jJ0rL/gwTaCeuYqmpw==}
     engines: {node: '>=16.12.0'}
     peerDependencies:
@@ -894,7 +900,7 @@ packages:
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
-      csstype: 3.1.1
+      csstype: 3.1.2
     dev: false
 
   /@types/resolve/1.20.2:
@@ -916,7 +922,7 @@ packages:
     dependencies:
       '@types/hoist-non-react-statics': 3.3.1
       '@types/react': 18.0.28
-      csstype: 3.1.1
+      csstype: 3.1.2
     dev: false
 
   /@types/unist/2.0.6:
@@ -1086,7 +1092,7 @@ packages:
       babel-plugin-syntax-jsx: 6.18.0
       lodash: 4.17.21
       picomatch: 2.3.1
-      styled-components: 5.3.6_biqbaboplfbrettd7655fr4n2y
+      styled-components: 5.3.6_react-dom@18.2.0+react@18.2.0
     dev: false
 
   /babel-plugin-syntax-jsx/6.18.0:
@@ -1265,6 +1271,11 @@ packages:
     engines: {node: '>=0.8'}
     dev: false
 
+  /clsx/1.2.1:
+    resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
+    engines: {node: '>=6'}
+    dev: false
+
   /color-convert/1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}
     dependencies:
@@ -1340,9 +1351,8 @@ packages:
     engines: {node: '>= 6'}
     dev: false
 
-  /csstype/3.1.1:
-    resolution: {integrity: sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==}
-    dev: false
+  /csstype/3.1.2:
+    resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
 
   /debug/4.3.4:
     resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
@@ -3341,7 +3351,7 @@ packages:
       inline-style-parser: 0.1.1
     dev: false
 
-  /styled-components/5.3.6_biqbaboplfbrettd7655fr4n2y:
+  /styled-components/5.3.6_react-dom@18.2.0+react@18.2.0:
     resolution: {integrity: sha512-hGTZquGAaTqhGWldX7hhfzjnIYBZ0IXQXkCYdvF1Sq3DsUaLx6+NTHC5Jj1ooM2F68sBiVz3lvhfwQs/S3l6qg==}
     engines: {node: '>=10'}
     requiresBuild: true

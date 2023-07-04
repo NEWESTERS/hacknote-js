@@ -3,22 +3,38 @@ import tipIcon from "./icons/tip.svg";
 
 interface Props {
   title: string;
+  type?: "info" | "warning";
 }
 
-const { title } = Astro.props;
+const { title, type = "info" } = Astro.props;
 ---
 
 <style>
   aside {
     background-color: var(--color_background-light);
-    border-left: solid 4px var(--color_accent-blue);
+    border-left: solid 4px var(--color);
+
     padding: 8px 16px;
     box-sizing: border-box;
   }
 
-  img {
+  aside[data-type="info"] {
+    --color: var(--color_accent-blue);
+  }
+
+  aside[data-type="warning"] {
+    --color: var(--color_accent-yellow);
+  }
+
+  .icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
     margin-right: 8px;
     margin-bottom: -4px;
+    mask-size: cover;
+    -webkit-mask-size: cover;
+    background-color: var(--color);
   }
 
   p {
@@ -26,8 +42,14 @@ const { title } = Astro.props;
     font-weight: bold;
   }
 </style>
-<aside>
-  <p><img src={tipIcon} />{title}</p>
+<aside data-type={type}>
+  <p>
+    <span
+      class="icon"
+      style=`mask-image: url(${tipIcon}); -webkit-mask-image: url(${tipIcon});`
+    >
+    </span>{title}
+  </p>
   <section>
     <slot />
   </section>

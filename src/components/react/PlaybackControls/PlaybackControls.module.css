@@ -1,0 +1,22 @@
+.Button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.1s ease-out;
+}
+
+.Button:hover {
+  transform: scale(1.05);
+}
+
+.Button:active {
+  transform: scale(0.95);
+}
+
+.Layout {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}

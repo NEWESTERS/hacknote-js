@@ -1,0 +1,29 @@
+.Button {
+  background-color: var(--color_background-light);
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--color_text-white);
+  height: 48px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 8px;
+  transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+}
+
+.Button:not(:disabled):hover {
+  transform: scale(1.05);
+}
+
+.Button:not(:disabled):active {
+  transform: scale(0.95);
+}
+
+.Button:disabled {
+  opacity: 0.5;
+}

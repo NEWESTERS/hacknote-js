@@ -1,0 +1,32 @@
+.Title {
+  color: var(--color_background-light);
+}
+
+.Data {
+  color: var(--color_text-white);
+}
+
+.ContentLayout {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.Layout {
+  display: flex;
+  flex-direction: row;
+  border: solid 2px var(--color_background-light);
+  box-sizing: border-box;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+@media screen and (max-width: 375px) {
+  .Layout {
+    flex-direction: column;
+  }
+}
+
+.Layout .ContentLayout {
+  flex-grow: 1;
+}
