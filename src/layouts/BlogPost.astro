@@ -1,7 +1,9 @@
 ---
 import type { CollectionEntry } from "astro:content";
 
+import H1 from "@components/astro/H1.astro";
 import DefaultPage from "./DefaultPage.astro";
+import FormattedDate from "@components/astro/FormattedDate.astro";
 
 type Props = CollectionEntry<"articles">["data"];
 
@@ -27,15 +29,6 @@ const { title, description, pubDate, heroImage } = Astro.props;
     }
   }
 
-  h1 {
-    display: block;
-    text-align: center;
-  }
-
-  h1 {
-    margin-top: 0;
-  }
-
   figure {
     display: flex;
     flex-direction: row;
@@ -45,16 +38,9 @@ const { title, description, pubDate, heroImage } = Astro.props;
     background-color: var(--color_background-light);
   }
 
-  time {
-    display: block;
+  .date {
     margin: auto;
-    width: max-content;
-    font-weight: regular;
-    font-size: 16px;
-    color: var(--color_text-white);
-    padding: 0 8px;
-    background-color: var(--color_background-light);
-    border-radius: 8px;
+    margin-top: 16px;
   }
 </style>
 
@@ -65,17 +51,9 @@ const { title, description, pubDate, heroImage } = Astro.props;
   type="article"
 >
   <article>
-    <h1>{title}</h1>
+    <H1>{title}</H1>
 
-    <time datetime={pubDate.toISOString()}>
-      {
-        pubDate.toLocaleDateString("ru-ru", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })
-      }
-    </time>
+    <FormattedDate class="date" date={pubDate} />
 
     <figure>
       <img src={heroImage} width="288" height="240" alt={title} />

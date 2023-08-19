@@ -1,5 +1,5 @@
 ---
-import tipIcon from "./icons/tip.svg";
+import tipIcon from "../icons/tip.svg";
 
 interface Props {
   title: string;
@@ -16,6 +16,8 @@ const { title, type = "info" } = Astro.props;
 
     padding: 8px 16px;
     box-sizing: border-box;
+
+    font: var(--font_body);
   }
 
   aside[data-type="info"] {

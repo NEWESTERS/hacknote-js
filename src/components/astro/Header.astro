@@ -1,12 +1,13 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
-import { SITE_TITLE } from "../consts";
+import { SITE_TITLE } from "../../consts";
+import H1 from "./H1.astro";
 ---
 
 <header>
-  <h1>
+  <H1 class="title">
     {SITE_TITLE}
-  </h1>
+  </H1>
   <nav>
     <HeaderLink href="/hacknote-js/">Главная</HeaderLink>
     <HeaderLink href="/hacknote-js/articles">Статьи</HeaderLink>
@@ -18,9 +19,10 @@ import { SITE_TITLE } from "../consts";
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 8px;
   }
-  h1 {
+
+  .title {
     color: var(--color_accent-yellow);
     margin: 0;
   }

@@ -1,29 +1,20 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import Footer from "../components/Footer.astro";
-import Header from "../components/Header.astro";
-import WebComponentsDefinitions from "../components/web-components/index.astro";
+import Head, { Props as HeadProps } from "@components/astro/Head.astro";
+import Footer from "@components/astro/Footer.astro";
+import Header from "@components/astro/Header.astro";
+import WebComponentsDefinitions from "@components/web-components/index.astro";
 
-type Props = {
-  type?: "website" | "article";
-  title: string;
-  description: string;
-  image?: string;
-};
+type Props = HeadProps;
 
 const { title, description, image, type } = Astro.props;
 ---
 
 <style>
-  html {
-    /* overflow-y: scroll; */
-  }
-
   body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 32px;
+    gap: 16px;
     width: 100vw;
     height: 100vh;
     margin: 0;
@@ -40,14 +31,7 @@ const { title, description, image, type } = Astro.props;
 </style>
 
 <html lang="ru">
-  <head>
-    <BaseHead
-      title={title}
-      description={description}
-      image={image}
-      type={type}
-    />
-  </head>
+  <Head title={title} description={description} image={image} type={type} />
 
   <body>
     <WebComponentsDefinitions />

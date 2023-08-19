@@ -10,26 +10,26 @@
     #content {
       display: flex;
       flex-direction: column;
-      width: 250px;
+      min-width: 250px;
+      max-width: 400px;
       gap: 8px;
     }
 
     #title {
+      font: var(--font_h4);
       color: var(--color_text-white);
-      font-weight: bold;
-      font-size: 16px;
       margin: 0;
     }
 
     #description {
+      font: var(--font_body);
       color: var(--color_text-white);
-      font-size: 14px;
       margin: 0;
     }
 
     #source {
+      font: var(--font_body);
       color: var(--color_accent-yellow);
-      font-size: 14px;
     }
 
     #source::before {
@@ -51,7 +51,7 @@
   </style>
   <article id="layout">
     <div id="content">
-      <h2 id="title"></h2>
+      <h4 id="title"></h4>
       <p id="description"></p>
       <a id="source"></a>
     </div>
