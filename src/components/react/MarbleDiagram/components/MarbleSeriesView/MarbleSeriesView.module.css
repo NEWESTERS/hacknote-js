@@ -1,5 +1,5 @@
 .Title {
-  font-size: 16px;
+  font: var(--font_body);
   color: var(--color_text-white);
   opacity: 0.5;
 }

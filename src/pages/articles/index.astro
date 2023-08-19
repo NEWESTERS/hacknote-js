@@ -1,7 +1,7 @@
 ---
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 import { getCollection } from "astro:content";
-import ArticleList from "../../components/ArticleList.astro";
+import ArticleList from "@components/astro/ArticleList.astro";
 import DefaultPage from "../../layouts/DefaultPage.astro";
 
 const articles = (await getCollection("articles")).sort(

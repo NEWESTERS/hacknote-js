@@ -1,31 +1,43 @@
 :root {
-	--color_background-regular: #272727;
-	--color_background-dark: #1F1F1F;
-	--color_background-light: #3C3B3D;
-	--color_text-white: #F7F0FF;
-	--color_text-black: #272727;
-	--color_accent-red: #FF6287;
-	--color_accent-yellow: #FFD865;
-	--color_accent-green: #A6DC75;
-	--color_accent-blue: #75DBE7;
-	--color_language-ts: #0078CB;
-	--color_language-js: #F5DE1C;
-	--color_language-dts: #00A13E;
+  --color_background-regular: #272727;
+  --color_background-dark: #1f1f1f;
+  --color_background-light: #3c3b3d;
+  --color_text-white: #f7f0ff;
+  --color_text-black: #272727;
+  --color_accent-red: #ff6287;
+  --color_accent-yellow: #ffd865;
+  --color_accent-green: #a6dc75;
+  --color_accent-blue: #75dbe7;
+  --color_language-ts: #0078cb;
+  --color_language-js: #f5de1c;
+  --color_language-dts: #00a13e;
 
-	--shadow_default: 0px 10px 34px rgba(0, 0, 0, 0.35);
+  --shadow_default: 0px 10px 34px rgba(0, 0, 0, 0.35);
 
-	--font-family: Menlo, Verdana, sans-serif;
+  --font-family: "Montserrat", sans-serif;
+  --font-family-mono: Consolas, Menlo, Monaco, source-code-pro, Courier New,
+    monospace;
+
+  --font_h1: bold 2.5rem / 1.25 var(--font-family);
+  --font_h2: bold 1.75rem / 1.35 var(--font-family);
+  --font_h3: bold 1.5rem / 1.45 var(--font-family);
+  --font_h4: bold 1.25rem / 1.55 var(--font-family);
+  --font_body: normal 1rem / 1.75 var(--font-family);
+  --font_code: normal 0.9rem / 1.75 var(--font-family-mono);
+  --font_caption: normal 0.8rem / 1.5 var(--font-family);
+}
+
+html {
+  font-size: 16px;
 }
 
 body {
-	font-family: var(--font-family);
-	background-color: var(--color_background-dark);
-	color: var(--color_text-white);
-	font-size: 18px;
-	line-height: 1.5;
+  background-color: var(--color_background-dark);
+  color: var(--color_text-white);
+  font: var(--font_body);
 }
 
 *::selection {
-	background-color: #999999;
-	background-color: var(--color_background-light);
+  background-color: #999999;
+  background-color: var(--color_background-light);
 }

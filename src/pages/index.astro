@@ -3,8 +3,10 @@ import { getCollection } from "astro:content";
 
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import DefaultPage from "../layouts/DefaultPage.astro";
-import BaseLink from "../components/BaseLink.astro";
-import ArticleCard from "../components/ArticleCard.astro";
+import BaseLink from "@components/astro/BaseLink.astro";
+import ArticleCard from "@components/astro/ArticleCard.astro";
+import P from "@components/astro/P.astro";
+import H2 from "@components/astro/H2.astro";
 
 const latestArticle = (await getCollection("articles")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -16,12 +18,12 @@ const latestArticle = (await getCollection("articles")).sort(
     <img src="/hacknote-js/images/logo.svg" />
   </figure>
 
-  <p>
+  <P class="description">
     Блог Telegram-канала
     <BaseLink href="https://t.me/hacknote_js">Hacknote.js</BaseLink>.
-  </p>
+  </P>
 
-  <h1>Последняя статья</h1>
+  <H2 class="header">Последняя статья</H2>
 
   <a href={`/hacknote-js/articles/${latestArticle.slug}`}>
     <ArticleCard {...latestArticle.data} />
@@ -42,12 +44,13 @@ const latestArticle = (await getCollection("articles")).sort(
     border-radius: 32px;
   }
 
-  p {
+  .description {
     text-align: center;
   }
 
-  h1 {
+  .header {
     text-align: center;
+    margin-bottom: 16px;
   }
 
   a {

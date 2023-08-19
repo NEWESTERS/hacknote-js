@@ -1,5 +1,5 @@
 .Time {
-  font-size: 16px;
+  font: var(--font_body);
   opacity: 0.5;
 }
 
@@ -16,14 +16,13 @@
   }
 
   .Time {
-    font-size: 12px;
+    font: var(--font_caption);
   }
 }
 
 .Title {
   margin: 0;
-  font-size: 16px;
-  line-height: 20px;
+  font: var(--font_body);
 }
 
 .Layout {

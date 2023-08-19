@@ -1,17 +1,19 @@
 ---
 import { CollectionEntry, getCollection } from "astro:content";
 import BlogPost from "../../layouts/BlogPost.astro";
-import A from "../../components/markdown/A.astro";
-import Code from "../../components/markdown/Code.astro";
-import Img from "../../components/markdown/Img.astro";
-import Pre from "../../components/markdown/Pre.astro";
-import H2 from "../../components/markdown/H2.astro";
-import H3 from "../../components/markdown/H3.astro";
-import Blockquote from "../../components/markdown/Blockquote.astro";
-import Table from "../../components/markdown/Table.astro";
-import Tr from "../../components/markdown/Tr.astro";
-import Th from "../../components/markdown/Th.astro";
-import Td from "../../components/markdown/Td.astro";
+import A from "@components/astro/PreviewableLink.astro";
+import Code from "@components/astro/Code.astro";
+import Img from "@components/astro/Img.astro";
+import Pre from "@components/astro/Pre.astro";
+import H1 from "@components/astro/H1.astro";
+import H2 from "@components/astro/H2.astro";
+import H3 from "@components/astro/H3.astro";
+import P from "@components/astro/P.astro";
+import Blockquote from "@components/astro/Blockquote.astro";
+import Table from "@components/astro/Table.astro";
+import Tr from "@components/astro/Tr.astro";
+import Th from "@components/astro/Th.astro";
+import Td from "@components/astro/Td.astro";
 
 export async function getStaticPaths() {
   const articles = await getCollection("articles");
@@ -33,8 +35,10 @@ const { Content } = await article.render();
       code: Code,
       img: Img,
       pre: Pre,
+      h1: H1,
       h2: H2,
       h3: H3,
+      p: P,
       table: Table,
       tr: Tr,
       th: Th,

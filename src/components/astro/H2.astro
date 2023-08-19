@@ -2,14 +2,24 @@
 import anchorIcon from "../icons/link.svg";
 
 interface Props {
+  class?: string;
   id?: string;
 }
 
-const { id } = Astro.props;
+const { class: className, id } = Astro.props;
 ---
 
-<h2 id={id}>
-  <a href={`#${id}`}><img src={anchorIcon} /><slot /></a>
+<h2 class={className} id={id}>
+  {
+    id !== undefined ? (
+      <a href={`#${id}`}>
+        <img src={anchorIcon} />
+        <slot />
+      </a>
+    ) : (
+      <slot />
+    )
+  }
 </h2>
 <style>
   img {
@@ -25,6 +35,7 @@ const { id } = Astro.props;
 
   h2 {
     position: relative;
+    font: var(--font_h2);
   }
 
   a {

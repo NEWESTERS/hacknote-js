@@ -1,6 +1,9 @@
 ---
 import type { CollectionEntry } from "astro:content";
 
+import H2 from "./H2.astro";
+import FormattedDate from "./FormattedDate.astro";
+
 type Props = CollectionEntry<"articles">["data"] & {
   class?: string;
 };
@@ -10,17 +13,9 @@ const { pubDate, title, heroImage, class: className } = Astro.props;
 
 <div class:list={["card", className]}>
   <div class="description">
-    <h2 class="title">{title}</h2>
+    <H2 class="title">{title}</H2>
 
-    <time class="date" datetime={pubDate.toISOString()}>
-      {
-        pubDate.toLocaleDateString("ru-ru", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })
-      }
-    </time>
+    <FormattedDate date={pubDate} />
   </div>
 
   <img class="image" src={heroImage} width={196} height={160} alt={title} />
@@ -49,16 +44,6 @@ const { pubDate, title, heroImage, class: className } = Astro.props;
     font-weight: bold;
     font-size: 24px;
     color: var(--color_text-white);
-  }
-
-  .date {
-    width: max-content;
-    font-weight: regular;
-    font-size: 16px;
-    color: var(--color_text-white);
-    padding: 0 8px;
-    background-color: var(--color_background-light);
-    border-radius: 8px;
   }
 
   .description {

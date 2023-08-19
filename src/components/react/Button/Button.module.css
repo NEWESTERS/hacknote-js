@@ -2,8 +2,7 @@
   background-color: var(--color_background-light);
   border: none;
   cursor: pointer;
-  font-size: 16px;
-  line-height: 20px;
+  font: var(--font_body);
   color: var(--color_text-white);
   height: 48px;
   padding: 0 12px;

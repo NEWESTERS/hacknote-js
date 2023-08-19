@@ -5,8 +5,8 @@ pubDate: "Jul 4 2023"
 heroImage: "/hacknote-js/images/race-condition/hero.png"
 ---
 
-import Demo from "@components/Demo.astro";
-import Aside from "@components/Aside.astro";
+import Demo from "@components/astro/Demo.astro";
+import Aside from "@components/astro/Aside.astro";
 import {
   RaceCondition,
   RaceConditionTimeline,
@@ -15,7 +15,7 @@ import {
   AbortControllerTimeline,
   RequestRace,
   RepoSearch,
-} from "../../articleAssets/race-condition";
+} from "@articleAssets/race-condition";
 
 При разработке пользовательских интерфейсов мы часто сталкиваемся с обработкой каких-либо асинхронных операций. Зачастую в качестве таких операций выступают сетевые запросы. Сеть зависит от множества разных вещей, что делает её весьма непредсказуемой. Предлагаю рассмотреть на примерах, что я имею в виду.
 
