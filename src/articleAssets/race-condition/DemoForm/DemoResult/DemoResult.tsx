@@ -30,7 +30,7 @@ export const DemoResult: FC<DemoResultProps> = ({
 
       <Button
         title="Сбросить"
-        right={<Icon url={resetSvg} color="var(--color_accent-red)" />}
+        right={<Icon url={resetSvg.src} color="var(--color_accent-red)" />}
         onClick={onReset}
       />
     </div>

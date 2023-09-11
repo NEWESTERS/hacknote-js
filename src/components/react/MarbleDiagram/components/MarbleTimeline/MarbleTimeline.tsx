@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { type FC, useEffect, useState } from "react";
 
 import { Slider } from "../../../Slider";
 import {
@@ -6,7 +6,10 @@ import {
   useSetCurrentTime,
   useTimeRange,
 } from "../../contexts";
-import { PlaybackControls, PlaybackState } from "../../../PlaybackControls";
+import {
+  PlaybackControls,
+  type PlaybackState,
+} from "../../../PlaybackControls";
 import Styles from "./MarbleTimeline.module.css";
 import { play } from "./play";
 

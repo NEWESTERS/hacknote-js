@@ -76,7 +76,7 @@ export const RepoSearch = () => {
         <Button
           title="Демо"
           onClick={handleDemo}
-          right={<Icon url={playSvg} color="var(--color_accent-green)" />}
+          right={<Icon url={playSvg.src} color="var(--color_accent-green)" />}
           disabled={isAutoFilling}
         />
       </div>

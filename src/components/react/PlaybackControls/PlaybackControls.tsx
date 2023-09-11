@@ -11,9 +11,9 @@ import Styles from "./PlaybackControls.module.css";
 export type PlaybackState = "playing" | "paused" | "finished";
 
 const playButtonIconUrl: Record<PlaybackState, string> = {
-  playing: pauseSvg,
-  paused: playSvg,
-  finished: resetSvg,
+  playing: pauseSvg.src,
+  paused: playSvg.src,
+  finished: resetSvg.src,
 };
 
 export interface PlaybackControlsProps {
@@ -60,7 +60,7 @@ export const PlaybackControls: FC<PlaybackControlsProps> = ({
       </button>
 
       <button className={Styles.Button} onClick={onSkip}>
-        <Icon color="var(--color_text-white)" url={playSkipForwardSvg} />
+        <Icon color="var(--color_text-white)" url={playSkipForwardSvg.src} />
       </button>
     </div>
   );

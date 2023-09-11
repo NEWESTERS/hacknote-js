@@ -48,7 +48,7 @@ const { title, type = "info" } = Astro.props;
   <p>
     <span
       class="icon"
-      style=`mask-image: url(${tipIcon}); -webkit-mask-image: url(${tipIcon});`
+      style=`mask-image: url(${tipIcon.src}); -webkit-mask-image: url(${tipIcon.src});`
     >
     </span>{title}
   </p>

@@ -49,7 +49,7 @@ export const RaceResultView: FC<RaceResultViewProps> = ({
 
           <Icon
             className={Styles.WinnerIcon}
-            url={winnerSvg}
+            url={winnerSvg.src}
             color="var(--color_accent-yellow)"
             size={16}
           />

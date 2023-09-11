@@ -5,8 +5,6 @@ import {
   MarblePlayer,
 } from "@components/react";
 import successSvg from "@components/icons/success.svg";
-import errorSvg from "@components/icons/delete.svg";
-import cancelSvg from "@components/icons/cancel.svg";
 import userSvg from "@components/icons/user.svg";
 
 const diagram = MarbleDiagram.from({
@@ -18,12 +16,12 @@ const diagram = MarbleDiagram.from({
       points: [
         {
           title: "Пользователь ввёл букву",
-          content: <Icon url={userSvg} color="var(--color_accent-blue)" />,
+          content: <Icon url={userSvg.src} color="var(--color_accent-blue)" />,
           time: 100,
         },
         {
           title: "Пользователь ввёл букву",
-          content: <Icon url={userSvg} color="var(--color_accent-blue)" />,
+          content: <Icon url={userSvg.src} color="var(--color_accent-blue)" />,
           time: 300,
         },
       ],
@@ -35,7 +33,9 @@ const diagram = MarbleDiagram.from({
       points: [
         {
           title: "Результат запроса применён",
-          content: <Icon url={successSvg} color="var(--color_accent-green)" />,
+          content: (
+            <Icon url={successSvg.src} color="var(--color_accent-green)" />
+          ),
           time: 700,
         },
       ],
@@ -47,7 +47,9 @@ const diagram = MarbleDiagram.from({
       points: [
         {
           title: "Результат запроса применён",
-          content: <Icon url={successSvg} color="var(--color_accent-green)" />,
+          content: (
+            <Icon url={successSvg.src} color="var(--color_accent-green)" />
+          ),
           time: 500,
         },
       ],

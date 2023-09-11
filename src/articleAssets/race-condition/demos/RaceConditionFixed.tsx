@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 import { fetchData } from "../fetchData";
-import { DemoForm, UseDemoData } from "../DemoForm";
+import { DemoForm, type UseDemoData } from "../DemoForm";
 
 const useRaceConditionFixed: UseDemoData = ({ searchString, setData }) => {
   useEffect(() => {

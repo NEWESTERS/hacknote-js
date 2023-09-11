@@ -9,7 +9,7 @@ const { id } = Astro.props;
 ---
 
 <h3 id={id}>
-  <a href={`#${id}`}><img src={anchorIcon} /><slot /></a>
+  <a href={`#${id}`}><img src={anchorIcon.src} /><slot /></a>
 </h3>
 <style>
   img {
