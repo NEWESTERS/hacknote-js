@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { FC, HTMLAttributes, memo } from "react";
+import { type FC, type HTMLAttributes, memo } from "react";
 
 import Styles from "./Icon.module.css";
 

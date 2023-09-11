@@ -1,5 +1,5 @@
 ---
-import { CollectionEntry, getCollection } from "astro:content";
+import { type CollectionEntry, getCollection } from "astro:content";
 import BlogPost from "../../layouts/BlogPost.astro";
 import A from "@components/astro/PreviewableLink.astro";
 import Code from "@components/astro/Code.astro";
@@ -32,7 +32,7 @@ const { telegramPostId } = article.data;
 const { Content } = await article.render();
 ---
 
-<BlogPost {...article.data}>
+<BlogPost {...article.data} id={article.id}>
   <Content
     components={{
       a: A,

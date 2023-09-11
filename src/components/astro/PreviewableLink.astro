@@ -2,7 +2,7 @@
 import { getLinkPreviewLoader } from "@api/linkPreview";
 import { toBase64 } from "@utils/string";
 
-import BaseLink, { Props as BaseLinkProps } from "./BaseLink.astro";
+import BaseLink, { type Props as BaseLinkProps } from "./BaseLink.astro";
 
 export interface Props extends Omit<BaseLinkProps, "iconUrl"> {}
 

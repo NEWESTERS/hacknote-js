@@ -44,7 +44,7 @@ export const RepoCard: FC<RepoCardProps> = ({
       </div>
 
       <div className={Styles.StarsCount}>
-        <Icon url={starSvg} color="var(--color_accent-yellow)" />
+        <Icon url={starSvg.src} color="var(--color_accent-yellow)" />
 
         <span className={Styles.Count}>{starCount}</span>
       </div>

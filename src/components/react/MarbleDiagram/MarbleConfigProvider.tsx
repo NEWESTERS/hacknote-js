@@ -1,4 +1,4 @@
-import { FC, ReactNode, useMemo } from "react";
+import { type FC, type ReactNode, useMemo } from "react";
 import {
   CurrentTimeProvider,
   MarbleDiagramProvider,

@@ -1,7 +1,7 @@
 import { clamp } from "@utils/number";
 import { useEventCallback } from "@utils/react";
 import clsx from "clsx";
-import { FC, useEffect, useRef, useState } from "react";
+import { type FC, useEffect, useRef, useState } from "react";
 
 import Styles from "./Slider.module.css";
 import { subscribeToSlider } from "./subscribeToSlider";

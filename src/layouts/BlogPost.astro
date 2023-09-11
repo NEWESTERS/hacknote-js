@@ -5,7 +5,7 @@ import H1 from "@components/astro/H1.astro";
 import DefaultPage from "./DefaultPage.astro";
 import FormattedDate from "@components/astro/FormattedDate.astro";
 
-type Props = CollectionEntry<"articles">["data"];
+type Props = CollectionEntry<"articles">["data"] & { id: string };
 
 const { title, description, pubDate, heroImage } = Astro.props;
 ---

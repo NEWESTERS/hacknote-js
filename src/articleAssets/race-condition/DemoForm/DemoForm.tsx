@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
 
 import { autofill } from "@utils/demo";
 import { Button, Icon, Input } from "@components/react";
@@ -48,7 +48,7 @@ export const DemoForm: FC<DemoFormProps> = ({ useDemoData }) => {
           title="Демо"
           disabled={isAutoFilling}
           onClick={handleAutofill}
-          right={<Icon url={playSvg} color="var(--color_accent-green)" />}
+          right={<Icon url={playSvg.src} color="var(--color_accent-green)" />}
         />
       </div>
 

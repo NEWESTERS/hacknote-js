@@ -26,7 +26,7 @@ const latestArticle = (await getCollection("articles")).sort(
   <H2 class="header">Последняя статья</H2>
 
   <a href={`/hacknote-js/articles/${latestArticle.slug}`}>
-    <ArticleCard {...latestArticle.data} />
+    <ArticleCard {...latestArticle.data} id={latestArticle.id} />
   </a>
 </DefaultPage>
 

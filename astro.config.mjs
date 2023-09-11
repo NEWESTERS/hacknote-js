@@ -16,4 +16,5 @@ export default defineConfig({
       theme: customTheme,
     },
   },
+  scopedStyleStrategy: "where",
 });

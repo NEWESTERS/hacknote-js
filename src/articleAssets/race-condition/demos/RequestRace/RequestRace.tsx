@@ -1,10 +1,10 @@
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
 
 import { Button, Icon } from "@components/react";
 import playSvg from "@components/icons/play.svg";
 import Styles from "./RequestRace.module.css";
 import clsx from "clsx";
-import { RaceResult, RaceResultView } from "./RaceResultView";
+import { type RaceResult, RaceResultView } from "./RaceResultView";
 
 export const RequestRace: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -65,7 +65,7 @@ export const RequestRace: FC = () => {
       <Button
         onClick={start}
         title="Демо"
-        right={<Icon url={playSvg} color="var(--color_accent-green)" />}
+        right={<Icon url={playSvg.src} color="var(--color_accent-green)" />}
         disabled={isLoading}
       />
 

@@ -15,7 +15,9 @@ import sunSrc from "@components/icons/sun-outline.svg";
   </p>
 </div>
 
-<style define:vars={{ moonSrc: `url(${moonSrc})`, sunSrc: `url(${sunSrc})` }}>
+<style
+  define:vars={{ moonSrc: `url(${moonSrc.src})`, sunSrc: `url(${sunSrc.src})` }}
+>
   #theming-demo[data-theme="light"] {
     --text-color: var(--color_text-black);
     --bg-color: var(--color_text-white);
@@ -32,7 +34,9 @@ import sunSrc from "@components/icons/sun-outline.svg";
 
   #theming-demo,
   #theming-demo > * {
-    transition: color 0.2s ease-out, background-color 0.2s ease-out,
+    transition:
+      color 0.2s ease-out,
+      background-color 0.2s ease-out,
       transform 0.2s ease-out;
   }
 

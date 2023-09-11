@@ -29,10 +29,10 @@ const { articles, path, class: className } = Astro.props;
 
 <ul class={className}>
   {
-    articles.map(({ data, slug }) => (
+    articles.map(({ data, slug, id }) => (
       <li>
         <a href={`${path}/${slug}`}>
-          <ArticleCard {...data} />
+          <ArticleCard {...data} id={id} />
         </a>
       </li>
     ))

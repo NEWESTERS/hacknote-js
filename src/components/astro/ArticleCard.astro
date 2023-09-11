@@ -6,6 +6,7 @@ import FormattedDate from "./FormattedDate.astro";
 
 type Props = CollectionEntry<"articles">["data"] & {
   class?: string;
+  id: string;
 };
 
 const { pubDate, title, heroImage, class: className } = Astro.props;
