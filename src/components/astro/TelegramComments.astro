@@ -1,0 +1,17 @@
+---
+interface Props {
+  postId: string;
+}
+
+const { postId } = Astro.props;
+---
+
+<script
+  async
+  src="https://telegram.org/js/telegram-widget.js?22"
+  data-telegram-discussion={`hacknote_js/${postId}`}
+  data-comments-limit="5"
+  data-colorful="1"
+  data-dark="1"
+  data-dark-color="F0B138"
+></script>
