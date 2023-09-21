@@ -15,6 +15,7 @@ const articles = defineCollection({
       .optional()
       .transform((str) => (str ? new Date(str) : undefined)),
     heroImage: z.string().optional(),
+    telegramPostId: z.string().optional(),
   }),
 });
 
