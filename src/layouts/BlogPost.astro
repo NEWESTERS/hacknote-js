@@ -7,7 +7,7 @@ import FormattedDate from "@components/astro/FormattedDate.astro";
 
 type Props = CollectionEntry<"articles">["data"] & { id: string };
 
-const { title, description, pubDate, heroImage } = Astro.props;
+const { title, description, pubDate, heroImage, id } = Astro.props;
 ---
 
 <style>
@@ -50,13 +50,19 @@ const { title, description, pubDate, heroImage } = Astro.props;
   image={heroImage}
   type="article"
 >
-  <article>
+  <article transition:name={id}>
     <H1>{title}</H1>
 
     <FormattedDate class="date" date={pubDate} />
 
     <figure>
-      <img src={heroImage} width="288" height="240" alt={title} />
+      <img
+        src={heroImage}
+        width="288"
+        height="240"
+        alt={title}
+        transition:name={`${id}__image`}
+      />
     </figure>
 
     <slot />
