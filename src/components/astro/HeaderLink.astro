@@ -1,15 +1,15 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 
-type Props = HTMLAttributes<"a">;
+import { isUrlMatch } from "@utils/url";
 
-const { href, class: className, ...props } = Astro.props;
+interface Props extends HTMLAttributes<"a"> {
+  exact?: boolean;
+}
 
-const { pathname } = Astro.url;
-const isActive =
-  href &&
-  (href === pathname ||
-    (href !== "/hacknote-js/" && pathname.startsWith(href.toString())));
+const { href, class: className, exact, ...props } = Astro.props;
+
+const isActive = href && isUrlMatch(Astro.url.pathname, href, exact);
 ---
 
 <a href={href} class:list={[className, { active: isActive }]} {...props}>
