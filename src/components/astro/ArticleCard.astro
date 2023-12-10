@@ -9,17 +9,24 @@ type Props = CollectionEntry<"articles">["data"] & {
   id: string;
 };
 
-const { pubDate, title, heroImage, class: className } = Astro.props;
+const { pubDate, title, heroImage, class: className, id } = Astro.props;
 ---
 
-<div class:list={["card", className]}>
+<div class:list={["card", className]} transition:name={id}>
   <div class="description">
     <H2 class="title">{title}</H2>
 
     <FormattedDate date={pubDate} />
   </div>
 
-  <img class="image" src={heroImage} width={196} height={160} alt={title} />
+  <img
+    class="image"
+    src={heroImage}
+    width={196}
+    height={160}
+    alt={title}
+    transition:name={`${id}__image`}
+  />
 </div>
 
 <style>

@@ -3,6 +3,7 @@
 // all pages through the use of the <BaseHead /> component.
 import "../../styles/global.css";
 
+import { ViewTransitions } from "astro:transitions";
 import GoogleFonts from "./GoogleFonts.astro";
 import OpenGraph, { type Props as OpenGraphProps } from "./OpenGraph.astro";
 
@@ -63,4 +64,6 @@ const { type, title, description, image } = Astro.props;
     image={image}
     type={type}
   />
+
+  <ViewTransitions />
 </head>
