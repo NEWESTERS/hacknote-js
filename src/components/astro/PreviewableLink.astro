@@ -8,11 +8,17 @@ export interface Props extends Omit<BaseLinkProps, "iconUrl"> {}
 
 const { class: className, href, ...props } = Astro.props;
 
-const loader = href ? getLinkPreviewLoader(href) : undefined;
+let url: URL | undefined;
+
+if (href) {
+  url = new URL(href, href.toString().startsWith("/") ? Astro.site : undefined);
+}
+
+const loader = url ? getLinkPreviewLoader(url) : undefined;
 
 const previewData = loader ? await loader.linkPreviewData : undefined;
 
-const id = href ? toBase64(href.toString()) : undefined;
+const id = url ? toBase64(url.toString()) : undefined;
 ---
 
 <style>
