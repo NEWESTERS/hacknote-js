@@ -38,12 +38,11 @@ export const List = ({ items }: ListProps): ReactElement => {
 
 Чтобы не дублировать код, мы реализовали механизм кастомизации `List` с помощью пропсов, позволяющих включать/выключать определённые параметры элементов списка.
 
-```tsx
+```tsx ins={5-7} ins="hasBadge, hasIcon" ins="hasBadge={hasBadge} hasIcon={hasIcon}"
 import { ListItem } from "@components/ListItem";
 
 export interface ListProps {
   items: Item[];
-
   // Свойства, передаваемые элементам списка
   hasBadge?: boolean;
   hasIcon?: boolean;

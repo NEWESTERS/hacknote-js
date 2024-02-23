@@ -88,7 +88,7 @@ const FilterableList = ({ items }) => {
 
 С помощью вычисления «на лету» мы избавляемся от одного совершенно ненужного состояния.
 
-```tsx
+```tsx ins={4}
 const FilterableList = ({ items }) => {
   const [selectedTypes, setSelectedTypes] = useState([]);
 
@@ -108,7 +108,7 @@ const FilterableList = ({ items }) => {
 
 В процессе отладки может выясниться, что функция фильтрации достаточно ресурсоёмкая и выполнение её в каждом рендере будет неэффективным, появится соблазн всё-таки сохранять результаты её выполнения в состояние из соображений оптимизации.
 
-```tsx
+```tsx ins={3} ins={5-7}
 const FilterableList = ({ items }) => {
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [filteredItems, setFilteredItems] = useState(items);
@@ -131,7 +131,7 @@ const FilterableList = ({ items }) => {
 
 На самом деле задача оптимизации в данном случае может быть решена с помощью **мемоизации** вычислений.
 
-```tsx
+```tsx ins={4-7}
 const FilterableList = ({ items }) => {
   const [selectedTypes, setSelectedTypes] = useState([]);
 

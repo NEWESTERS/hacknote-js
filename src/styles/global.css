@@ -41,3 +41,7 @@ body {
   background-color: #999999;
   background-color: var(--color_background-light);
 }
+
+.expressive-code {
+  margin-inline: -32px;
+}

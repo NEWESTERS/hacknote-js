@@ -86,7 +86,7 @@ const MyComponent = () => (
 
 Если нам понадобится передать данные из JS в CSS, мы можем сделать это так же, как и с любым другим React-компонентом:
 
-```tsx
+```tsx ins={3-5, 7-15, 18} ins="type=\"important\"" 
 import styled, { css } from "styled-components";
 
 interface ParagraphProps {
@@ -117,7 +117,7 @@ const MyComponent = () => (
 
 Мы передаём некий дискретный набор данных в компонент и для каждой новой их комбинации [styled-components](https://styled-components.com) будет создавать уникальный класс и вставлять его в DOM. Но что, если параметр не дискретный и меняется часто?
 
-```tsx
+```tsx mark={13-14}
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -164,7 +164,7 @@ const MyComponent = () => {
 
 Для этого случая нам предлагают использовать инлайновые стили, но по прежнему они спрятаны за абстракцией в виде пропсы `position`, за счёт чего стили отделены от логики:
 
-```tsx
+```tsx ins={9-11}
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -218,7 +218,7 @@ const MyComponent = () => {
 
 Аналогично можно использовать data-атрибуты:
 
-```html
+```html mark="data-invalid=\"true\""
 <input class="input" data-invalid="true" />
 
 <style>
@@ -230,7 +230,7 @@ const MyComponent = () => {
 
 Во многих случаях, кстати, data-атрибуты можно заменить на [aria-атрибуты](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes) и таким образом убить сразу двух зайцев: стили и доступность:
 
-```html
+```html mark="aria-invalid=\"true\""
 <input class="input" aria-invalid="true" />
 
 <style>
@@ -250,7 +250,7 @@ const MyComponent = () => {
 
 С их помощью можно в том числе организовать API между бизнес-логикой и визуалом:
 
-```html
+```html mark="style=\"--position-x: 35px; --position-y: 54px;\""
 <div class="ball" style="--position-x: 35px; --position-y: 54px;"></div>
 
 <style>
@@ -266,7 +266,7 @@ const MyComponent = () => {
 
 То же самое возможно и в JSX ([понадобится пара дополнительных действий для Typescript](https://github.com/frenic/csstype#what-should-i-do-when-i-get-type-errors)):
 
-```jsx
+```jsx mark={10-11}
 const MyComponent = () => {
   const [position, setPosition] = useState([0, 0]);
 

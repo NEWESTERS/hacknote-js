@@ -96,7 +96,7 @@ export async function fetchData(text: string): Promise<string> {
 
 Можно просто создать переменную `isIgnored` и присваивать ей значение `true` в момент, когда запрос становится неактуальным:
 
-```ts
+```ts ins={2,5,7,10-14}
 useEffect(() => {
   let isIgnored = false;
 
@@ -134,7 +134,7 @@ useEffect(() => {
 
 На самом деле создание переменной `isIgnored` — довольно кустарный способ решения проблемы, ведь в браузере есть более мощный встроенный механизм — [AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController). Попробуем переписать код с его помощью:
 
-```ts
+```ts ins={2,5,7,10-12}
 useEffect(() => {
   const abortController = new AbortController();
 
@@ -154,7 +154,7 @@ useEffect(() => {
 
 Чтобы увидеть всю мощь `AbortController`, нам понадобится использовать функцию, которая умеет с ним работать. К счастью обычный `fetch` как раз умеет это делать — он принимает сигнал отмены (`signal`) в качестве одного из необязательных параметров:
 
-```ts
+```ts ins={5-6}
 useEffect(() => {
   const abortController = new AbortController();
 
