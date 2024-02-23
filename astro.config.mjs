@@ -2,6 +2,7 @@ import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import customTheme from "./color-scheme.json";
+import { remarkReadingTime } from "./integrations/remarkReadingTime.mjs";
 
 // https://astro.build/config
 import react from "@astrojs/react";
@@ -15,6 +16,7 @@ export default defineConfig({
     shikiConfig: {
       theme: customTheme,
     },
+    remarkPlugins: [remarkReadingTime],
   },
   scopedStyleStrategy: "where",
 });

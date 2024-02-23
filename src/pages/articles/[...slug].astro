@@ -29,10 +29,14 @@ const article = Astro.props;
 
 const { telegramPostId } = article.data;
 
-const { Content } = await article.render();
+const { Content, remarkPluginFrontmatter } = await article.render();
 ---
 
-<BlogPost {...article.data} id={article.id}>
+<BlogPost
+  {...article.data}
+  id={article.id}
+  readingTime={remarkPluginFrontmatter.readingTime}
+>
   <Content
     components={{
       a: A,
