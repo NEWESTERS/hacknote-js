@@ -86,7 +86,7 @@ export const MyForm = styled.form`
 ### ❌ Плохо
 Для самой кнопки определена внешняя геометрия (например, `margin`), поэтому при использовании её в других компонентах может потребоваться их переопределять:
 
-```js
+```js del={3}
 /** Блок my-button */
 export const MyButton = styled.button`
     margin: 16px;
@@ -99,7 +99,7 @@ export const MyForm = styled.form``;
 ### ✅ Хорошо
 Для кнопки по умолчанию не определена внешняя геометрия, определять её будут блоки, элементами которых будет эта кнопка:
 
-```js
+```js ins={7-9}
 /** Блок my-button */
 export const MyButton = styled.button``;
 
