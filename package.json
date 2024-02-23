@@ -20,9 +20,11 @@
     "astro": "4.0.3",
     "cheerio": "1.0.0-rc.12",
     "clsx": "^1.2.1",
+    "mdast-util-to-string": "^4.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-is": "^18.2.0",
+    "reading-time": "^1.5.0",
     "rollup": "^3.29.1",
     "styled-components": "^5.3.6",
     "vite": "^4.4.9"

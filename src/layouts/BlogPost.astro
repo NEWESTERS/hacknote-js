@@ -4,10 +4,14 @@ import type { CollectionEntry } from "astro:content";
 import H1 from "@components/astro/H1.astro";
 import DefaultPage from "./DefaultPage.astro";
 import FormattedDate from "@components/astro/FormattedDate.astro";
+import FormattedDuration from "@components/astro/FormattedDuration.astro";
 
-type Props = CollectionEntry<"articles">["data"] & { id: string };
+type Props = CollectionEntry<"articles">["data"] & {
+  id: string;
+  readingTime: number;
+};
 
-const { title, description, pubDate, heroImage, id } = Astro.props;
+const { title, description, pubDate, heroImage, id, readingTime } = Astro.props;
 ---
 
 <style>
@@ -38,9 +42,13 @@ const { title, description, pubDate, heroImage, id } = Astro.props;
     background-color: var(--color_background-light);
   }
 
-  .date {
-    margin: auto;
+  .tags {
     margin-top: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 </style>
 
@@ -53,7 +61,11 @@ const { title, description, pubDate, heroImage, id } = Astro.props;
   <article transition:name={id}>
     <H1>{title}</H1>
 
-    <FormattedDate class="date" date={pubDate} />
+    <div class="tags">
+      <FormattedDate date={pubDate} />
+
+      <FormattedDuration duration={readingTime} />
+    </div>
 
     <figure>
       <img

@@ -1,32 +1,28 @@
 ---
-import dateIcon from "../icons/date.svg";
+import timeIcon from "../icons/time.svg";
+import { formatDuration } from "@utils/time";
 
 export interface Props {
   class?: string;
-  date: Date;
+  /** Длительность в миллисекундах */
+  duration: number;
 }
 
-const { class: className, date } = Astro.props;
+const { class: className, duration } = Astro.props;
 ---
 
-<time class={className} datetime={date.toISOString()}>
-  <img src={dateIcon.src} />
+<div class={className}>
+  <img src={timeIcon.src} />
 
-  {
-    date.toLocaleDateString("ru-ru", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    })
-  }
-</time>
+  {formatDuration(duration)}
+</div>
 <style>
   img {
     width: 16px;
     height: 16px;
   }
 
-  time {
+  div {
     display: flex;
     flex-direction: row;
     align-items: center;
