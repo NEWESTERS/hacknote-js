@@ -10,7 +10,7 @@ export async function GET(context) {
     site: context.site,
     items: posts.map((post) => ({
       ...post.data,
-      link: `/articles/${post.slug}/`,
+      link: `/hacknote-js/articles/${post.slug}/`,
     })),
   });
 }
