@@ -68,7 +68,7 @@ const { pubDate, title, heroImage, class: className, id } = Astro.props;
     border-radius: 16px;
   }
 
-  @media screen and (max-width: 375px) {
+  @media screen and (max-width: 500px) {
     .title {
       text-align: center;
     }
@@ -83,6 +83,7 @@ const { pubDate, title, heroImage, class: className, id } = Astro.props;
 
     .image {
       width: 100%;
+      max-width: 300px;
       height: auto;
     }
   }

@@ -65,7 +65,7 @@
   flex-basis: 0;
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 500px) {
   .Card .TopicList {
     display: none;
   }

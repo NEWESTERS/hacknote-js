@@ -15,10 +15,18 @@ const articles = (await getCollection("articles")).sort(
     flex-direction: column;
     align-items: center;
   }
+
+  section > .list {
+    width: 100%;
+  }
 </style>
 
 <DefaultPage title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <section>
-    <ArticleList articles={articles} path="/hacknote-js/articles" />
+    <ArticleList
+      class="list"
+      articles={articles}
+      path="/hacknote-js/articles"
+    />
   </section>
 </DefaultPage>
