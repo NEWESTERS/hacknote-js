@@ -21,7 +21,7 @@
   border-radius: 8px;
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 500px) {
   .Layout {
     flex-direction: column;
   }
