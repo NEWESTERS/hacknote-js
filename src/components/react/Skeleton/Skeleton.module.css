@@ -1,0 +1,19 @@
+@keyframes blink {
+  0% {
+    opacity: 0.1;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
+
+  100% {
+    opacity: 0.1;
+  }
+}
+
+.Skeleton {
+  background-color: #fff;
+  border-radius: 16px;
+  animation: blink 1.5s linear infinite;
+}

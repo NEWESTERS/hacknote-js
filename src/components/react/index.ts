@@ -4,3 +4,4 @@ export * from "./Icon";
 export * from "./Timeline";
 export * from "./MarbleDiagram";
 export * from "./PlaybackControls";
+export * from "./GlobalSearch";

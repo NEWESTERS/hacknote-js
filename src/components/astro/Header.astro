@@ -1,16 +1,26 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
 import { SITE_TITLE } from "../../consts";
-import H1 from "./H1.astro";
+
+import { GlobalSearchModal } from "@components/react/GlobalSearch";
+
+export interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
 ---
 
-<header>
-  <H1 class="title">
+<header class={className}>
+  <div class="title">
     {SITE_TITLE}
-  </H1>
+  </div>
+
   <nav>
     <HeaderLink href="/hacknote-js/" exact>Главная</HeaderLink>
     <HeaderLink href="/hacknote-js/articles">Статьи</HeaderLink>
+
+    <GlobalSearchModal className="search" client:only />
   </nav>
 </header>
 
@@ -24,12 +34,21 @@ import H1 from "./H1.astro";
 
   .title {
     color: var(--color_accent-yellow);
+    font: var(--font_h1);
+    text-align: center;
     margin: 0;
   }
 
   nav {
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
     gap: 8px;
+    width: 100%;
+    height: 48px;
+  }
+
+  .search {
+    margin-left: auto;
   }
 </style>

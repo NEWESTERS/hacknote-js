@@ -1,12 +1,15 @@
-import type {
-  ChangeEventHandler,
-  FC,
-  InputHTMLAttributes,
-  ReactNode,
+import {
+  forwardRef,
+  type ChangeEventHandler,
+  type FC,
+  type InputHTMLAttributes,
+  type ReactNode,
+  useRef,
 } from "react";
 import { clsx } from "clsx";
 
 import Styles from "./Input.module.css";
+import { useAutoFocus } from "./useAutoFocus";
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   onValueChange?: (value: string) => void;
@@ -21,8 +24,13 @@ export const Input: FC<InputProps> = ({
   onChange,
   left,
   right,
+  autoFocus = false,
   ...props
 }) => {
+  const ref = useRef<HTMLInputElement>(null);
+
+  useAutoFocus(ref, autoFocus);
+
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     onChange?.(event);
     onValueChange?.(event.target.value);
@@ -33,6 +41,7 @@ export const Input: FC<InputProps> = ({
       {left}
 
       <input
+        ref={ref}
         className={Styles.Input}
         type="text"
         onChange={handleChange}

@@ -1,13 +1,8 @@
 ---
-export interface Props {
-  id?: string;
-  class?: string;
-}
-
-const { id, class: className } = Astro.props;
+export type Props = astroHTML.JSX.BaseHTMLAttributes;
 ---
 
-<h1 id={id} class={className}>
+<h1 {...Astro.props}>
   <slot />
 </h1>
 <style>

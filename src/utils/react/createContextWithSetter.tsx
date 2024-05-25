@@ -1,6 +1,6 @@
 import { createContext, FC, ProviderProps, ReactNode, useContext } from "react";
 
-export interface ContextWithUtils<T> {
+export interface ContextWithSetter<T> {
   Provider: FC<ContextWithSetterProviderProps<T>>;
   useValue: () => T;
   useContext: () => { value: T; set: (value: T) => void };
@@ -15,7 +15,9 @@ export interface ContextWithSetterProviderProps<T> {
   children: ReactNode;
 }
 
-export function createContextWithSetter<T>(title: string): ContextWithUtils<T> {
+export function createContextWithSetter<T>(
+  title: string
+): ContextWithSetter<T> {
   const ValueContext = createContext<T | typeof None>(None);
   const SetterContext = createContext<((value: T) => void) | typeof None>(None);
 

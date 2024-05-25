@@ -1,0 +1,41 @@
+.Link {
+  color: var(--color_accent-yellow);
+}
+
+.NotFoundText {
+  margin: 0;
+  font: var(--font_body);
+  color: var(--color_text-white);
+  text-align: center;
+}
+
+.NotFoundContainer {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 500px;
+  padding: 32px;
+}
+
+.List {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.Container {
+  border-radius: 16px;
+  overflow-y: scroll;
+}
+
+.Container::-webkit-scrollbar {
+  background: transparent;
+}
+
+.Container::-webkit-scrollbar-thumb {
+  background-color: var(--color_background-light);
+}

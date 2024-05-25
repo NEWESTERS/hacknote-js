@@ -126,13 +126,11 @@ import InputRange from "@components/astro/InputRange.astro";
       `rgb(${red}, ${green}, ${blue})`
     );
 
-    document.body
-      .querySelector("h1")
-      ?.style.setProperty(
-        "color",
-        `rgb(${255 - Number(red)}, ${255 - Number(green)}, ${
-          255 - Number(blue)
-        })`
-      );
+    (
+      document.body.querySelector(".title") as HTMLDivElement | null
+    )?.style.setProperty(
+      "color",
+      `rgb(${255 - Number(red)}, ${255 - Number(green)}, ${255 - Number(blue)})`
+    );
   });
 </script>
