@@ -7,7 +7,7 @@ interface Props {
 const { class: className, style } = Astro.props;
 ---
 
-<pre class={className} style={style}><slot /></pre>
+<pre class={className} style={style} data-pagefind-ignore><slot /></pre>
 <style>
   pre {
     margin: 16px -32px;

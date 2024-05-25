@@ -1,0 +1,14 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 800px;
+}
+
+.Container > .Field {
+  flex-shrink: 0;
+}
+
+.Container > .Results {
+  flex-grow: 1;
+}

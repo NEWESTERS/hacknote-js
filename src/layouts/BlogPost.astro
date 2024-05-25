@@ -58,7 +58,7 @@ const { title, description, pubDate, heroImage, id, readingTime } = Astro.props;
   image={heroImage}
   type="article"
 >
-  <article transition:name={id}>
+  <article transition:name={id} data-pagefind-body>
     <H1>{title}</H1>
 
     <div class="tags">
@@ -74,6 +74,7 @@ const { title, description, pubDate, heroImage, id, readingTime } = Astro.props;
         height="240"
         alt={title}
         transition:name={`${id}__image`}
+        data-pagefind-meta="image[src]"
       />
     </figure>
 

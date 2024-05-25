@@ -1,0 +1,20 @@
+.Link {
+  color: var(--color_accent-yellow);
+}
+
+.Text {
+  margin: 0;
+  font: var(--font_body);
+  color: var(--color_text-white);
+  text-align: center;
+}
+
+.Container {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 500px;
+  padding: 32px;
+}

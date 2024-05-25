@@ -1,0 +1,88 @@
+.Title {
+  font: var(--font_h3);
+  color: var(--color_text-white);
+  text-decoration: none;
+}
+
+.Image {
+  border-radius: 16px;
+  box-shadow: var(--shadow_default);
+}
+
+.SubResults {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.Left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.Right > .Image {
+  width: 100%;
+  height: auto;
+}
+
+.Container {
+  padding: 16px;
+  box-sizing: border-box;
+  background-color: var(--color_background-regular);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.Container > .Left {
+  flex-grow: 1;
+}
+
+.Container > .Right {
+  width: 150px;
+  flex-shrink: 0;
+}
+
+.Container .Title,
+.Container .Image {
+  position: sticky;
+  top: 0;
+}
+
+.Container:not(.Skeleton) .Title {
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    var(--color_background-regular),
+    transparent
+  );
+  padding-inline: 16px;
+  padding-bottom: 32px;
+  margin-inline: -16px;
+  margin-bottom: -32px;
+}
+
+@media screen and (max-width: 500px) {
+  .Container > .Right {
+    display: none;
+  }
+
+  .Container .Title {
+    position: static;
+  }
+}
+
+.Skeleton .Image {
+  width: 150px;
+  height: 122px;
+}
+
+.Skeleton .Title {
+  width: 300px;
+  height: 34px;
+}
