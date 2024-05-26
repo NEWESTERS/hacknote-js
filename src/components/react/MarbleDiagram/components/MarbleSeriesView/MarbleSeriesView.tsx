@@ -1,14 +1,14 @@
-import clsx from "clsx";
-import type { FC } from "react";
+import clsx from 'clsx';
+import type { FC } from 'react';
 
 import {
   useCurrentTime,
   useMarbleSeries,
   useMarbleSeriesPointIds,
-  useTimeRange,
-} from "../../contexts";
-import { MarblePointView } from "../MarblePointView";
-import Styles from "./MarbleSeriesView.module.css";
+  useTimeRange
+} from '../../contexts';
+import { MarblePointView } from '../MarblePointView';
+import Styles from './MarbleSeriesView.module.css';
 
 export interface MarbleSeriesViewProps {
   className?: string;
@@ -17,7 +17,7 @@ export interface MarbleSeriesViewProps {
 
 export const MarbleSeriesView: FC<MarbleSeriesViewProps> = ({
   className,
-  id,
+  id
 }) => {
   const diagramTimeRange = useTimeRange();
   const currentTime = useCurrentTime();
@@ -35,10 +35,10 @@ export const MarbleSeriesView: FC<MarbleSeriesViewProps> = ({
     <div
       className={clsx(Styles.Layout, className)}
       style={{
-        "--diagram-duration": diagramDuration,
-        "--series-duration": seriesDuration,
-        "--series-start": timeRange.from,
-        "--series-progress": timeRange.getProgress(currentTime),
+        '--diagram-duration': diagramDuration,
+        '--series-duration': seriesDuration,
+        '--series-start': timeRange.from,
+        '--series-progress': timeRange.getProgress(currentTime)
       }}
       data-started={isStarted}
     >

@@ -1,8 +1,8 @@
 ---
-const Slot = "slot";
+const Slot = 'slot';
 ---
 
-<template id="hjs-popup-template">
+<template id='hjs-popup-template'>
   <style is:inline>
     @keyframes appearance {
       from {
@@ -29,24 +29,24 @@ const Slot = "slot";
       box-shadow: var(--shadow_default);
     }
 
-    #container[data-direction="down"] {
+    #container[data-direction='down'] {
       top: calc((var(--link-y) + var(--link-height)) * 1px + 4px);
       transform: translateX(-50%);
     }
 
-    #container[data-direction="up"] {
+    #container[data-direction='up'] {
       top: calc(var(--link-y) * 1px - 4px);
       transform: translate(-50%, -100%);
     }
   </style>
-  <div id="container">
+  <div id='container'>
     <Slot />
   </div>
 </template>
 
 <script>
-  const popupTemplate = document.getElementById(
-    "hjs-popup-template"
+  const popupTemplate = document.querySelector(
+    '#hjs-popup-template'
   ) as HTMLTemplateElement;
 
   class Popup extends HTMLElement {
@@ -55,11 +55,11 @@ const Slot = "slot";
 
       const content = document.importNode(popupTemplate.content, true);
 
-      const shadowRoot = this.attachShadow({ mode: "open" });
+      const shadowRoot = this.attachShadow({ mode: 'open' });
 
-      shadowRoot.appendChild(content);
+      shadowRoot.append(content);
 
-      this.container = shadowRoot.getElementById("container") as HTMLDivElement;
+      this.container = shadowRoot.querySelector('#container') as HTMLDivElement;
     }
 
     public readonly container: HTMLDivElement;
@@ -82,8 +82,8 @@ const Slot = "slot";
       const anchorBottom =
         window.innerHeight - anchorRect.top - anchorRect.height;
 
-      this.container.dataset["direction"] =
-        anchorRect.top > anchorBottom ? "up" : "down";
+      this.container.dataset['direction'] =
+        anchorRect.top > anchorBottom ? 'up' : 'down';
     }
 
     private _updateLinkPosition(): void {
@@ -93,17 +93,17 @@ const Slot = "slot";
 
       const anchorRect = this._anchor.getBoundingClientRect();
 
-      this.container.style.setProperty("--link-x", String(anchorRect.left));
+      this.container.style.setProperty('--link-x', String(anchorRect.left));
       this.container.style.setProperty(
-        "--link-y",
+        '--link-y',
         String(this._anchor.offsetTop)
       );
       this.container.style.setProperty(
-        "--link-width",
+        '--link-width',
         String(anchorRect.width)
       );
       this.container.style.setProperty(
-        "--link-height",
+        '--link-height',
         String(anchorRect.height)
       );
     }
@@ -112,7 +112,7 @@ const Slot = "slot";
       this._updateDirection();
     }
 
-    public static observedAttributes = ["anchor"];
+    public static observedAttributes = ['anchor'];
 
     public attributeChangedCallback(
       property: string,
@@ -123,8 +123,8 @@ const Slot = "slot";
         return;
       }
 
-      if (property === "anchor") {
-        const anchor = document.getElementById(newValue);
+      if (property === 'anchor') {
+        const anchor = document.querySelector<HTMLElement>(`#${newValue}`);
 
         if (!anchor) {
           throw new Error(`Element with id "${newValue}" not found`);
@@ -135,5 +135,5 @@ const Slot = "slot";
     }
   }
 
-  customElements.define("hjs-popup", Popup);
+  customElements.define('hjs-popup', Popup);
 </script>

@@ -1,6 +1,7 @@
 ---
-import timeIcon from "../icons/time.svg";
-import { formatDuration } from "@utils/time";
+import { formatDuration } from '@utils/time';
+
+import timeIcon from '../icons/time.svg';
 
 export interface Props {
   class?: string;
@@ -10,7 +11,7 @@ export interface Props {
 const { class: className, duration } = Astro.props;
 
 const durationString =
-  typeof duration === "number" ? formatDuration(duration) : duration;
+  typeof duration === 'number' ? formatDuration(duration) : duration;
 ---
 
 <div class={className}>

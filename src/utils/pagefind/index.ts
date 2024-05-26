@@ -1,3 +1,3 @@
-export * from "./importPagefind";
+export * from './importPagefind';
 
-export * from "./types";
+export * from './types';

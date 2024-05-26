@@ -1,12 +1,12 @@
 ---
-import tipIcon from "../icons/tip.svg";
+import tipIcon from '../icons/tip.svg';
 
 interface Props {
   title: string;
-  type?: "info" | "warning";
+  type?: 'info' | 'warning';
 }
 
-const { title, type = "info" } = Astro.props;
+const { title, type = 'info' } = Astro.props;
 ---
 
 <style>
@@ -20,11 +20,11 @@ const { title, type = "info" } = Astro.props;
     font: var(--font_body);
   }
 
-  aside[data-type="info"] {
+  aside[data-type='info'] {
     --color: var(--color_accent-blue);
   }
 
-  aside[data-type="warning"] {
+  aside[data-type='warning'] {
     --color: var(--color_accent-yellow);
   }
 
@@ -47,7 +47,7 @@ const { title, type = "info" } = Astro.props;
 <aside data-type={type}>
   <p>
     <span
-      class="icon"
+      class='icon'
       style=`mask-image: url(${tipIcon.src}); -webkit-mask-image: url(${tipIcon.src});`
     >
     </span>{title}

@@ -1,8 +1,8 @@
 ---
-import HeaderLink from "./HeaderLink.astro";
-import { SITE_TITLE } from "../../consts";
+import { GlobalSearchModal } from '@components/react/GlobalSearch';
 
-import { GlobalSearchModal } from "@components/react/GlobalSearch";
+import HeaderLink from './HeaderLink.astro';
+import { SITE_TITLE } from '../../consts';
 
 export interface Props {
   class?: string;
@@ -12,16 +12,16 @@ const { class: className } = Astro.props;
 ---
 
 <header class={className}>
-  <div class="title">
+  <div class='title'>
     {SITE_TITLE}
   </div>
 
   <nav>
-    <HeaderLink href="/hacknote-js/" exact>Главная</HeaderLink>
-    <HeaderLink href="/hacknote-js/articles">Статьи</HeaderLink>
-    <HeaderLink href="/hacknote-js/videos">Доклады</HeaderLink>
+    <HeaderLink href='/hacknote-js/' exact>Главная</HeaderLink>
+    <HeaderLink href='/hacknote-js/articles'>Статьи</HeaderLink>
+    <HeaderLink href='/hacknote-js/videos'>Доклады</HeaderLink>
 
-    <GlobalSearchModal className="search" client:only="react" />
+    <GlobalSearchModal className='search' client:only='react' />
   </nav>
 </header>
 

@@ -1,10 +1,11 @@
-import { clamp } from "@utils/number";
-import { useEventCallback } from "@utils/react";
-import clsx from "clsx";
-import { type FC, useEffect, useRef, useState } from "react";
+import clsx from 'clsx';
+import { type FC, useEffect, useRef, useState } from 'react';
 
-import Styles from "./Slider.module.css";
-import { subscribeToSlider } from "./subscribeToSlider";
+import { clamp } from '@utils/number';
+import { useEventCallback } from '@utils/react';
+
+import Styles from './Slider.module.css';
+import { subscribeToSlider } from './subscribeToSlider';
 
 export interface SliderProps {
   className?: string;
@@ -19,7 +20,7 @@ export const Slider: FC<SliderProps> = ({
   value,
   max,
   min,
-  onValueChange,
+  onValueChange
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isActive, setIsActive] = useState(false);
@@ -37,7 +38,7 @@ export const Slider: FC<SliderProps> = ({
       onStart: () => setIsActive(true),
       onChange: ({ relativeValue }) =>
         handleValueChange(clamp((max - min) * relativeValue + min, min, max)),
-      onEnd: () => setIsActive(false),
+      onEnd: () => setIsActive(false)
     });
   }, [handleValueChange, min, max]);
 
@@ -46,7 +47,7 @@ export const Slider: FC<SliderProps> = ({
       ref={ref}
       className={clsx(Styles.Layout, className)}
       style={{
-        "--progress": (value - min) / (max - min),
+        '--progress': (value - min) / (max - min)
       }}
       data-active={isActive}
     >

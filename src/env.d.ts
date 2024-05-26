@@ -1,7 +1,7 @@
 /// <reference path="../.astro/types.d.ts" />
 /// <reference types="astro/client" />
 
-declare module "csstype" {
+declare module 'csstype' {
   interface Properties {
     /**
      * CSS Custom Properties

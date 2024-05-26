@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, type FC } from 'react';
 
-import { fetchData } from "../fetchData";
-import { DemoForm, type UseDemoData } from "../DemoForm";
+import { fetchData } from '../fetchData';
+import { DemoForm, type UseDemoData } from '../DemoForm';
 
 const useRaceConditionFixed: UseDemoData = ({ searchString, setData }) => {
   useEffect(() => {
@@ -16,9 +16,9 @@ const useRaceConditionFixed: UseDemoData = ({ searchString, setData }) => {
     return () => {
       abortController.abort();
     };
-  }, [searchString]);
+  }, [searchString, setData]);
 };
 
-export const RaceConditionFixed = () => {
+export const RaceConditionFixed: FC = () => {
   return <DemoForm useDemoData={useRaceConditionFixed} />;
 };

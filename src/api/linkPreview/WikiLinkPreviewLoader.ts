@@ -1,4 +1,4 @@
-import { LinkPreviewLoader } from "./LinkPreviewLoader";
+import { LinkPreviewLoader } from './LinkPreviewLoader';
 
 interface WikiArticleData {
   title: string;
@@ -11,7 +11,8 @@ interface WikiArticleData {
 export class WikiLinkPreviewLoader extends LinkPreviewLoader<WikiArticleData> {
   public wikiApiUrl: URL;
 
-  public static wikiUrlRegExp = /https:\/\/(.+)\.wikipedia\.org\/wiki\/(.+)/;
+  public static wikiUrlRegExp: RegExp =
+    /https:\/\/(.+)\.wikipedia\.org\/wiki\/(.+)/;
 
   public constructor(linkUrl: URL | string) {
     super(linkUrl);
@@ -24,7 +25,7 @@ export class WikiLinkPreviewLoader extends LinkPreviewLoader<WikiArticleData> {
       throw new Error(`"${this.url.href}" is not Wikipedia url`);
     }
 
-    const [_, lang, articleId] = wikipediaLinkMatch;
+    const [, lang, articleId] = wikipediaLinkMatch;
 
     this.wikiApiUrl = new URL(
       `https://${lang}.wikipedia.org/api/rest_v1/page/summary/${articleId}`
@@ -49,7 +50,7 @@ export class WikiLinkPreviewLoader extends LinkPreviewLoader<WikiArticleData> {
 
   public get favicon(): Promise<string | undefined> {
     return new Promise((resolve) =>
-      resolve("https://ru.wikipedia.org/static/favicon/wikipedia.ico")
+      resolve('https://ru.wikipedia.org/static/favicon/wikipedia.ico')
     );
   }
 }

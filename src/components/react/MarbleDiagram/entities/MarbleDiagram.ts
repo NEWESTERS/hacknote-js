@@ -1,8 +1,8 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 
-import { MarblePoint } from "./MarblePoint";
-import { MarbleSeries } from "./MarbleSeries";
-import { TimeRange } from "./TimeRange";
+import { MarblePoint } from './MarblePoint';
+import { MarbleSeries } from './MarbleSeries';
+import { TimeRange } from './TimeRange';
 
 export interface MarbleDiagramData {
   series: Array<{
@@ -18,12 +18,22 @@ export interface MarbleDiagramData {
 }
 
 export class MarbleDiagram {
+  private readonly _series: Record<string, MarbleSeries>;
+  public readonly seriesIds: string[];
+  private readonly _points: Record<string, MarblePoint>;
+  private readonly _seriesPointIds: Record<string, string[]>;
+
   public constructor(
-    private readonly _series: Record<string, MarbleSeries>,
-    public readonly seriesIds: string[],
-    private readonly _points: Record<string, MarblePoint>,
-    private readonly _seriesPointIds: Record<string, string[]>
-  ) {}
+    series: Record<string, MarbleSeries>,
+    seriesIds: string[],
+    points: Record<string, MarblePoint>,
+    seriesPointIds: Record<string, string[]>
+  ) {
+    this._series = series;
+    this.seriesIds = seriesIds;
+    this._points = points;
+    this._seriesPointIds = seriesPointIds;
+  }
 
   public getSeries(seriesId: string): MarbleSeries | undefined {
     return this._series[seriesId];
@@ -48,7 +58,7 @@ export class MarbleDiagram {
     let seriesCounter = 0;
     const getSeriesId = (): string => `series-${++seriesCounter}`;
 
-    data.series.forEach((seriesData) => {
+    for (const seriesData of data.series) {
       const currentSeries = new MarbleSeries(
         getSeriesId(),
         new TimeRange(seriesData.startTime, seriesData.endTime),
@@ -61,8 +71,8 @@ export class MarbleDiagram {
 
       seriesPointIds[currentSeries.id] = [];
 
-      seriesData.points &&
-        seriesData.points.forEach((pointData) => {
+      if (seriesData.points) {
+        for (const pointData of seriesData.points) {
           const currentPoint = new MarblePoint(
             getPointId(),
             pointData.time,
@@ -73,8 +83,9 @@ export class MarbleDiagram {
           points[currentPoint.id] = currentPoint;
 
           seriesPointIds[currentSeries.id].push(currentPoint.id);
-        });
-    });
+        }
+      }
+    }
 
     return new MarbleDiagram(series, seriesIds, points, seriesPointIds);
   }
@@ -82,9 +93,9 @@ export class MarbleDiagram {
   public get minTime(): number {
     let minTime = 0;
 
-    Object.values(this._series).forEach(({ timeRange }) => {
+    for (const { timeRange } of Object.values(this._series)) {
       minTime = Math.min(minTime, timeRange.from);
-    });
+    }
 
     return minTime;
   }
@@ -92,9 +103,9 @@ export class MarbleDiagram {
   public get maxTime(): number {
     let maxTime = 0;
 
-    Object.values(this._series).forEach(({ timeRange }) => {
+    for (const { timeRange } of Object.values(this._series)) {
       maxTime = Math.max(maxTime, timeRange.to);
-    });
+    }
 
     return maxTime;
   }

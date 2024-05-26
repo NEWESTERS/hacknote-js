@@ -1,11 +1,11 @@
-import { createContext, type FC, type ProviderProps, useContext } from "react";
+import { createContext, type FC, type ProviderProps, useContext } from 'react';
 
 export interface ContextWithUtils<T> {
   Provider: FC<ProviderProps<T>>;
   useContext: () => T;
 }
 
-const None = Symbol("None");
+const None = Symbol('None');
 
 export function createContextWithUtils<T>(title: string): ContextWithUtils<T> {
   const Context = createContext<T | typeof None>(None);
@@ -20,6 +20,6 @@ export function createContextWithUtils<T>(title: string): ContextWithUtils<T> {
       }
 
       return context;
-    },
+    }
   };
 }

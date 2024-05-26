@@ -1,13 +1,13 @@
-import type { MouseEventHandler, ReactElement, ReactNode } from "react";
-import clsx from "clsx";
+import type { FC, MouseEventHandler, ReactNode } from 'react';
+import clsx from 'clsx';
 
 import {
   PagefindSearchResultView,
-  PagefindSearchResultSkeleton,
-} from "../PagefindSearchResultView";
-import { PagefindNotFound } from "../PagefindNotFound";
-import { usePageFindQuery } from "./usePageFindQuery";
-import Styles from "./PagefindSearch.module.css";
+  PagefindSearchResultSkeleton
+} from '../PagefindSearchResultView';
+import { PagefindNotFound } from '../PagefindNotFound';
+import { usePageFindQuery } from './usePageFindQuery';
+import Styles from './PagefindSearch.module.css';
 
 export interface PagefindSearchProps {
   className?: string;
@@ -15,11 +15,11 @@ export interface PagefindSearchProps {
   onLinkClick?: MouseEventHandler<HTMLAnchorElement>;
 }
 
-export const PagefindSearch = ({
+export const PagefindSearch: FC<PagefindSearchProps> = ({
   className,
   searchString,
-  onLinkClick,
-}: PagefindSearchProps): ReactElement | null => {
+  onLinkClick
+}) => {
   const pagefindQuery = usePageFindQuery(searchString);
 
   const renderContent = (): ReactNode => {

@@ -1,16 +1,16 @@
-import type { LinkPreviewLoader } from "./LinkPreviewLoader";
-import { DefaultLinkPreviewLoader } from "./DefaultLinkPreviewLoader";
-import { WikiLinkPreviewLoader } from "./WikiLinkPreviewLoader";
-import { DevLinkPreviewLoader } from "./DevLinkPreviewLoader";
-import type { HtmlParser } from "./htmlParser";
+import type { LinkPreviewLoader } from './LinkPreviewLoader';
+import { DefaultLinkPreviewLoader } from './DefaultLinkPreviewLoader';
+import { WikiLinkPreviewLoader } from './WikiLinkPreviewLoader';
+import { DevLinkPreviewLoader as DevelopmentLinkPreviewLoader } from './DevLinkPreviewLoader';
+import type { HtmlParser } from './htmlParser';
 
-const isBrowser = typeof document !== "undefined";
+const isBrowser = typeof document !== 'undefined';
 
 const HtmlParser = isBrowser
-  ? await import("./htmlParser/BrowserHtmlParser").then(
+  ? await import('./htmlParser/BrowserHtmlParser').then(
       ({ BrowserHtmlParser }) => BrowserHtmlParser
     )
-  : await import("./htmlParser/NodeHtmlParser").then(
+  : await import('./htmlParser/NodeHtmlParser').then(
       ({ NodeHtmlParser }) => NodeHtmlParser
     );
 
@@ -18,16 +18,14 @@ const parser = new HtmlParser();
 
 export function getLinkPreviewLoader(
   href: string | URL
-): LinkPreviewLoader<any> {
+): LinkPreviewLoader<unknown> {
   if (import.meta.env.DEV) {
-    return new DevLinkPreviewLoader(href);
+    return new DevelopmentLinkPreviewLoader(href);
   }
 
-  if (WikiLinkPreviewLoader.wikiUrlRegExp.test(href.toString())) {
-    return new WikiLinkPreviewLoader(href);
-  } else {
-    return new DefaultLinkPreviewLoader(href, parser);
-  }
+  return WikiLinkPreviewLoader.wikiUrlRegExp.test(href.toString())
+    ? new WikiLinkPreviewLoader(href)
+    : new DefaultLinkPreviewLoader(href, parser);
 }
 
-export type { LinkPreviewData } from "./LinkPreviewLoader";
+export type { LinkPreviewData } from './LinkPreviewLoader';

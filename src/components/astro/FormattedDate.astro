@@ -1,5 +1,5 @@
 ---
-import dateIcon from "../icons/date.svg";
+import dateIcon from '../icons/date.svg';
 
 export interface Props {
   class?: string;
@@ -13,10 +13,10 @@ const { class: className, date } = Astro.props;
   <img src={dateIcon.src} />
 
   {
-    date.toLocaleDateString("ru-ru", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
+    date.toLocaleDateString('ru-ru', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
     })
   }
 </time>

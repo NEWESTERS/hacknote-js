@@ -1,9 +1,10 @@
-import { Icon } from "@components/react";
-import clsx from "clsx";
-import type { FC } from "react";
+import clsx from 'clsx';
+import type { FC } from 'react';
 
-import starSvg from "@components/icons/star.svg";
-import Styles from "./RepoCard.module.css";
+import { Icon } from '@components/react';
+import starSvg from '@components/icons/star.svg';
+
+import Styles from './RepoCard.module.css';
 
 export interface RepoCardProps {
   className?: string;
@@ -20,14 +21,14 @@ export const RepoCard: FC<RepoCardProps> = ({
   name,
   starCount,
   url,
-  topics,
+  topics
 }) => {
   return (
     <a
       className={clsx(Styles.Card, className)}
       href={url}
-      target="_blank"
-      rel="noopener noreferrer"
+      target='_blank'
+      rel='noopener noreferrer'
     >
       <div className={Styles.Main}>
         <div className={Styles.Author}>{author}</div>
@@ -44,7 +45,7 @@ export const RepoCard: FC<RepoCardProps> = ({
       </div>
 
       <div className={Styles.StarsCount}>
-        <Icon url={starSvg.src} color="var(--color_accent-yellow)" />
+        <Icon url={starSvg.src} color='var(--color_accent-yellow)' />
 
         <span className={Styles.Count}>{starCount}</span>
       </div>

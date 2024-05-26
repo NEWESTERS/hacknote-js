@@ -1,9 +1,10 @@
-import { Button, Icon } from "@components/react";
-import clsx from "clsx";
-import type { FC } from "react";
+import clsx from 'clsx';
+import type { FC } from 'react';
 
-import resetSvg from "@components/icons/delete.svg";
-import Styles from "./DemoResult.module.css";
+import { Button, Icon } from '@components/react';
+import resetSvg from '@components/icons/delete.svg';
+
+import Styles from './DemoResult.module.css';
 
 export interface DemoResultProps {
   className?: string;
@@ -14,7 +15,7 @@ export interface DemoResultProps {
 export const DemoResult: FC<DemoResultProps> = ({
   className,
   data,
-  onReset,
+  onReset
 }) => {
   if (!data) {
     return null;
@@ -29,8 +30,8 @@ export const DemoResult: FC<DemoResultProps> = ({
       </div>
 
       <Button
-        title="Сбросить"
-        right={<Icon url={resetSvg.src} color="var(--color_accent-red)" />}
+        title='Сбросить'
+        right={<Icon url={resetSvg.src} color='var(--color_accent-red)' />}
         onClick={onReset}
       />
     </div>

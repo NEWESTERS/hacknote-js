@@ -1,5 +1,6 @@
-import { useEffect } from "react";
-import { useEventCallback } from "./useEventCallback";
+import { useEffect } from 'react';
+
+import { useEventCallback } from './useEventCallback';
 
 interface UseKeyboardShortcutOptions {
   onPress: () => void;
@@ -10,7 +11,7 @@ interface UseKeyboardShortcutOptions {
 function isInputFocused(): boolean {
   return (
     document.activeElement instanceof HTMLElement &&
-    ["input", "select", "textarea"].includes(
+    ['input', 'select', 'textarea'].includes(
       document.activeElement.tagName.toLowerCase()
     )
   );
@@ -19,7 +20,7 @@ function isInputFocused(): boolean {
 export function useKeyboardShortcut({
   onPress,
   predicate,
-  disableOnInput = true,
+  disableOnInput = true
 }: UseKeyboardShortcutOptions): void {
   const handleKeyPress = useEventCallback((event: KeyboardEvent) => {
     if (disableOnInput && isInputFocused()) {
@@ -33,10 +34,10 @@ export function useKeyboardShortcut({
   });
 
   useEffect(() => {
-    document.addEventListener("keypress", handleKeyPress);
+    document.addEventListener('keypress', handleKeyPress);
 
     return () => {
-      document.removeEventListener("keypress", handleKeyPress);
+      document.removeEventListener('keypress', handleKeyPress);
     };
   }, [handleKeyPress]);
 }

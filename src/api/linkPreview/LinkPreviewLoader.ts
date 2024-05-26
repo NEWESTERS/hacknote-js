@@ -7,12 +7,6 @@ export interface LinkPreviewData {
 export abstract class LinkPreviewLoader<C> {
   public url: URL;
 
-  public constructor(linkUrl: URL | string) {
-    this.url = new URL(linkUrl);
-  }
-
-  public abstract fetchContent(): Promise<C>;
-
   public abstract title: Promise<string | undefined>;
 
   public abstract description: Promise<string | undefined>;
@@ -22,6 +16,12 @@ export abstract class LinkPreviewLoader<C> {
   public abstract favicon: Promise<string | undefined>;
 
   private _linkContent: Promise<C> | undefined;
+
+  public constructor(linkUrl: URL | string) {
+    this.url = new URL(linkUrl);
+  }
+
+  public abstract fetchContent(): Promise<C>;
 
   public get baseUrl(): string {
     return `${this.url.protocol}//${this.url.host}`;
@@ -35,17 +35,17 @@ export abstract class LinkPreviewLoader<C> {
     return this._linkContent;
   }
 
-  public get linkPreviewData(): Promise<LinkPreviewData | undefined> {
+  public get linkPreviewData(): Promise<LinkPreviewData | void> {
     return Promise.all([this.title, this.description, this.image])
       .then(([title, description, image]) => {
         if (description && title) {
           return {
             title,
             description,
-            image,
+            image
           };
         }
       })
-      .catch(() => undefined);
+      .catch(() => {});
   }
 }

@@ -1,7 +1,7 @@
-import clsx from "clsx";
-import type { ReactElement } from "react";
+import clsx from 'clsx';
+import type { ReactElement } from 'react';
 
-import Styles from "./Skeleton.module.css";
+import Styles from './Skeleton.module.css';
 
 export interface SkeletonProps {
   className?: string;

@@ -1,1 +1,1 @@
-export * from "./MarblePointView";
+export * from './MarblePointView';

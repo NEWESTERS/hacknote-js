@@ -1,12 +1,12 @@
 ---
-title: "Генерация превью для ссылок: получаем данные"
-description: "В статьях я стараюсь оставлять максимальное количество ссылок на ресурсы, которые помогли мне подробнее ознакомиться с рассматриваемой темой. Мне кажется, не всегда из контекста понятно, какую именно информацию даст та или иная ссылка, поэтому я подумал о добавлении механизма их предпросмотра."
-pubDate: "Apr 10 2023"
-heroImage: "/hacknote-js/images/link-preview/hero.png"
-telegramPostId: "34"
+title: 'Генерация превью для ссылок: получаем данные'
+description: 'В статьях я стараюсь оставлять максимальное количество ссылок на ресурсы, которые помогли мне подробнее ознакомиться с рассматриваемой темой. Мне кажется, не всегда из контекста понятно, какую именно информацию даст та или иная ссылка, поэтому я подумал о добавлении механизма их предпросмотра.'
+pubDate: 'Apr 10 2023'
+heroImage: '/hacknote-js/images/link-preview/hero.png'
+telegramPostId: '34'
 ---
 
-import Aside from "@components/astro/Aside.astro";
+import Aside from '@components/astro/Aside.astro';
 
 В статьях я стараюсь оставлять максимальное количество ссылок на ресурсы, которые помогли мне подробнее ознакомиться с рассматриваемой темой. Мне кажется, не всегда из контекста понятно, какую именно информацию даст та или иная ссылка, поэтому я подумал о добавлении механизма их предпросмотра.
 
@@ -101,7 +101,7 @@ export async function fetchWikipediaLinkPreviewData(
     return {
       title,
       description: extract,
-      image: thumbnail?.source,
+      image: thumbnail?.source
     };
   }
 }
@@ -165,25 +165,25 @@ export const fetchDefaultLinkPreviewData: FetchLinkPreviewData = async (
 
   const parser = new DOMParser();
 
-  const dom = parser.parseFromString(html, "text/html");
+  const dom = parser.parseFromString(html, 'text/html');
 
   const title = dom
     .querySelector('meta[property="og:title"]')
-    ?.getAttribute?.("content");
+    ?.getAttribute?.('content');
 
   const description = dom
     .querySelector('meta[property="og:description"]')
-    ?.getAttribute?.("content");
+    ?.getAttribute?.('content');
 
   const image = dom
     .querySelector('meta[property="og:image"]')
-    ?.getAttribute?.("content");
+    ?.getAttribute?.('content');
 
   if (title && description) {
     return {
       title,
       description,
-      image,
+      image
     };
   }
 };
@@ -246,13 +246,13 @@ export interface HtmlParser {
 Тогда браузерная реализация этого интерфейса будет максимально простой:
 
 ```ts
-import type { HtmlDocumentApi, HtmlParser } from "./HTMLParser";
+import type { HtmlDocumentApi, HtmlParser } from './HTMLParser';
 
 export class BrowserHtmlParser implements HtmlParser {
   private _domParser = new DOMParser();
 
   public parse(html: string): HtmlDocumentApi {
-    return this._domParser.parseFromString(html, "text/html");
+    return this._domParser.parseFromString(html, 'text/html');
   }
 }
 ```
@@ -260,9 +260,9 @@ export class BrowserHtmlParser implements HtmlParser {
 Теперь реализуем парсер на основе cheerio:
 
 ```ts
-import { load as loadHtml } from "cheerio";
+import { load as loadHtml } from 'cheerio';
 
-import type { HtmlDocumentApi, HtmlParser } from "./HTMLParser";
+import type { HtmlDocumentApi, HtmlParser } from './HTMLParser';
 
 export class NodeHtmlParser implements HtmlParser {
   public parse(html: string): HtmlDocumentApi {
@@ -278,9 +278,9 @@ export class NodeHtmlParser implements HtmlParser {
           },
           getText() {
             return element.text();
-          },
+          }
         };
-      },
+      }
     };
   }
 }
@@ -303,14 +303,14 @@ export function fetchDefaultLinkPreviewData(
 
 ```ts
 // В Node.js ведь нет глобальной переменной "document" — верно?
-const isBrowser = typeof document !== "undefined";
+const isBrowser = typeof document !== 'undefined';
 
 // Выбираем, откуда импортировать парсер
 const HtmlParser = isBrowser
-  ? await import("./htmlParser/BrowserHtmlParser").then(
+  ? await import('./htmlParser/BrowserHtmlParser').then(
       ({ BrowserHtmlParser }) => BrowserHtmlParser
     )
-  : await import("./htmlParser/NodeHtmlParser").then(
+  : await import('./htmlParser/NodeHtmlParser').then(
       ({ NodeHtmlParser }) => NodeHtmlParser
     );
 
@@ -345,9 +345,9 @@ export const fetchLinkPreviewData: FetchLinkPreviewData = (href) => {
 ```ts
 export const fetchMockLinkPreviewData: FetchLinkPreviewData = async () => {
   return {
-    title: "Hacknote.js",
-    description: "Lorem ipsum dolor sit amet.",
-    image: "/hacknote-js/images/logo.png",
+    title: 'Hacknote.js',
+    description: 'Lorem ipsum dolor sit amet.',
+    image: '/hacknote-js/images/logo.png'
   };
 };
 ```
@@ -355,13 +355,13 @@ export const fetchMockLinkPreviewData: FetchLinkPreviewData = async () => {
 И в dev-режиме использовать её вместо настоящих:
 
 ```ts
-const isBrowser = typeof document !== "undefined";
+const isBrowser = typeof document !== 'undefined';
 
 const HtmlParser = isBrowser
-  ? await import("./htmlParser/BrowserHtmlParser").then(
+  ? await import('./htmlParser/BrowserHtmlParser').then(
       ({ BrowserHtmlParser }) => BrowserHtmlParser
     )
-  : await import("./htmlParser/NodeHtmlParser").then(
+  : await import('./htmlParser/NodeHtmlParser').then(
       ({ NodeHtmlParser }) => NodeHtmlParser
     );
 
@@ -389,7 +389,7 @@ export const fetchLinkPreviewData: FetchLinkPreviewData = (href) => {
 
 ```astro
 ---
-import { fetchLinkPreviewData } from "@api/linkPreview";
+import { fetchLinkPreviewData } from '@api/linkPreview';
 
 export interface Props {
   href: string;

@@ -1,14 +1,17 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection } from 'astro:content';
 
-import DefaultPage from "@layouts/DefaultPage.astro";
-import BaseLink from "@components/astro/BaseLink.astro";
-import ArticleCard from "@components/astro/ArticleCard.astro";
-import P from "@components/astro/P.astro";
-import H2 from "@components/astro/H2.astro";
-import VideoCard from "@components/astro/VideoCard.astro";
+import DefaultPage from '@layouts/DefaultPage.astro';
+import BaseLink from '@components/astro/BaseLink.astro';
+import ArticleCard from '@components/astro/ArticleCard.astro';
+import P from '@components/astro/P.astro';
+import H2 from '@components/astro/H2.astro';
+import VideoCard from '@components/astro/VideoCard.astro';
 
-const [articles, videos] = await Promise.all([getCollection("articles"), getCollection("videos")]);
+const [articles, videos] = await Promise.all([
+  getCollection('articles'),
+  getCollection('videos')
+]);
 
 const latestPublication = [...articles, ...videos].sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -17,24 +20,26 @@ const latestPublication = [...articles, ...videos].sort(
 
 <DefaultPage>
   <figure>
-    <img src="/hacknote-js/images/logo.svg" />
+    <img src='/hacknote-js/images/logo.svg' />
   </figure>
 
-  <P class="description">
+  <P class='description'>
     Блог Telegram-канала
-    <BaseLink href="https://t.me/hacknote_js">Hacknote.js</BaseLink>.
+    <BaseLink href='https://t.me/hacknote_js'>Hacknote.js</BaseLink>.
   </P>
 
-  <H2 class="header">Последняя публикация</H2>
+  <H2 class='header'>Последняя публикация</H2>
 
   {
-    "url" in latestPublication.data ? 
+    'url' in latestPublication.data ? (
       <a href={`/hacknote-js/videos/${latestPublication.slug}`}>
         <VideoCard {...latestPublication.data} id={latestPublication.id} />
-      </a> :
+      </a>
+    ) : (
       <a href={`/hacknote-js/articles/${latestPublication.slug}`}>
         <ArticleCard {...latestPublication.data} id={latestPublication.id} />
       </a>
+    )
   }
 </DefaultPage>
 

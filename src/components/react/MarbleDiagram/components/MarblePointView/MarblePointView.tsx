@@ -1,9 +1,9 @@
-import clsx from "clsx";
-import type { FC } from "react";
+import clsx from 'clsx';
+import type { FC } from 'react';
 
-import { useCurrentTime, useMarblePoint } from "../../contexts";
-import { useSelectPoint } from "../../contexts/PointSelectionContext";
-import Styles from "./MarblePointView.module.css";
+import { useCurrentTime, useMarblePoint } from '../../contexts';
+import { useSelectPoint } from '../../contexts/PointSelectionContext';
+import Styles from './MarblePointView.module.css';
 
 export interface MarblePointViewProps {
   className?: string;
@@ -12,17 +12,17 @@ export interface MarblePointViewProps {
 
 export const MarblePointView: FC<MarblePointViewProps> = ({
   className,
-  id,
+  id
 }) => {
   const currentTime = useCurrentTime();
   const { time, content, title } = useMarblePoint(id);
   const selectPoint = useSelectPoint();
 
-  const handleMouseOver = () => {
+  const handleMouseOver = (): void => {
     selectPoint(id);
   };
 
-  const handleMouseOut = () => {
+  const handleMouseOut = (): void => {
     selectPoint(undefined);
   };
 
@@ -31,7 +31,7 @@ export const MarblePointView: FC<MarblePointViewProps> = ({
       className={clsx(className)}
       title={title}
       style={{
-        "--point-time": time,
+        '--point-time': time
       }}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}

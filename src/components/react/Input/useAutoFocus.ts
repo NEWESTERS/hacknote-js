@@ -1,4 +1,4 @@
-import { useEffect, type RefObject } from "react";
+import { useEffect, type RefObject } from 'react';
 
 export function useAutoFocus(
   ref: RefObject<HTMLInputElement>,
@@ -8,5 +8,5 @@ export function useAutoFocus(
     if (ref.current && isAutofocus) {
       ref.current.focus();
     }
-  }, [ref, useAutoFocus]);
+  }, [ref, isAutofocus]);
 }

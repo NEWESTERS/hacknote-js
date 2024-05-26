@@ -1,7 +1,7 @@
-import clsx from "clsx";
-import type { ButtonHTMLAttributes, FC, ReactNode } from "react";
+import clsx from 'clsx';
+import type { ButtonHTMLAttributes, FC, ReactNode } from 'react';
 
-import Styles from "./Button.module.css";
+import Styles from './Button.module.css';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
@@ -15,7 +15,7 @@ export const Button: FC<ButtonProps> = ({
   title,
   left,
   right,
-  type = "button",
+  type = 'button',
   ...props
 }) => {
   return (

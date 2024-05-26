@@ -1,10 +1,11 @@
-import { type FC, useState } from "react";
+import { type FC, useState } from 'react';
 
-import { autofill } from "@utils/demo";
-import { Button, Icon, Input } from "@components/react";
-import playSvg from "@components/icons/play.svg";
-import Styles from "./DemoForm.module.css";
-import { DemoResult } from "./DemoResult";
+import { autofill } from '@utils/demo';
+import { Button, Icon, Input } from '@components/react';
+import playSvg from '@components/icons/play.svg';
+
+import Styles from './DemoForm.module.css';
+import { DemoResult } from './DemoResult';
 
 export interface UseDemoData {
   (props: { searchString: string; setData: (data: string) => void }): void;
@@ -15,21 +16,22 @@ export interface DemoFormProps {
 }
 
 export const DemoForm: FC<DemoFormProps> = ({ useDemoData }) => {
-  const [searchString, setSearchString] = useState("");
+  const [searchString, setSearchString] = useState('');
   const [data, setData] = useState<string>();
   const [isAutoFilling, setIsAutoFilling] = useState(false);
 
   useDemoData({ searchString, setData });
 
-  const handleAutofill = () => {
+  const handleAutofill = (): void => {
     setIsAutoFilling(true);
+
     autofill({
-      text: "Состояние гонки",
-      onType: setSearchString,
+      text: 'Состояние гонки',
+      onType: setSearchString
     }).finally(() => setIsAutoFilling(false));
   };
 
-  const handleReset = () => {
+  const handleReset = (): void => {
     setData(undefined);
   };
 
@@ -41,14 +43,14 @@ export const DemoForm: FC<DemoFormProps> = ({ useDemoData }) => {
           readOnly={isAutoFilling}
           value={searchString}
           onValueChange={setSearchString}
-          placeholder="Поиск"
+          placeholder='Поиск'
         />
 
         <Button
-          title="Демо"
+          title='Демо'
           disabled={isAutoFilling}
           onClick={handleAutofill}
-          right={<Icon url={playSvg.src} color="var(--color_accent-green)" />}
+          right={<Icon url={playSvg.src} color='var(--color_accent-green)' />}
         />
       </div>
 

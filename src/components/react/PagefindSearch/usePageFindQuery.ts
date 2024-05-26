@@ -1,7 +1,7 @@
-import { useQuery, type UseQueryResult } from "@tanstack/react-query";
+import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 
-import { importPagefind, type PagefindSearchResults } from "@utils/pagefind";
-import { queryClient } from "@utils/query";
+import { importPagefind, type PagefindSearchResults } from '@utils/pagefind';
+import { queryClient } from '@utils/query';
 
 function fetchSearchResults(
   searchString: string
@@ -18,8 +18,8 @@ export function usePageFindQuery(
 ): UseQueryResult<PagefindSearchResults> {
   return useQuery(
     {
-      queryKey: ["pagefind", searchString],
-      queryFn: () => fetchSearchResults(searchString),
+      queryKey: ['pagefind', searchString],
+      queryFn: () => fetchSearchResults(searchString)
     },
     queryClient
   );

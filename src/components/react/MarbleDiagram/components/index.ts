@@ -1,9 +1,9 @@
-export * from "./MarbleDiagramView";
+export * from './MarbleDiagramView';
 
-export * from "./MarblePointView";
+export * from './MarblePointView';
 
-export * from "./MarbleSeriesView";
+export * from './MarbleSeriesView';
 
-export * from "./MarbleTimeline";
+export * from './MarbleTimeline';
 
-export * from "./MarblePlayer";
+export * from './MarblePlayer';

@@ -1,9 +1,9 @@
-import clsx from "clsx";
-import type { FC } from "react";
+import clsx from 'clsx';
+import type { FC } from 'react';
 
-import { useMarblePointIds } from "../../contexts";
-import { MarblePointListItem } from "../MarblePointListItem";
-import Styles from "./MarblePointList.module.css";
+import { useMarblePointIds } from '../../contexts';
+import { MarblePointListItem } from '../MarblePointListItem';
+import Styles from './MarblePointList.module.css';
 
 export interface MarblePointListProps {
   className?: string;

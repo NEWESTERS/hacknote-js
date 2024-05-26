@@ -1,8 +1,9 @@
-import type { MouseEventHandler, ReactElement } from "react";
-import clsx from "clsx";
+import type { MouseEventHandler, ReactElement } from 'react';
+import clsx from 'clsx';
 
-import type { PagefindSubResult } from "@utils/pagefind";
-import Styles from "./PagefindSubResultView.module.css";
+import type { PagefindSubResult } from '@utils/pagefind';
+
+import Styles from './PagefindSubResultView.module.css';
 
 export interface PagefindSubResultViewProps {
   className?: string;
@@ -13,7 +14,7 @@ export interface PagefindSubResultViewProps {
 export const PagefindSubResultView = ({
   className,
   data,
-  onLinkClick,
+  onLinkClick
 }: PagefindSubResultViewProps): ReactElement => {
   return (
     <div className={clsx(Styles.Container, className)}>

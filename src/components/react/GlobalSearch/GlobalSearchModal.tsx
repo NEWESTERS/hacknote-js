@@ -1,19 +1,20 @@
-import { useEffect, useState, type ReactElement } from "react";
+import { useState, type ReactElement } from 'react';
 
-import { Button } from "../Button";
-import { ModalDialog } from "../ModalDialog";
-import { PagefindSearchField } from "../PagefindSearchField";
-import { Icon } from "../Icon";
-import searchIcon from "../../icons/search.svg";
-import Styles from "./GlobalSearchModal.module.css";
-import { useEventCallback, useKeyboardShortcut } from "@utils/react";
+import { useKeyboardShortcut } from '@utils/react';
+
+import { Button } from '../Button';
+import { ModalDialog } from '../ModalDialog';
+import { PagefindSearchField } from '../PagefindSearchField';
+import { Icon } from '../Icon';
+import searchIcon from '../../icons/search.svg';
+import Styles from './GlobalSearchModal.module.css';
 
 export interface GlobalSearchModalProps {
   className?: string;
 }
 
 export const GlobalSearchModal = ({
-  className,
+  className
 }: GlobalSearchModalProps): ReactElement => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -23,14 +24,14 @@ export const GlobalSearchModal = ({
 
   useKeyboardShortcut({
     onPress: openModal,
-    predicate: (event) => event.key === "/",
+    predicate: (event) => event.key === '/'
   });
 
   return (
     <>
       <Button
         className={className}
-        title="Поиск"
+        title='Поиск'
         onClick={(event) => {
           event.stopPropagation();
           openModal();

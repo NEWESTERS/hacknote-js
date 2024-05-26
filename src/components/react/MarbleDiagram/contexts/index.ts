@@ -1,7 +1,7 @@
-export * from "./CurrentTimeContext";
+export * from './CurrentTimeContext';
 
-export * from "./TimeRangeContext";
+export * from './TimeRangeContext';
 
-export * from "./MarbleDiagramContext";
+export * from './MarbleDiagramContext';
 
-export * from "./PointSelectionContext";
+export * from './PointSelectionContext';

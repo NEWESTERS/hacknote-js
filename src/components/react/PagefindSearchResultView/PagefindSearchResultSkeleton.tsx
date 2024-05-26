@@ -1,16 +1,16 @@
-import clsx from "clsx";
-import type { ReactElement } from "react";
+import clsx from 'clsx';
+import type { ReactElement } from 'react';
 
-import { Skeleton } from "../Skeleton";
-import { PagefindSubResultSkeleton } from "../PagefindSubResultView";
-import Styles from "./PagefindSearchResultView.module.css";
+import { Skeleton } from '../Skeleton';
+import { PagefindSubResultSkeleton } from '../PagefindSubResultView';
+import Styles from './PagefindSearchResultView.module.css';
 
 interface PagefindSearchResultSkeletonProps {
   className?: string;
 }
 
 export const PagefindSearchResultSkeleton = ({
-  className,
+  className
 }: PagefindSearchResultSkeletonProps): ReactElement => {
   return (
     <div className={clsx(Styles.Container, Styles.Skeleton, className)}>

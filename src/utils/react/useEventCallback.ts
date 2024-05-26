@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from 'react';
 
-export function useEventCallback<A extends any[], R>(
-  callback: (...args: A) => R
-): (...args: A) => R {
+export function useEventCallback<A extends unknown[], R>(
+  callback: (...arguments_: A) => R
+): (...arguments_: A) => R {
   const callbackRef = useRef(callback);
 
   useEffect(() => {
     callbackRef.current = callback;
   });
 
-  return useCallback((...args) => callbackRef.current(...args), []);
+  return useCallback((...arguments_) => callbackRef.current(...arguments_), []);
 }

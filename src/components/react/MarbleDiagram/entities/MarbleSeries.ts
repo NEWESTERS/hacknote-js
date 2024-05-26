@@ -1,4 +1,4 @@
-import type { TimeRange } from "./TimeRange";
+import type { TimeRange } from './TimeRange';
 
 export class MarbleSeries {
   public readonly id: string;

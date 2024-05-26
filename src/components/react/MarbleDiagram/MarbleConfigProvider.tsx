@@ -1,12 +1,12 @@
-import { type FC, type ReactNode, useMemo } from "react";
+import { type FC, type ReactNode, useMemo } from 'react';
+
 import {
   CurrentTimeProvider,
   MarbleDiagramProvider,
   PointSelectionProvider,
-  TimeRangeProvider,
-} from "./contexts";
-
-import { MarbleDiagram, TimeRange } from "./entities";
+  TimeRangeProvider
+} from './contexts';
+import { MarbleDiagram, TimeRange } from './entities';
 
 export interface MarbleConfigProviderProps {
   diagram: MarbleDiagram;
@@ -21,7 +21,7 @@ export const MarbleConfigProvider: FC<MarbleConfigProviderProps> = ({
   startTime = diagram.minTime,
   endTime = diagram.maxTime,
   initialTime = endTime,
-  children,
+  children
 }) => {
   return (
     <MarbleDiagramProvider value={diagram}>

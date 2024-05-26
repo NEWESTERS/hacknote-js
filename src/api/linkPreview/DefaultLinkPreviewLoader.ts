@@ -1,5 +1,5 @@
-import { LinkPreviewLoader } from "./LinkPreviewLoader";
-import type { HtmlDocumentApi, HtmlParser } from "./htmlParser";
+import { LinkPreviewLoader } from './LinkPreviewLoader';
+import type { HtmlDocumentApi, HtmlParser } from './htmlParser';
 
 export class DefaultLinkPreviewLoader extends LinkPreviewLoader<HtmlDocumentApi> {
   private _htmlParser: HtmlParser;
@@ -20,10 +20,10 @@ export class DefaultLinkPreviewLoader extends LinkPreviewLoader<HtmlDocumentApi>
     return this.linkContent.then((htmlApi) => {
       let title = htmlApi
         .querySelector('meta[property="og:title"]')
-        ?.getAttribute("content");
+        ?.getAttribute('content');
 
       if (!title) {
-        title = htmlApi.querySelector("title")?.getText();
+        title = htmlApi.querySelector('title')?.getText();
       }
 
       return title;
@@ -34,7 +34,7 @@ export class DefaultLinkPreviewLoader extends LinkPreviewLoader<HtmlDocumentApi>
     return this.linkContent.then((htmlApi) => {
       return htmlApi
         .querySelector('meta[property="og:description"]')
-        ?.getAttribute("content");
+        ?.getAttribute('content');
     });
   }
 
@@ -42,7 +42,7 @@ export class DefaultLinkPreviewLoader extends LinkPreviewLoader<HtmlDocumentApi>
     return this.linkContent.then((htmlApi) => {
       return htmlApi
         .querySelector('meta[property="og:image"]')
-        ?.getAttribute("content");
+        ?.getAttribute('content');
     });
   }
 
@@ -50,19 +50,19 @@ export class DefaultLinkPreviewLoader extends LinkPreviewLoader<HtmlDocumentApi>
     return this.linkContent.then((htmlApi) => {
       let faviconUrl = htmlApi
         .querySelector('link[rel="alternate icon"]')
-        ?.getAttribute("href");
+        ?.getAttribute('href');
 
       if (!faviconUrl) {
         faviconUrl = htmlApi
           .querySelector('link[rel="icon"]')
-          ?.getAttribute("href");
+          ?.getAttribute('href');
       }
 
       if (!faviconUrl) {
-        return undefined;
+        return;
       }
 
-      if (faviconUrl.startsWith("/")) {
+      if (faviconUrl.startsWith('/')) {
         return this.baseUrl + faviconUrl;
       }
 
