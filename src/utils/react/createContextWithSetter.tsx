@@ -1,4 +1,4 @@
-import { createContext, FC, ProviderProps, ReactNode, useContext } from "react";
+import { createContext, type FC, type ReactNode, useContext } from "react";
 
 export interface ContextWithSetter<T> {
   Provider: FC<ContextWithSetterProviderProps<T>>;
