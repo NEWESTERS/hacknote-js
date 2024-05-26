@@ -24,7 +24,7 @@
     "cheerio": "1.0.0-rc.12",
     "clsx": "^1.2.1",
     "mdast-util-to-string": "^4.0.0",
-    "pagefind": "^1.0.4",
+    "pagefind": "^1.1.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-is": "^18.2.0",
