@@ -20,7 +20,7 @@ const { class: className } = Astro.props;
     <HeaderLink href="/hacknote-js/" exact>Главная</HeaderLink>
     <HeaderLink href="/hacknote-js/articles">Статьи</HeaderLink>
 
-    <GlobalSearchModal className="search" client:only />
+    <GlobalSearchModal className="search" client:only="react" />
   </nav>
 </header>
 

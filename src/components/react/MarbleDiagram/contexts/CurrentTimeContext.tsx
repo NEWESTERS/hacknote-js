@@ -1,12 +1,6 @@
+import { type FC, type ReactNode, useState } from "react";
+
 import { createContextWithSetter } from "@utils/react";
-import {
-  createContext,
-  FC,
-  ReactNode,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
 
 const Context = createContextWithSetter<number>("PointSelection");
 
