@@ -37,7 +37,11 @@ export const PagefindSearch = ({
 
     return pagefindQuery.data.results.map((result) => (
       <li key={result.id}>
-        <PagefindSearchResultView data={result} onLinkClick={onLinkClick} />
+        <PagefindSearchResultView
+          data={result}
+          onLinkClick={onLinkClick}
+          searchId={searchString}
+        />
       </li>
     ));
   };
