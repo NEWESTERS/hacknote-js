@@ -12,14 +12,16 @@ export interface PagefindSearchResultViewProps {
   className?: string;
   data: PagefindSearchResult;
   onLinkClick?: MouseEventHandler<HTMLAnchorElement>;
+  searchId: string;
 }
 
 export const PagefindSearchResultView = ({
   className,
   data,
   onLinkClick,
+  searchId,
 }: PagefindSearchResultViewProps): ReactElement => {
-  const itemQuery = usePageFindResultQuery(data);
+  const itemQuery = usePageFindResultQuery(data, searchId);
 
   if (!itemQuery.data) {
     return <PagefindSearchResultSkeleton className={className} />;

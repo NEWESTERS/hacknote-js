@@ -7,11 +7,12 @@ import type {
 import { queryClient } from "@utils/query";
 
 export function usePageFindResultQuery(
-  result: PagefindSearchResult
+  result: PagefindSearchResult,
+  searchId: string
 ): UseQueryResult<PagefindSearchFragment> {
   return useQuery(
     {
-      queryKey: ["pagefind", result.id],
+      queryKey: ["pagefind", searchId, result.id],
       queryFn: () => result.data(),
     },
     queryClient
