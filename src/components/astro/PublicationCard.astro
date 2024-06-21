@@ -1,0 +1,70 @@
+---
+import H2 from "./H2.astro";
+import FormattedDate from "./FormattedDate.astro";
+
+interface Props {
+  class?: string;
+  id: string;
+  title: string;
+  pubDate: Date;
+};
+
+const { pubDate, title, class: className, id } = Astro.props;
+---
+
+<div class:list={["card", className]} transition:name={id}>
+  <div class="info">
+    <H2 class="title">{title}</H2>
+
+    <FormattedDate date={pubDate} />
+  </div>
+
+  <slot name="thumbnail" />
+</div>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+    padding: 32px;
+    border-radius: 16px;
+    background-color: var(--color_background-regular);
+    box-shadow: var(--shadow_default);
+    box-sizing: border-box;
+    transition: transform 0.2s ease;
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+  }
+
+  .title {
+    margin: 0;
+    font-weight: bold;
+    font-size: 24px;
+    color: var(--color_text-white);
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 16px;
+  }
+
+  @media screen and (max-width: 500px) {
+    .title {
+      text-align: center;
+    }
+
+    .info {
+      align-items: center;
+    }
+
+    .card {
+      flex-direction: column;
+    }
+  }
+</style>

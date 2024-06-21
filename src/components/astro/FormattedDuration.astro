@@ -4,17 +4,19 @@ import { formatDuration } from "@utils/time";
 
 export interface Props {
   class?: string;
-  /** Длительность в миллисекундах */
-  duration: number;
+  duration: number | string;
 }
 
 const { class: className, duration } = Astro.props;
+
+const durationString =
+  typeof duration === "number" ? formatDuration(duration) : duration;
 ---
 
 <div class={className}>
   <img src={timeIcon.src} />
 
-  {formatDuration(duration)}
+  {durationString}
 </div>
 <style>
   img {

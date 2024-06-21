@@ -1,0 +1,83 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import { YouTube } from "@astro-community/astro-embed-youtube";
+
+import A from "@components/astro/PreviewableLink.astro";
+import Code from "@components/astro/Code.astro";
+import Img from "@components/astro/Img.astro";
+import Pre from "@components/astro/Pre.astro";
+import H1 from "@components/astro/H1.astro";
+import H2 from "@components/astro/H2.astro";
+import H3 from "@components/astro/H3.astro";
+import P from "@components/astro/P.astro";
+import Blockquote from "@components/astro/Blockquote.astro";
+import Table from "@components/astro/Table.astro";
+import Tr from "@components/astro/Tr.astro";
+import Th from "@components/astro/Th.astro";
+import Td from "@components/astro/Td.astro";
+import PublicationPage from "@layouts/PublicationPage.astro";
+
+export async function getStaticPaths() {
+  const videos = await getCollection("videos");
+
+  return videos.map((video) => ({
+    params: { slug: video.slug },
+    props: video,
+  }));
+}
+
+type Props = CollectionEntry<"videos">;
+
+const video = Astro.props;
+
+const { telegramPostId, pubDate, watchTime, title, description,heroImage, url } = video.data;
+
+const { Content } = await video.render();
+---
+
+<style>
+  .video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+    margin-top: 32px;
+  }
+</style>
+
+<PublicationPage
+  title={title}
+  description={description}
+  heroImage={heroImage}
+  duration={watchTime}
+  id={video.id}
+  pubDate={pubDate}
+  telegramPostId={telegramPostId}
+>
+    <YouTube
+      id={url}
+      class="video"
+      transition:name={`${video.id}__image`}
+      data-pagefind-meta={`image:${heroImage}`}
+    />
+
+    <P>{description}</P>
+
+    <Content
+      components={{
+        a: A,
+        code: Code,
+        img: Img,
+        pre: Pre,
+        h1: H1,
+        h2: H2,
+        h3: H3,
+        p: P,
+        table: Table,
+        tr: Tr,
+        th: Th,
+        td: Td,
+        blockquote: Blockquote,
+      }}
+  />
+</PublicationPage>
+

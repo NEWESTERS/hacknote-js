@@ -1,6 +1,6 @@
 ---
 import { type CollectionEntry, getCollection } from "astro:content";
-import BlogPost from "../../layouts/BlogPost.astro";
+
 import A from "@components/astro/PreviewableLink.astro";
 import Code from "@components/astro/Code.astro";
 import Img from "@components/astro/Img.astro";
@@ -14,7 +14,7 @@ import Table from "@components/astro/Table.astro";
 import Tr from "@components/astro/Tr.astro";
 import Th from "@components/astro/Th.astro";
 import Td from "@components/astro/Td.astro";
-import TelegramComments from "@components/astro/TelegramComments.astro";
+import PublicationPage from "@layouts/PublicationPage.astro";
 
 export async function getStaticPaths() {
   const articles = await getCollection("articles");
@@ -27,16 +27,42 @@ type Props = CollectionEntry<"articles">;
 
 const article = Astro.props;
 
-const { telegramPostId } = article.data;
+const { telegramPostId, title, description, heroImage, pubDate } = article.data;
 
 const { Content, remarkPluginFrontmatter } = await article.render();
 ---
 
-<BlogPost
-  {...article.data}
+<style>
+  figure {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 16px -32px;
+    width: calc(100% + 64px);
+    background-color: var(--color_background-light);
+  }
+</style>
+
+<PublicationPage
+  title={title}
+  description={description}
+  heroImage={heroImage}
+  duration={remarkPluginFrontmatter.readingTime}
   id={article.id}
-  readingTime={remarkPluginFrontmatter.readingTime}
+  pubDate={pubDate}
+  telegramPostId={telegramPostId}
 >
+  <figure>
+    <img
+      src={heroImage}
+      width="288"
+      height="240"
+      alt={title}
+      transition:name={`${article.id}__image`}
+      data-pagefind-meta="image[src]"
+    />
+  </figure>
+
   <Content
     components={{
       a: A,
@@ -54,6 +80,4 @@ const { Content, remarkPluginFrontmatter } = await article.render();
       blockquote: Blockquote,
     }}
   />
-
-  {telegramPostId && <TelegramComments postId={telegramPostId} />}
-</BlogPost>
+</PublicationPage>

@@ -1,17 +1,21 @@
 ---
-import type { CollectionEntry } from "astro:content";
-
 import H1 from "@components/astro/H1.astro";
-import DefaultPage from "./DefaultPage.astro";
 import FormattedDate from "@components/astro/FormattedDate.astro";
 import FormattedDuration from "@components/astro/FormattedDuration.astro";
+import DefaultPage from "./DefaultPage.astro";
+import TelegramComments from "@components/astro/TelegramComments.astro";
 
-type Props = CollectionEntry<"articles">["data"] & {
+interface Props  {
   id: string;
-  readingTime: number;
+  title: string;
+  pubDate: Date;
+  duration: string | number;
+  heroImage: string;
+  description: string;
+  telegramPostId?: string;
 };
 
-const { title, description, pubDate, heroImage, id, readingTime } = Astro.props;
+const { title, description, pubDate, id, duration, heroImage, telegramPostId } = Astro.props;
 ---
 
 <style>
@@ -25,21 +29,12 @@ const { title, description, pubDate, heroImage, id, readingTime } = Astro.props;
     overflow-x: hidden;
   }
 
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 375px) {
     article {
       margin: 0 -16px;
       width: calc(100% + 32px);
       border-radius: 0;
     }
-  }
-
-  figure {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin: 16px -32px;
-    width: calc(100% + 64px);
-    background-color: var(--color_background-light);
   }
 
   .tags {
@@ -50,13 +45,20 @@ const { title, description, pubDate, heroImage, id, readingTime } = Astro.props;
     flex-wrap: wrap;
     gap: 8px;
   }
+
+  .video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+    margin-top: 32px;
+  }
 </style>
 
 <DefaultPage
-  title={title}
-  description={description}
-  image={heroImage}
-  type="article"
+    title={title}
+    description={description}
+    image={heroImage}
+    type="article"
 >
   <article transition:name={id} data-pagefind-body>
     <H1>{title}</H1>
@@ -64,20 +66,11 @@ const { title, description, pubDate, heroImage, id, readingTime } = Astro.props;
     <div class="tags">
       <FormattedDate date={pubDate} />
 
-      <FormattedDuration duration={readingTime} />
+      <FormattedDuration duration={duration} />
     </div>
 
-    <figure>
-      <img
-        src={heroImage}
-        width="288"
-        height="240"
-        alt={title}
-        transition:name={`${id}__image`}
-        data-pagefind-meta="image[src]"
-      />
-    </figure>
-
     <slot />
+
+    {telegramPostId && <TelegramComments postId={telegramPostId} />}
   </article>
 </DefaultPage>

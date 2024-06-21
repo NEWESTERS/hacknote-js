@@ -2,9 +2,9 @@
 import { getCollection } from "astro:content";
 
 import DefaultPage from "@layouts/DefaultPage.astro";
-import ArticleCard from "@components/astro/ArticleCard.astro";
+import VideoCard from "@components/astro/VideoCard.astro";
 
-const articles = (await getCollection("articles")).sort(
+const videos = (await getCollection("videos")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 ---
@@ -22,7 +22,7 @@ const articles = (await getCollection("articles")).sort(
     flex-direction: column;
     gap: 24px;
   }
-  
+
   section {
     display: flex;
     flex-direction: column;
@@ -38,10 +38,10 @@ const articles = (await getCollection("articles")).sort(
   <section>
     <ul>
       {
-        articles.map(({ data, slug, id }) => (
+        videos.map(({ data, slug, id }) => (
           <li>
-            <a href={`/hacknote-js/articles/${slug}`}>
-              <ArticleCard {...data} id={id} />
+            <a href={`/hacknote-js/videos/${slug}`}>
+              <VideoCard {...data} id={id} />
             </a>
           </li>
         ))

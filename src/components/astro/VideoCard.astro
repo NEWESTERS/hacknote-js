@@ -3,7 +3,7 @@ import type { CollectionEntry } from "astro:content";
 
 import PublicationCard from "./PublicationCard.astro";
 
-type Props = CollectionEntry<"articles">["data"] & {
+type Props = CollectionEntry<"videos">["data"] & {
   class?: string;
   id: string;
 };
@@ -25,11 +25,15 @@ const { pubDate, title, heroImage, class: className, id } = Astro.props;
 
 <style>
   .image {
-    width: 196px;
-    height: 160px;
+    width: 256px;
+    max-width: 50%;
+    height: auto;
+    aspect-ratio: 16 / 9;
     object-fit: contain;
     border-radius: 16px;
+    filter: contrast(0.9) brightness(1.1) saturate(0.9);
   }
+
   @media screen and (max-width: 500px) {
     .image {
       width: 100%;
