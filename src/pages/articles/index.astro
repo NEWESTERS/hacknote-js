@@ -1,12 +1,12 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection } from 'astro:content';
 
-import DefaultPage from "@layouts/DefaultPage.astro";
-import ArticleCard from "@components/astro/ArticleCard.astro";
+import DefaultPage from '@layouts/DefaultPage.astro';
+import ArticleCard from '@components/astro/ArticleCard.astro';
 
-const articles = (await getCollection("articles")).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+const articles = await getCollection('articles');
+
+articles.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
 <style>
@@ -22,7 +22,7 @@ const articles = (await getCollection("articles")).sort(
     flex-direction: column;
     gap: 24px;
   }
-  
+
   section {
     display: flex;
     flex-direction: column;

@@ -1,7 +1,7 @@
-import clsx from "clsx";
-import { type FC, type HTMLAttributes, memo } from "react";
+import clsx from 'clsx';
+import { type FC, type HTMLAttributes, memo } from 'react';
 
-import Styles from "./Icon.module.css";
+import Styles from './Icon.module.css';
 
 export interface IconProps extends HTMLAttributes<HTMLElement> {
   size?: number;
@@ -15,18 +15,18 @@ export const Icon: FC<IconProps> = memo(
     style,
     size = 24,
     url,
-    color = "var(--color_text-white)",
+    color = 'var(--color_text-white)',
     ...props
   }) => {
     return (
       <div
         className={clsx(Styles.Icon, className)}
         style={{
-          "--size": `${size}px`,
-          "--color": color,
+          '--size': `${size}px`,
+          '--color': color,
           maskImage: `url(${url})`,
           WebkitMaskImage: `url(${url})`,
-          ...style,
+          ...style
         }}
         {...props}
       />

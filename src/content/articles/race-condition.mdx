@@ -1,13 +1,13 @@
 ---
-title: "Состояние гонки"
-description: "Асинхронные операции бывают непредсказуемыми, поскольку физически могут выполняться параллельно основному потоку, поэтому очень важно следить за актуальностью данных, которые они нам возвращают."
-pubDate: "Jul 4 2023"
-heroImage: "/hacknote-js/images/race-condition/hero.png"
-telegramPostId: "41"
+title: 'Состояние гонки'
+description: 'Асинхронные операции бывают непредсказуемыми, поскольку физически могут выполняться параллельно основному потоку, поэтому очень важно следить за актуальностью данных, которые они нам возвращают.'
+pubDate: 'Jul 4 2023'
+heroImage: '/hacknote-js/images/race-condition/hero.png'
+telegramPostId: '41'
 ---
 
-import Demo from "@components/astro/Demo.astro";
-import Aside from "@components/astro/Aside.astro";
+import Demo from '@components/astro/Demo.astro';
+import Aside from '@components/astro/Aside.astro';
 import {
   RaceCondition,
   RaceConditionTimeline,
@@ -15,8 +15,8 @@ import {
   RaceConditionFixedTimeline,
   AbortControllerTimeline,
   RequestRace,
-  RepoSearch,
-} from "@articleAssets/race-condition";
+  RepoSearch
+} from '@articleAssets/race-condition';
 
 При разработке пользовательских интерфейсов мы часто сталкиваемся с обработкой каких-либо асинхронных операций. Зачастую в качестве таких операций выступают сетевые запросы. Сеть зависит от множества разных вещей, что делает её весьма непредсказуемой. Предлагаю рассмотреть на примерах, что я имею в виду.
 
@@ -25,12 +25,12 @@ import {
 Устроим гонки покемонов: выставим на дуэль Пикачу и... ещё одного Пикачу! Почему бы и нет?
 
 ```ts
-fetch("https://pokeapi.co/api/v2/pokemon/pikachu").then(() => {
-  console.log("1");
+fetch('https://pokeapi.co/api/v2/pokemon/pikachu').then(() => {
+  console.log('1');
 });
 
-fetch("https://pokeapi.co/api/v2/pokemon/pikachu").then(() => {
-  console.log("2");
+fetch('https://pokeapi.co/api/v2/pokemon/pikachu').then(() => {
+  console.log('2');
 });
 ```
 
@@ -76,7 +76,7 @@ export async function fetchData(text: string): Promise<string> {
 
 Пример может показаться довольно бессмысленным, но зато он максимально наглядно проиллюстрирует проблему:
 
-<Demo title="Проблемный поиск (демо)">
+<Demo title='Проблемный поиск (демо)'>
   <RaceCondition client:visible />
 </Demo>
 
@@ -84,7 +84,7 @@ export async function fetchData(text: string): Promise<string> {
 
 Скорее всего вы уже догадались, в чём дело, но чтобы точно понять, с чем мы имеем дело, предлагаю рассмотреть последовательность происходящих событий на диаграмме:
 
-<Demo title="Проблемный поиск (диаграмма)">
+<Demo title='Проблемный поиск (диаграмма)'>
   <RaceConditionTimeline client:visible />
 </Demo>
 
@@ -116,13 +116,13 @@ useEffect(() => {
 
 Таким образом проблема действительно будет решена и приложение будет работать более предсказуемо в непредсказуемых условиях:
 
-<Demo title="Состояние гонки исправлено (демо)">
+<Demo title='Состояние гонки исправлено (демо)'>
   <RaceConditionFixed client:visible />
 </Demo>
 
 Посмотрим, что изменилось на диаграмме:
 
-<Demo title="Состояние гонки исправлено (диаграмма)">
+<Demo title='Состояние гонки исправлено (диаграмма)'>
   <RaceConditionFixedTimeline client:visible />
 </Demo>
 
@@ -160,7 +160,7 @@ useEffect(() => {
 
   fetch(`${apiUrl}?q=${searchString}`, {
     // Передаём источник события отмены
-    signal: abortController.signal,
+    signal: abortController.signal
   }).then((data) => {
     setData(data);
   });
@@ -173,7 +173,7 @@ useEffect(() => {
 
 Внутри браузер подпишется на событие `abort` у сигнала и прервёт запрос, когда событие произойдёт:
 
-<Demo title="Отмена запроса (диаграмма)">
+<Demo title='Отмена запроса (диаграмма)'>
   <AbortControllerTimeline client:visible />
 </Demo>
 

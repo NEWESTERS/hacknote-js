@@ -7,31 +7,34 @@ interface FrameContext {
 type OnAnimationFrame = (context: FrameContext) => void;
 
 export class FrameAnimation {
-  public constructor(private _onAnimationFrame: OnAnimationFrame) {}
-
   private _startTime: number | undefined = undefined;
 
   private _lastAnimationFrameId: number | undefined = undefined;
 
+  private _onAnimationFrame: OnAnimationFrame;
+
+  public constructor(onAnimationFrame: OnAnimationFrame) {
+    this._onAnimationFrame = onAnimationFrame;
+  }
+
   public start(): void {
     if (this._startTime) {
-      console.warn("Cannot start started animation");
       return;
     }
 
     const startTime = performance.now();
     this._startTime = startTime;
 
-    let prevTime = startTime;
+    let previousTime = startTime;
 
-    const onFrame = (time: DOMHighResTimeStamp) => {
-      const timeDelta = time - prevTime;
-      prevTime = time;
+    const onFrame = (time: DOMHighResTimeStamp): void => {
+      const timeDelta = time - previousTime;
+      previousTime = time;
 
       this._onAnimationFrame({
         startTime,
         timeDelta,
-        currentTime: time,
+        currentTime: time
       });
 
       this._lastAnimationFrameId = requestAnimationFrame(onFrame);
@@ -40,7 +43,7 @@ export class FrameAnimation {
     onFrame(startTime);
   }
 
-  public stop() {
+  public stop(): void {
     if (this._lastAnimationFrameId) {
       cancelAnimationFrame(this._lastAnimationFrameId);
     }

@@ -1,15 +1,15 @@
 ---
-title: "Передача данных в CSS"
-description: "При разработке интерфейсов часто возникает необходимость динамически менять стили HTML-элементов в зависимости от текущего состояния приложения. Существует довольно много способов передать данные из Javascript в CSS и в этой статье я предлагаю их рассмотреть."
-pubDate: "Mar 28 2023"
-heroImage: "/hacknote-js/images/js-in-css/hero.png"
-telegramPostId: "33"
+title: 'Передача данных в CSS'
+description: 'При разработке интерфейсов часто возникает необходимость динамически менять стили HTML-элементов в зависимости от текущего состояния приложения. Существует довольно много способов передать данные из Javascript в CSS и в этой статье я предлагаю их рассмотреть.'
+pubDate: 'Mar 28 2023'
+heroImage: '/hacknote-js/images/js-in-css/hero.png'
+telegramPostId: '33'
 ---
 
-import ColorPicker from "@articleAssets/js-in-css/ColorPicker.astro";
-import Scroll from "@articleAssets/js-in-css/Scroll.astro";
-import Theming from "@articleAssets/js-in-css/Theming.astro";
-import Demo from "@components/astro/Demo.astro";
+import ColorPicker from '@articleAssets/js-in-css/ColorPicker.astro';
+import Scroll from '@articleAssets/js-in-css/Scroll.astro';
+import Theming from '@articleAssets/js-in-css/Theming.astro';
+import Demo from '@components/astro/Demo.astro';
 
 При разработке интерфейсов часто возникает необходимость динамически менять стили HTML-элементов в зависимости от текущего состояния приложения. Существует довольно много способов передать данные из Javascript в CSS и в этой статье я предлагаю их рассмотреть.
 
@@ -32,7 +32,7 @@ import Demo from "@components/astro/Demo.astro";
 В JSX последний пункт можно решить с помощью создания переменной:
 
 ```jsx
-const paragraphStyles = { color: "#272727" };
+const paragraphStyles = { color: '#272727' };
 
 const MyComponent = () => (
   <div>
@@ -70,7 +70,7 @@ const MyComponent = () => (
 В общем-то очень остроумно проблему решают CSS-in-JS фреймворки: чтобы не передавать данные из JS в CSS, мы перенесли CSS в JS:
 
 ```jsx
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Paragraph = styled.p`
   color: #272727;
@@ -86,11 +86,11 @@ const MyComponent = () => (
 
 Если нам понадобится передать данные из JS в CSS, мы можем сделать это так же, как и с любым другим React-компонентом:
 
-```tsx ins={3-5, 7-15, 18} ins="type=\"important\"" 
-import styled, { css } from "styled-components";
+```tsx ins={3-5, 7-15, 18} ins="type="important""
+import styled, { css } from 'styled-components';
 
 interface ParagraphProps {
-  type?: "regular" | "important";
+  type?: 'regular' | 'important';
 }
 
 const paragraphTypeStyles = {
@@ -100,17 +100,17 @@ const paragraphTypeStyles = {
   important: css`
     background-color: #ff6287;
     font-weight: bold;
-  `,
+  `
 };
 
 const Paragraph = styled.p<ParagraphProps>`
-  ${({ type = "regular" }) => paragraphTypeStyles[type]}
+  ${({ type = 'regular' }) => paragraphTypeStyles[type]}
 `;
 
 const MyComponent = () => (
   <div>
     <Paragraph>Lorem ipsum dolor sit amet</Paragraph>
-    <Paragraph type="important">Lorem ipsum dolor sit amet</Paragraph>
+    <Paragraph type='important'>Lorem ipsum dolor sit amet</Paragraph>
   </div>
 );
 ```
@@ -118,8 +118,8 @@ const MyComponent = () => (
 Мы передаём некий дискретный набор данных в компонент и для каждой новой их комбинации [styled-components](https://styled-components.com) будет создавать уникальный класс и вставлять его в DOM. Но что, если параметр не дискретный и меняется часто?
 
 ```tsx mark={13-14}
-import { useEffect, useState } from "react";
-import styled from "styled-components";
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 interface BallProps {
   position: [x: number, y: number];
@@ -218,11 +218,11 @@ const MyComponent = () => {
 
 Аналогично можно использовать data-атрибуты:
 
-```html mark="data-invalid=\"true\""
+```html mark="data-invalid="true""
 <input class="input" data-invalid="true" />
 
 <style>
-  .input[data-invalid="true"] {
+  .input[data-invalid='true'] {
     border-color: red;
   }
 </style>
@@ -230,11 +230,11 @@ const MyComponent = () => {
 
 Во многих случаях, кстати, data-атрибуты можно заменить на [aria-атрибуты](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes) и таким образом убить сразу двух зайцев: стили и доступность:
 
-```html mark="aria-invalid=\"true\""
+```html mark="aria-invalid="true""
 <input class="input" aria-invalid="true" />
 
 <style>
-  .input[aria-invalid="true"] {
+  .input[aria-invalid='true'] {
     border-color: red;
   }
 </style>
@@ -250,7 +250,7 @@ const MyComponent = () => {
 
 С их помощью можно в том числе организовать API между бизнес-логикой и визуалом:
 
-```html mark="style=\"--position-x: 35px; --position-y: 54px;\""
+```html mark="style="--position-x: 35px; --position-y: 54px;""
 <div class="ball" style="--position-x: 35px; --position-y: 54px;"></div>
 
 <style>
@@ -274,10 +274,10 @@ const MyComponent = () => {
 
   return (
     <div
-      className="ball"
+      className='ball'
       style={{
-        "--position-x": position[0],
-        "--position-y": position[1],
+        '--position-x': position[0],
+        '--position-y': position[1]
       }}
     />
   );
@@ -308,15 +308,15 @@ const MyComponent = () => {
 </style>
 
 <script>
-  document.addEventListener("scroll", ({ event }) => {
+  document.addEventListener('scroll', ({ event }) => {
     document
-      .getElementById("cube-demo")
-      .style.setAttribute("--scroll-top", event.target.scrollTop.toString());
+      .getElementById('cube-demo')
+      .style.setAttribute('--scroll-top', event.target.scrollTop.toString());
   });
 </script>
 ```
 
-<Demo title="Кручу-верчу...">
+<Demo title='Кручу-верчу...'>
   <Scroll />
 </Demo>
 
@@ -334,15 +334,15 @@ const MyComponent = () => {
 </form>
 
 <script>
-  const demo = document.getElementById("color-picker-demo");
+  const demo = document.getElementById('color-picker-demo');
 
-  demo.addEventListener("input", ({ target }) => {
+  demo.addEventListener('input', ({ target }) => {
     demo.style.setProperty(`--${target.name}`, target.value);
   });
 </script>
 ```
 
-<Demo title="Колорпикер">
+<Demo title='Колорпикер'>
   <ColorPicker />
 </Demo>
 
@@ -354,19 +354,19 @@ const MyComponent = () => {
 </body>
 
 <style>
-  body[data-theme="light"] {
+  body[data-theme='light'] {
     --text-color: back;
     --bg-color: white;
   }
 
-  body[data-theme="dark"] {
+  body[data-theme='dark'] {
     --text-color: white;
     --bg-color: black;
   }
 </style>
 ```
 
-<Demo title="Темизация">
+<Demo title='Темизация'>
   <Theming />
 </Demo>
 

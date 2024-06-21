@@ -1,9 +1,10 @@
-import clsx from "clsx";
-import type { FC } from "react";
+import clsx from 'clsx';
+import type { FC } from 'react';
 
-import winnerSvg from "@components/icons/winner.svg";
-import Styles from "./RaceResultView.module.css";
-import { Icon } from "@components/react";
+import winnerSvg from '@components/icons/winner.svg';
+import { Icon } from '@components/react';
+
+import Styles from './RaceResultView.module.css';
 
 export interface RaceResult {
   startTime: number;
@@ -21,7 +22,7 @@ export interface RaceResultViewProps {
 
 export const RaceResultView: FC<RaceResultViewProps> = ({
   className,
-  result,
+  result
 }) => {
   const max = Math.max(...result.finishes.map((item) => item.time));
 
@@ -29,7 +30,7 @@ export const RaceResultView: FC<RaceResultViewProps> = ({
     <div
       className={clsx(Styles.Layout, className)}
       style={{
-        "--max": max,
+        '--max': max
       }}
     >
       {result.finishes.map((item) => (
@@ -37,7 +38,7 @@ export const RaceResultView: FC<RaceResultViewProps> = ({
           key={item.title}
           className={Styles.Item}
           style={{
-            "--value": item.time,
+            '--value': item.time
           }}
           data-winner={item.isWinner}
         >
@@ -50,7 +51,7 @@ export const RaceResultView: FC<RaceResultViewProps> = ({
           <Icon
             className={Styles.WinnerIcon}
             url={winnerSvg.src}
-            color="var(--color_accent-yellow)"
+            color='var(--color_accent-yellow)'
             size={16}
           />
         </div>

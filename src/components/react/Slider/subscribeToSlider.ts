@@ -20,47 +20,47 @@ function getChangeEvent(
   return {
     target: element,
     relativeValue: (clientX - left) / width,
-    nativeEvent: mouseEvent,
+    nativeEvent: mouseEvent
   };
 }
+
+const preventDefault = (event: TouchEvent): void => {
+  event.preventDefault();
+};
 
 export function subscribeToSlider(
   element: HTMLElement,
   observer: SliderObserver
 ): () => void {
-  const handleMouseMove = (mouseEvent: MouseEvent) => {
+  const handleMouseMove = (mouseEvent: MouseEvent): void => {
     mouseEvent.preventDefault();
     observer.onChange(getChangeEvent(element, mouseEvent));
   };
 
-  const handleMouseUp = () => {
+  const handleMouseUp = (): void => {
     observer.onEnd();
-    document.body.removeEventListener("pointermove", handleMouseMove);
+    document.body.removeEventListener('pointermove', handleMouseMove);
   };
 
-  const handleTouchMove = (event: TouchEvent) => {
-    event.preventDefault();
-  };
-
-  const handleMouseDown = (mouseEvent: MouseEvent) => {
+  const handleMouseDown = (mouseEvent: MouseEvent): void => {
     // Отменяем выделение
     mouseEvent.preventDefault();
 
     observer.onStart();
     observer.onChange(getChangeEvent(element, mouseEvent));
 
-    document.body.addEventListener("pointermove", handleMouseMove);
-    document.body.addEventListener("touchmove", handleTouchMove, {
-      passive: false,
+    document.body.addEventListener('pointermove', handleMouseMove);
+    document.body.addEventListener('touchmove', preventDefault, {
+      passive: false
     });
-    document.body.addEventListener("pointerup", handleMouseUp, { once: true });
+    document.body.addEventListener('pointerup', handleMouseUp, { once: true });
   };
 
-  element.addEventListener("pointerdown", handleMouseDown, { passive: false });
+  element.addEventListener('pointerdown', handleMouseDown, { passive: false });
 
   return () => {
-    element.removeEventListener("pointerdown", handleMouseDown);
-    document.body.removeEventListener("pointermove", handleMouseMove);
-    document.body.removeEventListener("touchmove", handleTouchMove);
+    element.removeEventListener('pointerdown', handleMouseDown);
+    document.body.removeEventListener('pointermove', handleMouseMove);
+    document.body.removeEventListener('touchmove', preventDefault);
   };
 }

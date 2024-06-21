@@ -1,9 +1,9 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import type { CollectionEntry } from 'astro:content';
 
-import PublicationCard from "./PublicationCard.astro";
+import PublicationCard from './PublicationCard.astro';
 
-type Props = CollectionEntry<"videos">["data"] & {
+type Props = CollectionEntry<'videos'>['data'] & {
   class?: string;
   id: string;
 };
@@ -13,13 +13,13 @@ const { pubDate, title, heroImage, class: className, id } = Astro.props;
 
 <PublicationCard title={title} pubDate={pubDate} class={className} id={id}>
   <img
-    class="image"
+    class='image'
     src={heroImage}
     width={196}
     height={160}
     alt={title}
     transition:name={`${id}__image`}
-    slot="thumbnail"
+    slot='thumbnail'
   />
 </PublicationCard>
 

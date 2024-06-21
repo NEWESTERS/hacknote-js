@@ -1,2 +1,2 @@
-export * from "./normalizeUrl";
-export * from "./isUrlMatch";
+export * from './normalizeUrl';
+export * from './isUrlMatch';

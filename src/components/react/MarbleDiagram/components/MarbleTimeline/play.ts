@@ -1,4 +1,4 @@
-import { FrameAnimation } from "@utils/animation";
+import { FrameAnimation } from '@utils/animation';
 
 interface PlayOptions {
   speed: number;
@@ -11,7 +11,7 @@ export function play({
   speed,
   onIncrement,
   targetValue,
-  startValue,
+  startValue
 }: PlayOptions): () => void {
   let currentValue = startValue;
 

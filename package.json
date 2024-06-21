@@ -7,7 +7,10 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint:prettier": "prettier --write  \"**/*.{js,jsx,ts,tsx,md,mdx,astro}\"",
+    "lint:eslint": "eslint --fix \"src/**/*.{js,ts,jsx,tsx,astro}\"",
+    "lint": "npm run lint:prettier && npm run lint:eslint"
   },
   "dependencies": {
     "@astro-community/astro-embed-youtube": "^0.5.2",
@@ -37,7 +40,21 @@
     "vite": "^4.4.9"
   },
   "devDependencies": {
-    "csstype": "^3.1.2"
+    "@microsoft/eslint-formatter-sarif": "^3.1.0",
+    "@rushstack/eslint-config": "^3.6.10",
+    "@typescript-eslint/parser": "^7.10.0",
+    "csstype": "^3.1.2",
+    "eslint": "^8.57.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-astro": "^1.2.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-sonarjs": "^1.0.3",
+    "eslint-plugin-unicorn": "^53.0.0",
+    "prettier": "^3.2.5",
+    "prettier-config-standard": "^7.0.0",
+    "prettier-plugin-astro": "^0.14.0"
   },
   "packageManager": "pnpm@8.15.3"
 }

@@ -1,10 +1,10 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection } from 'astro:content';
 
-import DefaultPage from "@layouts/DefaultPage.astro";
-import VideoCard from "@components/astro/VideoCard.astro";
+import DefaultPage from '@layouts/DefaultPage.astro';
+import VideoCard from '@components/astro/VideoCard.astro';
 
-const videos = (await getCollection("videos")).sort(
+const videos = (await getCollection('videos')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 ---

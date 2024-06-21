@@ -1,12 +1,13 @@
-import { useState, type MouseEventHandler, type ReactElement } from "react";
-import clsx from "clsx";
+import { useState, type MouseEventHandler, type ReactElement } from 'react';
+import clsx from 'clsx';
 
-import { Input } from "../Input";
-import { PagefindSearch } from "../PagefindSearch";
-import { Icon } from "../Icon";
-import searchIcon from "../../icons/search.svg";
-import Styles from "./PagefindSearchField.module.css";
-import { useDebouncedValue } from "@utils/react";
+import { useDebouncedValue } from '@utils/react';
+
+import { Input } from '../Input';
+import { PagefindSearch } from '../PagefindSearch';
+import { Icon } from '../Icon';
+import searchIcon from '../../icons/search.svg';
+import Styles from './PagefindSearchField.module.css';
 
 export interface PagefindSearchFieldProps {
   className?: string;
@@ -15,9 +16,9 @@ export interface PagefindSearchFieldProps {
 
 export const PagefindSearchField = ({
   className,
-  onLinkClick,
+  onLinkClick
 }: PagefindSearchFieldProps): ReactElement => {
-  const [searchString, setSearchString] = useState("");
+  const [searchString, setSearchString] = useState('');
 
   const debouncedSearchString = useDebouncedValue(searchString, 300);
 
@@ -30,7 +31,7 @@ export const PagefindSearchField = ({
         left={<Icon url={searchIcon.src} />}
       />
 
-      {debouncedSearchString !== "" && (
+      {debouncedSearchString !== '' && (
         <PagefindSearch
           className={Styles.Results}
           searchString={debouncedSearchString}

@@ -1,8 +1,8 @@
-import { type FC, type ReactNode, useState } from "react";
+import { type FC, type ReactNode, useState } from 'react';
 
-import { createContextWithSetter } from "@utils/react";
+import { createContextWithSetter } from '@utils/react';
 
-const Context = createContextWithSetter<string | undefined>("PointSelection");
+const Context = createContextWithSetter<string | undefined>('PointSelection');
 
 export const useSelectedPointId = Context.useValue;
 
@@ -13,7 +13,7 @@ export interface PointSelectionProviderProps {
 }
 
 export const PointSelectionProvider: FC<PointSelectionProviderProps> = ({
-  children,
+  children
 }) => {
   const [selectedPointId, setSelectedPointId] = useState<string>();
 

@@ -1,3 +1,3 @@
-export * from "./PagefindSearchResultView";
+export * from './PagefindSearchResultView';
 
-export * from "./PagefindSearchResultSkeleton";
+export * from './PagefindSearchResultSkeleton';

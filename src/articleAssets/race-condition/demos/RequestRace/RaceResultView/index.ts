@@ -1,1 +1,1 @@
-export * from "./RaceResultView";
+export * from './RaceResultView';

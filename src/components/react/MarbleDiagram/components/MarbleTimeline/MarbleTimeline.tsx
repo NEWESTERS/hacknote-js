@@ -1,17 +1,17 @@
-import { type FC, useEffect, useState } from "react";
+import { type FC, useEffect, useState } from 'react';
 
-import { Slider } from "../../../Slider";
+import { Slider } from '../../../Slider';
 import {
   useCurrentTime,
   useSetCurrentTime,
-  useTimeRange,
-} from "../../contexts";
+  useTimeRange
+} from '../../contexts';
 import {
   PlaybackControls,
-  type PlaybackState,
-} from "../../../PlaybackControls";
-import Styles from "./MarbleTimeline.module.css";
-import { play } from "./play";
+  type PlaybackState
+} from '../../../PlaybackControls';
+import Styles from './MarbleTimeline.module.css';
+import { play } from './play';
 
 export interface MarbleTimelineProps {
   className?: string;
@@ -24,45 +24,48 @@ export const MarbleTimeline: FC<MarbleTimelineProps> = ({ className }) => {
 
   const isFinished = currentTime === timeRange.to;
 
-  const [playbackState, setPlaybackState] = useState<PlaybackState>("paused");
+  const [playbackState, setPlaybackState] = useState<PlaybackState>('paused');
+  const [startTime, setStartTime] = useState<number>();
 
   useEffect(() => {
-    if (playbackState === "playing") {
+    if (playbackState === 'playing' && startTime !== undefined) {
       return play({
         onIncrement: setTime,
         targetValue: timeRange.to,
-        startValue: currentTime,
-        speed: 1,
+        startValue: startTime,
+        speed: 1
       });
     }
-  }, [playbackState, setTime, timeRange]);
+  }, [playbackState, setTime, timeRange, startTime]);
 
   useEffect(() => {
     if (isFinished) {
-      setPlaybackState("finished");
+      setPlaybackState('finished');
     }
   }, [isFinished]);
 
-  const handlePlay = () => {
-    setPlaybackState("playing");
+  const handlePlay = (): void => {
+    setStartTime(currentTime);
+    setPlaybackState('playing');
   };
 
-  const handlePause = () => {
-    setPlaybackState("paused");
+  const handlePause = (): void => {
+    setPlaybackState('paused');
   };
 
-  const handleReset = () => {
+  const handleReset = (): void => {
     setTime(timeRange.from);
-    setPlaybackState("playing");
+    setStartTime(timeRange.from);
+    setPlaybackState('playing');
   };
 
-  const handleSkip = () => {
+  const handleSkip = (): void => {
     setTime(timeRange.to);
   };
 
-  const handleManualChange = (value: number) => {
+  const handleManualChange = (value: number): void => {
     setTime(value);
-    setPlaybackState("paused");
+    setPlaybackState('paused');
   };
 
   return (

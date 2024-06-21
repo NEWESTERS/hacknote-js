@@ -1,19 +1,20 @@
-import { Icon } from "@components/react/Icon";
-import clsx from "clsx";
-import type { FC } from "react";
+import clsx from 'clsx';
+import type { FC } from 'react';
 
-import playSvg from "../../icons/play.svg";
-import pauseSvg from "../../icons/pause.svg";
-import resetSvg from "../../icons/reset.svg";
-import playSkipForwardSvg from "../../icons/play-skip-forward.svg";
-import Styles from "./PlaybackControls.module.css";
+import { Icon } from '@components/react/Icon';
 
-export type PlaybackState = "playing" | "paused" | "finished";
+import playSvg from '../../icons/play.svg';
+import pauseSvg from '../../icons/pause.svg';
+import resetSvg from '../../icons/reset.svg';
+import playSkipForwardSvg from '../../icons/play-skip-forward.svg';
+import Styles from './PlaybackControls.module.css';
+
+export type PlaybackState = 'playing' | 'paused' | 'finished';
 
 const playButtonIconUrl: Record<PlaybackState, string> = {
   playing: pauseSvg.src,
   paused: playSvg.src,
-  finished: resetSvg.src,
+  finished: resetSvg.src
 };
 
 export interface PlaybackControlsProps {
@@ -31,21 +32,24 @@ export const PlaybackControls: FC<PlaybackControlsProps> = ({
   onPlay,
   onPause,
   onReset,
-  onSkip,
+  onSkip
 }) => {
-  const handleMainAction = () => {
+  const handleMainAction = (): void => {
     switch (state) {
-      case "paused":
+      case 'paused': {
         onPlay();
         break;
+      }
 
-      case "playing":
+      case 'playing': {
         onPause();
         break;
+      }
 
-      case "finished":
+      case 'finished': {
         onReset();
         break;
+      }
     }
   };
 
@@ -53,14 +57,14 @@ export const PlaybackControls: FC<PlaybackControlsProps> = ({
     <div className={clsx(Styles.Layout, className)}>
       <button className={Styles.Button} onClick={handleMainAction}>
         <Icon
-          color="var(--color_text-white)"
+          color='var(--color_text-white)'
           url={playButtonIconUrl[state]}
           size={32}
         />
       </button>
 
       <button className={Styles.Button} onClick={onSkip}>
-        <Icon color="var(--color_text-white)" url={playSkipForwardSvg.src} />
+        <Icon color='var(--color_text-white)' url={playSkipForwardSvg.src} />
       </button>
     </div>
   );

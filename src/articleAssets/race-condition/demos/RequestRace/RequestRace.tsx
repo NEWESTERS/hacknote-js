@@ -1,17 +1,18 @@
-import { type FC, useState } from "react";
+import { type FC, useState } from 'react';
+import clsx from 'clsx';
 
-import { Button, Icon } from "@components/react";
-import playSvg from "@components/icons/play.svg";
-import Styles from "./RequestRace.module.css";
-import clsx from "clsx";
-import { type RaceResult, RaceResultView } from "./RaceResultView";
+import { Button, Icon } from '@components/react';
+import playSvg from '@components/icons/play.svg';
+
+import Styles from './RequestRace.module.css';
+import { type RaceResult, RaceResultView } from './RaceResultView';
 
 export const RequestRace: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [results, setResults] = useState<RaceResult[]>([]);
 
-  const start = () => {
+  const start = (): void => {
     setIsLoading(true);
 
     const startTime = performance.now();
@@ -19,42 +20,44 @@ export const RequestRace: FC = () => {
     let winner: string | undefined;
 
     Promise.all([
-      fetch("https://pokeapi.co/api/v2/pokemon/pikachu").then(() => {
-        console.log("1");
+      fetch('https://pokeapi.co/api/v2/pokemon/pikachu').then(() => {
+        // eslint-disable-next-line no-console
+        console.log('1');
 
         if (!winner) {
-          winner = "1";
+          winner = '1';
         }
 
         return performance.now();
       }),
-      fetch("https://pokeapi.co/api/v2/pokemon/pikachu").then(() => {
-        console.log("2");
+      fetch('https://pokeapi.co/api/v2/pokemon/pikachu').then(() => {
+        // eslint-disable-next-line no-console
+        console.log('2');
 
         if (!winner) {
-          winner = "2";
+          winner = '2';
         }
 
         return performance.now();
-      }),
+      })
     ]).then(([endTime1, endTime2]) => {
       setResults((results) => [
         {
           startTime,
           finishes: [
             {
-              title: "1",
+              title: '1',
               time: endTime1 - startTime,
-              isWinner: winner === "1",
+              isWinner: winner === '1'
             },
             {
-              title: "2",
+              title: '2',
               time: endTime2 - startTime,
-              isWinner: winner === "2",
-            },
-          ],
+              isWinner: winner === '2'
+            }
+          ]
         },
-        ...results,
+        ...results
       ]);
       setIsLoading(false);
     });
@@ -64,8 +67,8 @@ export const RequestRace: FC = () => {
     <div className={Styles.Layout}>
       <Button
         onClick={start}
-        title="Демо"
-        right={<Icon url={playSvg.src} color="var(--color_accent-green)" />}
+        title='Демо'
+        right={<Icon url={playSvg.src} color='var(--color_accent-green)' />}
         disabled={isLoading}
       />
 

@@ -1,5 +1,6 @@
-import { getRandomNumber } from "@utils/number";
-import { sleep } from "./sleep";
+import { getRandomNumber } from '@utils/number';
+
+import { sleep } from './sleep';
 
 export interface AutofillOptions {
   text: string;
@@ -8,12 +9,12 @@ export interface AutofillOptions {
 }
 
 export async function autofill(options: AutofillOptions): Promise<void> {
-  let currentText = "";
+  let currentText = '';
   for (const char of options.text) {
     await sleep(getRandomNumber(50, 100));
 
     if (options.signal?.aborted) {
-      throw new Error("Autofill aborted");
+      throw new Error('Autofill aborted');
     }
 
     currentText += char;

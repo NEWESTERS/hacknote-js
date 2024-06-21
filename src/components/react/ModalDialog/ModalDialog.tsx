@@ -3,12 +3,13 @@ import {
   useRef,
   type ReactElement,
   type ReactNode,
-  type RefObject,
-} from "react";
-import clsx from "clsx";
+  type RefObject
+} from 'react';
+import clsx from 'clsx';
 
-import Styles from "./ModalDialog.module.css";
-import { useEventCallback } from "@utils/react";
+import { useEventCallback } from '@utils/react';
+
+import Styles from './ModalDialog.module.css';
 
 export interface ModalDialogProps {
   className?: string;
@@ -31,14 +32,14 @@ function useToggleDialog(
 
     if (open) {
       dialog.showModal();
-      document.body.style.setProperty("overflow", "hidden");
+      document.body.style.setProperty('overflow', 'hidden');
     }
 
     return () => {
       dialog.close();
-      document.body.style.removeProperty("overflow");
+      document.body.style.removeProperty('overflow');
     };
-  }, [open]);
+  }, [open, ref]);
 }
 
 export const ModalDialog = ({
@@ -46,7 +47,7 @@ export const ModalDialog = ({
   open,
   children,
   onClickOutside,
-  onClose,
+  onClose
 }: ModalDialogProps): ReactElement => {
   const ref = useRef<HTMLDialogElement>(null);
 
@@ -63,17 +64,16 @@ export const ModalDialog = ({
       return;
     }
 
-    const handleClick = (event: MouseEvent) => {
+    const handleClick = (event: MouseEvent): void => {
       if (!content.contains(event.target as Node)) {
-        console.log("click outside");
         handleClickOutside();
       }
     };
 
-    document.body.addEventListener("click", handleClick);
+    document.body.addEventListener('click', handleClick);
 
     return () => {
-      document.body.removeEventListener("click", handleClick);
+      document.body.removeEventListener('click', handleClick);
     };
   }, [handleClickOutside, open]);
 
@@ -81,7 +81,6 @@ export const ModalDialog = ({
     <dialog
       ref={ref}
       className={clsx(Styles.ModalDialog, className)}
-      onClick={() => console.log("CLick")}
       onClose={onClose}
     >
       <div ref={contentRef} className={Styles.Content}>

@@ -1,4 +1,4 @@
-<template id="hjs-link-preview-template">
+<template id='hjs-link-preview-template'>
   <style is:inline>
     #layout {
       display: flex;
@@ -49,19 +49,19 @@
       display: none;
     }
   </style>
-  <article id="layout">
-    <div id="content">
-      <h4 id="title"></h4>
-      <p id="description"></p>
-      <a id="source"></a>
+  <article id='layout'>
+    <div id='content'>
+      <h4 id='title'></h4>
+      <p id='description'></p>
+      <a id='source'></a>
     </div>
-    <img id="thumbnail" />
+    <img id='thumbnail' />
   </article>
 </template>
 
 <script>
-  const linkPreviewTemplate = document.getElementById(
-    "hjs-link-preview-template"
+  const linkPreviewTemplate = document.querySelector(
+    '#hjs-link-preview-template'
   ) as HTMLTemplateElement;
 
   class LinkPreview extends HTMLElement {
@@ -70,19 +70,19 @@
 
       const content = document.importNode(linkPreviewTemplate.content, true);
 
-      const shadowRoot = this.attachShadow({ mode: "open" });
+      const shadowRoot = this.attachShadow({ mode: 'open' });
 
-      shadowRoot.appendChild(content);
+      shadowRoot.append(content);
 
-      this.linkTitle = shadowRoot.getElementById("title") as HTMLHeadingElement;
-      this.linkDescription = shadowRoot.getElementById(
-        "description"
+      this.linkTitle = shadowRoot.querySelector('#title') as HTMLHeadingElement;
+      this.linkDescription = shadowRoot.querySelector(
+        '#description'
       ) as HTMLParagraphElement;
-      this.linkSource = shadowRoot.getElementById(
-        "source"
+      this.linkSource = shadowRoot.querySelector(
+        '#source'
       ) as HTMLAnchorElement;
-      this.linkThumbnail = shadowRoot.getElementById(
-        "thumbnail"
+      this.linkThumbnail = shadowRoot.querySelector(
+        '#thumbnail'
       ) as HTMLImageElement;
     }
 
@@ -95,10 +95,10 @@
     public readonly linkThumbnail: HTMLImageElement;
 
     public static observedAttributes = [
-      "title",
-      "description",
-      "source-url",
-      "thumbnail-url",
+      'title',
+      'description',
+      'source-url',
+      'thumbnail-url'
     ];
 
     public attributeChangedCallback(
@@ -111,22 +111,22 @@
       }
 
       switch (property) {
-        case "title": {
+        case 'title': {
           this.linkTitle.textContent = newValue;
           break;
         }
 
-        case "description": {
+        case 'description': {
           this.linkDescription.textContent = newValue;
           break;
         }
 
-        case "source-url": {
+        case 'source-url': {
           this.linkSource.href = new URL(newValue).host;
           break;
         }
 
-        case "thumbnail-url": {
+        case 'thumbnail-url': {
           this.linkThumbnail.src = newValue;
           break;
         }
@@ -134,5 +134,5 @@
     }
   }
 
-  customElements.define("hjs-link-preview", LinkPreview);
+  customElements.define('hjs-link-preview', LinkPreview);
 </script>

@@ -1,14 +1,15 @@
-import { formatTime } from "@utils/number";
-import clsx from "clsx";
-import type { FC } from "react";
+import clsx from 'clsx';
+import type { FC } from 'react';
+
+import { formatTime } from '@utils/number';
 
 import {
   useCurrentTime,
   useMarblePoint,
   useSelectedPointId,
-  useSetCurrentTime,
-} from "../../contexts";
-import Styles from "./MarblePointListItem.module.css";
+  useSetCurrentTime
+} from '../../contexts';
+import Styles from './MarblePointListItem.module.css';
 
 export interface MarblePointListItemProps {
   className?: string;
@@ -17,7 +18,7 @@ export interface MarblePointListItemProps {
 
 export const MarblePointListItem: FC<MarblePointListItemProps> = ({
   className,
-  id,
+  id
 }) => {
   const point = useMarblePoint(id);
   const currentTime = useCurrentTime();
@@ -27,7 +28,7 @@ export const MarblePointListItem: FC<MarblePointListItemProps> = ({
 
   const isSelected = useSelectedPointId() === id;
 
-  const handleClick = () => {
+  const handleClick = (): void => {
     setCurrentTime(point.time);
   };
 

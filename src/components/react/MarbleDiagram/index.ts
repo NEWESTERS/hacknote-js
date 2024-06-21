@@ -1,7 +1,7 @@
-export * from "./contexts";
+export * from './contexts';
 
-export * from "./MarbleConfigProvider";
+export * from './MarbleConfigProvider';
 
-export * from "./entities";
+export * from './entities';
 
-export * from "./components";
+export * from './components';

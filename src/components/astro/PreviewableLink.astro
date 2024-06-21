@@ -1,17 +1,17 @@
 ---
-import { getLinkPreviewLoader } from "@api/linkPreview";
-import { toBase64 } from "@utils/string";
+import { getLinkPreviewLoader } from '@api/linkPreview';
+import { toBase64 } from '@utils/string';
 
-import BaseLink, { type Props as BaseLinkProps } from "./BaseLink.astro";
+import BaseLink, { type Props as BaseLinkProps } from './BaseLink.astro';
 
-export interface Props extends Omit<BaseLinkProps, "iconUrl"> {}
+export interface Props extends Omit<BaseLinkProps, 'iconUrl'> {}
 
 const { class: className, href, ...props } = Astro.props;
 
 let url: URL | undefined;
 
 if (href) {
-  url = new URL(href, href.toString().startsWith("/") ? Astro.site : undefined);
+  url = new URL(href, href.toString().startsWith('/') ? Astro.site : undefined);
 }
 
 const loader = url ? getLinkPreviewLoader(url) : undefined;
@@ -33,20 +33,20 @@ const id = url ? toBase64(url.toString()) : undefined;
   }
 </style>
 <script>
-  import type { LinkPreviewData } from "@api/linkPreview";
+  import type { LinkPreviewData } from '@api/linkPreview';
 
   export class PreviewableLink extends HTMLElement {
     public get link(): HTMLAnchorElement {
-      return this.querySelector("a") as HTMLAnchorElement;
+      return this.querySelector('a') as HTMLAnchorElement;
     }
 
     private _popup: HTMLElement | undefined;
 
     public get popup(): HTMLElement {
       if (!this._popup) {
-        this._popup = document.createElement("hjs-popup");
-        this._popup.style.setProperty("pointer-events", "none");
-        this._popup.setAttribute("anchor", this.link.id);
+        this._popup = document.createElement('hjs-popup');
+        this._popup.style.setProperty('pointer-events', 'none');
+        this._popup.setAttribute('anchor', this.link.id);
       }
 
       return this._popup;
@@ -56,8 +56,8 @@ const id = url ? toBase64(url.toString()) : undefined;
 
     public get linkPreview(): HTMLElement {
       if (!this._linkPreview) {
-        this._linkPreview = document.createElement("hjs-link-preview");
-        this.popup.appendChild(this.linkPreview);
+        this._linkPreview = document.createElement('hjs-link-preview');
+        this.popup.append(this.linkPreview);
       }
 
       return this._linkPreview;
@@ -66,15 +66,15 @@ const id = url ? toBase64(url.toString()) : undefined;
     public get linkPreviewData(): LinkPreviewData | undefined {
       const link = this.link;
 
-      const title = link.getAttribute("aria-label");
-      const description = link.getAttribute("aria-description");
-      const image = link.dataset["thumbnail"];
+      const title = link.getAttribute('aria-label');
+      const description = link.getAttribute('aria-description');
+      const image = link.dataset['thumbnail'];
 
       if (title && description) {
         return {
           title,
           description,
-          image,
+          image
         };
       }
     }
@@ -84,11 +84,11 @@ const id = url ? toBase64(url.toString()) : undefined;
     };
 
     private _mount = () => {
-      document.body.appendChild(this.popup);
+      document.body.append(this.popup);
     };
 
     private _handleMouseEnter = (event: PointerEvent) => {
-      if (event.pointerType !== "mouse") {
+      if (event.pointerType !== 'mouse') {
         return;
       }
 
@@ -98,37 +98,37 @@ const id = url ? toBase64(url.toString()) : undefined;
         return;
       }
 
-      this.linkPreview.setAttribute("title", linkPreviewData.title);
-      this.linkPreview.setAttribute("description", linkPreviewData.description);
-      this.linkPreview.setAttribute("source-url", this.link.href);
+      this.linkPreview.setAttribute('title', linkPreviewData.title);
+      this.linkPreview.setAttribute('description', linkPreviewData.description);
+      this.linkPreview.setAttribute('source-url', this.link.href);
       if (linkPreviewData.image) {
-        this.linkPreview.setAttribute("thumbnail-url", linkPreviewData.image);
+        this.linkPreview.setAttribute('thumbnail-url', linkPreviewData.image);
       }
 
       this._mount();
 
-      this.link.addEventListener("pointerleave", this._unmount, {
-        once: true,
+      this.link.addEventListener('pointerleave', this._unmount, {
+        once: true
       });
     };
 
     public connectedCallback() {
-      this.link.addEventListener("pointerenter", this._handleMouseEnter);
+      this.link.addEventListener('pointerenter', this._handleMouseEnter);
     }
 
     public disconnectedCallback() {
       this._unmount();
-      this.link.removeEventListener("pointerenter", this._handleMouseEnter);
-      this.link.removeEventListener("pointerleave", this._unmount);
+      this.link.removeEventListener('pointerenter', this._handleMouseEnter);
+      this.link.removeEventListener('pointerleave', this._unmount);
     }
   }
 
-  customElements.define("hjs-previewable-link", PreviewableLink);
+  customElements.define('hjs-previewable-link', PreviewableLink);
 </script>
 <hjs-previewable-link
   ><BaseLink
     id={id}
-    class:list={[className, "previewable-link"]}
+    class:list={[className, 'previewable-link']}
     href={href}
     aria-label={previewData?.title}
     aria-description={previewData?.description}

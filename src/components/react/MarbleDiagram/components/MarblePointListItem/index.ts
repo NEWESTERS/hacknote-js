@@ -1,1 +1,1 @@
-export * from "./MarblePointListItem";
+export * from './MarblePointListItem';

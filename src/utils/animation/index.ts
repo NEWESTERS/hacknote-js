@@ -1,1 +1,1 @@
-export * from "./FrameAnimation";
+export * from './FrameAnimation';

@@ -1,4 +1,4 @@
-import { createContext, type FC, type ReactNode, useContext } from "react";
+import { createContext, type FC, type ReactNode, useContext } from 'react';
 
 export interface ContextWithSetter<T> {
   Provider: FC<ContextWithSetterProviderProps<T>>;
@@ -7,7 +7,7 @@ export interface ContextWithSetter<T> {
   useSetter: () => (value: T) => void;
 }
 
-const None = Symbol("None");
+const None = Symbol('None');
 
 export interface ContextWithSetterProviderProps<T> {
   value: T;
@@ -21,7 +21,7 @@ export function createContextWithSetter<T>(
   const ValueContext = createContext<T | typeof None>(None);
   const SetterContext = createContext<((value: T) => void) | typeof None>(None);
 
-  const useValue = () => {
+  const useValue: ContextWithSetter<T>['useValue'] = () => {
     const value = useContext(ValueContext);
 
     if (value === None) {
@@ -31,7 +31,7 @@ export function createContextWithSetter<T>(
     return value;
   };
 
-  const useSetter = () => {
+  const useSetter: ContextWithSetter<T>['useSetter'] = () => {
     const setter = useContext(SetterContext);
 
     if (setter === None) {
@@ -45,7 +45,7 @@ export function createContextWithSetter<T>(
     Provider: ({
       value,
       onValueChange,
-      children,
+      children
     }: ContextWithSetterProviderProps<T>) => {
       return (
         <ValueContext.Provider value={value}>
@@ -59,7 +59,7 @@ export function createContextWithSetter<T>(
     useSetter,
     useContext: () => ({
       value: useValue(),
-      set: useSetter(),
-    }),
+      set: useSetter()
+    })
   };
 }

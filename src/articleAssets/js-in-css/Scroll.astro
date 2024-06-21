@@ -1,10 +1,10 @@
-<div id="scroll-demo" style="--scroll-top: 180;">
-  <div class="cube">
-    <div class="edge left"></div>
-    <div class="edge right"></div>
-    <div class="edge front"></div>
-    <div class="edge back"></div>
-    <div class="edge top"></div>
+<div id='scroll-demo' style='--scroll-top: 180;'>
+  <div class='cube'>
+    <div class='edge left'></div>
+    <div class='edge right'></div>
+    <div class='edge front'></div>
+    <div class='edge back'></div>
+    <div class='edge top'></div>
   </div>
 </div>
 
@@ -60,18 +60,18 @@
 </style>
 
 <script>
-  const demo = document.getElementById("scroll-demo") as HTMLDivElement;
+  const demo = document.querySelector('#scroll-demo') as HTMLDivElement;
 
   function syncStyles() {
     demo.style.setProperty(
-      "--scroll-top",
+      '--scroll-top',
       demo.getBoundingClientRect().top.toString()
     );
   }
 
   syncStyles();
 
-  document.addEventListener("scroll", () => {
+  document.addEventListener('scroll', () => {
     syncStyles();
   });
 </script>

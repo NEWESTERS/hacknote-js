@@ -1,9 +1,9 @@
 ---
 export interface Props
-  extends Omit<astroHTML.JSX.AnchorHTMLAttributes, "slot"> {}
+  extends Omit<astroHTML.JSX.AnchorHTMLAttributes, 'slot'> {}
 ---
 
-<a target="_blank" rel="noopener noreferrer" {...Astro.props}><slot /></a>
+<a target='_blank' rel='noopener noreferrer' {...Astro.props}><slot /></a>
 <style>
   a {
     color: var(--color_accent-yellow);

@@ -1,6 +1,6 @@
-import type { Pagefind } from "./types";
+import type { Pagefind } from './types';
 
-const PAGEFIND_URL = "/hacknote-js/pagefind/pagefind.js";
+const PAGEFIND_URL = '/hacknote-js/pagefind/pagefind.js';
 
 export function importPagefind(): Promise<Pagefind> {
   return import(

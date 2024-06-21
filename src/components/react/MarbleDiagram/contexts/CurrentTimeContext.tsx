@@ -1,8 +1,8 @@
-import { type FC, type ReactNode, useState } from "react";
+import { type FC, type ReactNode, useState } from 'react';
 
-import { createContextWithSetter } from "@utils/react";
+import { createContextWithSetter } from '@utils/react';
 
-const Context = createContextWithSetter<number>("PointSelection");
+const Context = createContextWithSetter<number>('PointSelection');
 
 export const useCurrentTime = Context.useValue;
 
@@ -15,7 +15,7 @@ export interface CurrentTimeProviderProps {
 
 export const CurrentTimeProvider: FC<CurrentTimeProviderProps> = ({
   initialTime,
-  children,
+  children
 }) => {
   const [currentTime, setTime] = useState(initialTime);
 

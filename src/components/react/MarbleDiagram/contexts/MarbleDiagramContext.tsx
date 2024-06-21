@@ -1,10 +1,11 @@
-import { createContextWithUtils } from "@utils/react";
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
-import type { MarbleDiagram, MarblePoint, MarbleSeries } from "../entities";
+import { createContextWithUtils } from '@utils/react';
+
+import type { MarbleDiagram, MarblePoint, MarbleSeries } from '../entities';
 
 export const { Provider: MarbleDiagramProvider, useContext: useMarbleDiagram } =
-  createContextWithUtils<MarbleDiagram>("MarbleDiagram");
+  createContextWithUtils<MarbleDiagram>('MarbleDiagram');
 
 export function useMarblePoint(pointId: string): MarblePoint {
   const diagram = useMarbleDiagram();

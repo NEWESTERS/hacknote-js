@@ -1,29 +1,29 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
+import { type CollectionEntry, getCollection } from 'astro:content';
 
-import A from "@components/astro/PreviewableLink.astro";
-import Code from "@components/astro/Code.astro";
-import Img from "@components/astro/Img.astro";
-import Pre from "@components/astro/Pre.astro";
-import H1 from "@components/astro/H1.astro";
-import H2 from "@components/astro/H2.astro";
-import H3 from "@components/astro/H3.astro";
-import P from "@components/astro/P.astro";
-import Blockquote from "@components/astro/Blockquote.astro";
-import Table from "@components/astro/Table.astro";
-import Tr from "@components/astro/Tr.astro";
-import Th from "@components/astro/Th.astro";
-import Td from "@components/astro/Td.astro";
-import PublicationPage from "@layouts/PublicationPage.astro";
+import A from '@components/astro/PreviewableLink.astro';
+import Code from '@components/astro/Code.astro';
+import Img from '@components/astro/Img.astro';
+import Pre from '@components/astro/Pre.astro';
+import H1 from '@components/astro/H1.astro';
+import H2 from '@components/astro/H2.astro';
+import H3 from '@components/astro/H3.astro';
+import P from '@components/astro/P.astro';
+import Blockquote from '@components/astro/Blockquote.astro';
+import Table from '@components/astro/Table.astro';
+import Tr from '@components/astro/Tr.astro';
+import Th from '@components/astro/Th.astro';
+import Td from '@components/astro/Td.astro';
+import PublicationPage from '@layouts/PublicationPage.astro';
 
 export async function getStaticPaths() {
-  const articles = await getCollection("articles");
+  const articles = await getCollection('articles');
   return articles.map((article) => ({
     params: { slug: article.slug },
-    props: article,
+    props: article
   }));
 }
-type Props = CollectionEntry<"articles">;
+type Props = CollectionEntry<'articles'>;
 
 const article = Astro.props;
 
@@ -55,11 +55,11 @@ const { Content, remarkPluginFrontmatter } = await article.render();
   <figure>
     <img
       src={heroImage}
-      width="288"
-      height="240"
+      width='288'
+      height='240'
       alt={title}
       transition:name={`${article.id}__image`}
-      data-pagefind-meta="image[src]"
+      data-pagefind-meta='image[src]'
     />
   </figure>
 
@@ -77,7 +77,7 @@ const { Content, remarkPluginFrontmatter } = await article.render();
       tr: Tr,
       th: Th,
       td: Td,
-      blockquote: Blockquote,
+      blockquote: Blockquote
     }}
   />
 </PublicationPage>

@@ -1,16 +1,16 @@
-import type { FC } from "react";
-import clsx from "clsx";
+import type { FC } from 'react';
+import clsx from 'clsx';
 
-import { useMarbleSeriesIds } from "../../contexts";
-import { MarbleSeriesView } from "../MarbleSeriesView";
-import Styles from "./MarbleDiagramView.module.css";
+import { useMarbleSeriesIds } from '../../contexts';
+import { MarbleSeriesView } from '../MarbleSeriesView';
+import Styles from './MarbleDiagramView.module.css';
 
 export interface MarbleDiagramViewProps {
   className?: string;
 }
 
 export const MarbleDiagramView: FC<MarbleDiagramViewProps> = ({
-  className,
+  className
 }) => {
   const seriesIds = useMarbleSeriesIds();
 

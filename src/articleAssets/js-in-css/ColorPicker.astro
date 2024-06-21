@@ -1,48 +1,48 @@
 ---
-import InputRange from "@components/astro/InputRange.astro";
+import InputRange from '@components/astro/InputRange.astro';
 ---
 
 <div
-  id="color-picker-demo"
-  style="--color-red: 255; --color-green: 216; --color-blue: 101;"
+  id='color-picker-demo'
+  style='--color-red: 255; --color-green: 216; --color-blue: 101;'
 >
   <form>
     <label>
       <span>R</span>
       <InputRange
-        min="0"
-        max="255"
-        value="255"
-        class="color-picker__field"
-        name="color-red"
+        min='0'
+        max='255'
+        value='255'
+        class='color-picker__field'
+        name='color-red'
       />
     </label>
 
     <label>
       <span>G</span>
       <InputRange
-        min="0"
-        max="255"
-        value="216"
-        class="color-picker__field"
-        name="color-green"
+        min='0'
+        max='255'
+        value='216'
+        class='color-picker__field'
+        name='color-green'
       />
     </label>
 
     <label>
       <span>B</span>
       <InputRange
-        min="0"
-        max="255"
-        value="101"
-        class="color-picker__field"
-        name="color-blue"
+        min='0'
+        max='255'
+        value='101'
+        class='color-picker__field'
+        name='color-blue'
       />
     </label>
   </form>
 
-  <button class="preview" title="НИ В КОЕМ СЛУЧАЕ НЕ НАЖИМАТЬ!">
-    <span class="preview-text">Hacknote.js</span>
+  <button class='preview' title='НИ В КОЕМ СЛУЧАЕ НЕ НАЖИМАТЬ!'>
+    <span class='preview-text'>Hacknote.js</span>
   </button>
 </div>
 
@@ -54,15 +54,15 @@ import InputRange from "@components/astro/InputRange.astro";
     align-items: center;
   }
 
-  .color-picker__field[name="color-red"]::-webkit-slider-runnable-track {
+  .color-picker__field[name='color-red']::-webkit-slider-runnable-track {
     background-color: rgba(var(--color-red), 0, 0);
   }
 
-  .color-picker__field[name="color-green"]::-webkit-slider-runnable-track {
+  .color-picker__field[name='color-green']::-webkit-slider-runnable-track {
     background-color: rgba(0, var(--color-green), 0);
   }
 
-  .color-picker__field[name="color-blue"]::-webkit-slider-runnable-track {
+  .color-picker__field[name='color-blue']::-webkit-slider-runnable-track {
     background-color: rgba(0, 0, var(--color-blue));
   }
 
@@ -92,19 +92,19 @@ import InputRange from "@components/astro/InputRange.astro";
   }
 </style>
 <script>
-  const demo = document.getElementById("color-picker-demo") as HTMLDivElement;
+  const demo = document.querySelector('#color-picker-demo') as HTMLDivElement;
 
   function syncInput(input: HTMLInputElement) {
     demo.style.setProperty(`--${input.name}`, input.value);
   }
 
-  demo.querySelectorAll(".color-picker__field").forEach((element) => {
+  for (const element of demo.querySelectorAll('.color-picker__field')) {
     if (element instanceof HTMLInputElement) {
       syncInput(element);
     }
-  });
+  }
 
-  demo.addEventListener("input", (event) => {
+  demo.addEventListener('input', (event) => {
     if (event.target instanceof HTMLInputElement) {
       syncInput(event.target);
     }
@@ -112,24 +112,24 @@ import InputRange from "@components/astro/InputRange.astro";
 
   function getCurrentColor(): [string, string, string] {
     return [
-      demo.style.getPropertyValue("--color-red"),
-      demo.style.getPropertyValue("--color-green"),
-      demo.style.getPropertyValue("--color-blue"),
+      demo.style.getPropertyValue('--color-red'),
+      demo.style.getPropertyValue('--color-green'),
+      demo.style.getPropertyValue('--color-blue')
     ];
   }
 
-  demo.querySelector(".preview")?.addEventListener("click", () => {
+  demo.querySelector('.preview')?.addEventListener('click', () => {
     const [red, green, blue] = getCurrentColor();
 
     document.body.style.setProperty(
-      "background-color",
+      'background-color',
       `rgb(${red}, ${green}, ${blue})`
     );
 
     (
-      document.body.querySelector(".title") as HTMLDivElement | null
+      document.body.querySelector('.title') as HTMLDivElement | null
     )?.style.setProperty(
-      "color",
+      'color',
       `rgb(${255 - Number(red)}, ${255 - Number(green)}, ${255 - Number(blue)})`
     );
   });

@@ -1,5 +1,5 @@
-export * from "./HTMLParser";
+export * from './HTMLParser';
 
-export * from "./BrowserHtmlParser";
+export * from './BrowserHtmlParser';
 
-export * from "./NodeHtmlParser";
+export * from './NodeHtmlParser';

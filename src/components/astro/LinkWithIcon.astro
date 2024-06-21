@@ -1,5 +1,5 @@
 ---
-import BaseLink, { type Props as BaseLinkProps } from "./BaseLink.astro";
+import BaseLink, { type Props as BaseLinkProps } from './BaseLink.astro';
 
 export interface Props extends BaseLinkProps {
   iconUrl?: string;
@@ -7,7 +7,7 @@ export interface Props extends BaseLinkProps {
 
 const {
   class: className,
-  "class:list": classList,
+  'class:list': classList,
   href,
   iconUrl,
   ...props
@@ -15,12 +15,12 @@ const {
 ---
 
 <BaseLink
-  class:list={[className, classList, "link-with-icon"]}
+  class:list={[className, classList, 'link-with-icon']}
   href={href}
   {...props}
 >
-  {iconUrl && <img class="link__icon" src={iconUrl} />}<span
-    class="link__content"><slot /></span
+  {iconUrl && <img class='link__icon' src={iconUrl} />}<span
+    class='link__content'><slot /></span
   >
 </BaseLink>
 <style>

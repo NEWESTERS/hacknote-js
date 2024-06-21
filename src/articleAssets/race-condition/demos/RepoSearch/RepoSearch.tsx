@@ -1,20 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FC } from 'react';
 
-import { Button, Icon, Input } from "@components/react";
-import { autofill } from "@utils/demo";
-import { RepoCard } from "./RepoCard";
-import playSvg from "@components/icons/play.svg";
-import type { GithubApiResponse } from "./api";
-import Styles from "./RepoSearch.module.css";
+import { Button, Icon, Input } from '@components/react';
+import { autofill } from '@utils/demo';
+import playSvg from '@components/icons/play.svg';
 
-export const RepoSearch = () => {
-  const [searchString, setSearchString] = useState("");
+import { RepoCard } from './RepoCard';
+import type { GithubApiResponse } from './api';
+import Styles from './RepoSearch.module.css';
 
-  const [data, setData] = useState<GithubApiResponse | undefined>(undefined);
+export const RepoSearch: FC = () => {
+  const [searchString, setSearchString] = useState('');
+
+  const [data, setData] = useState<GithubApiResponse | undefined>();
 
   const [isAutoFilling, setIsAutoFilling] = useState(false);
 
-  const handleDemo = () => {
+  const handleDemo = (): void => {
     setIsAutoFilling(true);
   };
 
@@ -24,8 +25,8 @@ export const RepoSearch = () => {
 
       autofill({
         onType: setSearchString,
-        text: "hacknote-js",
-        signal: abortController.signal,
+        text: 'hacknote-js',
+        signal: abortController.signal
       }).finally(() => {
         setIsAutoFilling(false);
       });
@@ -37,7 +38,7 @@ export const RepoSearch = () => {
   }, [isAutoFilling]);
 
   useEffect(() => {
-    if (searchString === "") {
+    if (searchString === '') {
       setData(undefined);
       return;
     }
@@ -46,7 +47,7 @@ export const RepoSearch = () => {
 
     fetch(
       `https://api.github.com/search/repositories?${new URLSearchParams({
-        q: searchString,
+        q: searchString
       })}`,
       { signal: abortController.signal }
     )
@@ -74,9 +75,9 @@ export const RepoSearch = () => {
         />
 
         <Button
-          title="Демо"
+          title='Демо'
           onClick={handleDemo}
-          right={<Icon url={playSvg.src} color="var(--color_accent-green)" />}
+          right={<Icon url={playSvg.src} color='var(--color_accent-green)' />}
           disabled={isAutoFilling}
         />
       </div>

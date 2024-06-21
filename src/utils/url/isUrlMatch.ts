@@ -1,4 +1,4 @@
-import { normalizeUrl } from "./normalizeUrl";
+import { normalizeUrl } from './normalizeUrl';
 
 export function isUrlMatch(
   currentUrl: string | URL,

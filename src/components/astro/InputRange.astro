@@ -5,7 +5,7 @@ const { class: className, name, min, max, value } = Astro.props;
 ---
 
 <input
-  type="range"
+  type='range'
   class={className}
   name={name}
   value={value}
@@ -14,17 +14,17 @@ const { class: className, name, min, max, value } = Astro.props;
 />
 
 <style>
-  input[type="range"] {
+  input[type='range'] {
     appearance: none;
     background: transparent;
     cursor: pointer;
   }
-  input[type="range"]::-webkit-slider-runnable-track {
+  input[type='range']::-webkit-slider-runnable-track {
     background-color: var(--color_background-light);
     border-radius: 8px;
   }
 
-  input[type="range"]::-webkit-slider-thumb {
+  input[type='range']::-webkit-slider-thumb {
     appearance: none;
     margin: -4px 0;
     width: 16px;

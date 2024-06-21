@@ -1,9 +1,9 @@
 ---
-title: "Инверсия зависимостей в React"
-description: "Старые добрые принципы SOLID могут быть полезны в любой области разработки. Особенно важным я считаю принцип инверсии зависимостей. В React существуют механизмы, позволяющие реализовать этот принцип, и в этом очень помогает Typescript"
-pubDate: "Feb 25 2023"
-heroImage: "/hacknote-js/images/di-react/hero.png"
-telegramPostId: "27"
+title: 'Инверсия зависимостей в React'
+description: 'Старые добрые принципы SOLID могут быть полезны в любой области разработки. Особенно важным я считаю принцип инверсии зависимостей. В React существуют механизмы, позволяющие реализовать этот принцип, и в этом очень помогает Typescript'
+pubDate: 'Feb 25 2023'
+heroImage: '/hacknote-js/images/di-react/hero.png'
+telegramPostId: '27'
 ---
 
 Старые добрые принципы [SOLID](<https://ru.wikipedia.org/wiki/SOLID_(объектно-ориентированное_программирование)>) могут быть полезны в любой области разработки. Особенно важным я считаю принцип [инверсии зависимостей](https://ru.wikipedia.org/wiki/Принцип_инверсии_зависимостей). В React существуют механизмы, позволяющие реализовать этот принцип, и в этом очень помогает Typescript.
@@ -15,7 +15,7 @@ telegramPostId: "27"
 ![Компонент, отображающий список элементов](/hacknote-js/images/di-react/list-component.png)
 
 ```tsx
-import { ListItem } from "@components/ListItem";
+import { ListItem } from '@components/ListItem';
 
 export interface ListProps {
   items: Item[]; // <- компонент принимает на вход данные элементов списка
@@ -23,7 +23,7 @@ export interface ListProps {
 
 export const List = ({ items }: ListProps): ReactElement => {
   return (
-    <ul className="my-list">
+    <ul className='my-list'>
       {items.map(({ id, title }) => (
         <ListItem key={id}>{title}</ListItem>
       ))}
@@ -39,7 +39,7 @@ export const List = ({ items }: ListProps): ReactElement => {
 Чтобы не дублировать код, мы реализовали механизм кастомизации `List` с помощью пропсов, позволяющих включать/выключать определённые параметры элементов списка.
 
 ```tsx ins={5-7} ins="hasBadge, hasIcon" ins="hasBadge={hasBadge} hasIcon={hasIcon}"
-import { ListItem } from "@components/ListItem";
+import { ListItem } from '@components/ListItem';
 
 export interface ListProps {
   items: Item[];
@@ -50,7 +50,7 @@ export interface ListProps {
 
 export const List = ({ items, hasBadge, hasIcon }: ListProps): ReactElement => {
   return (
-    <ul className="my-list">
+    <ul className='my-list'>
       {items.map(({ id, title }) => (
         <ListItem key={id} hasBadge={hasBadge} hasIcon={hasIcon}>
           {title}
@@ -76,20 +76,20 @@ API компонента получается недостаточно гибк�
 Можно сделать так, что `List` будет принимать не данные для отображения элементов списка, а уже готовые элементы.
 
 ```tsx
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 export interface ListProps {
   children: ReactNode; // <- компонент принимает элементы вместо их данных
 }
 
 export const List = ({ children }: ListProps): ReactElement => {
-  return <ul className="my-list">{children}</ul>;
+  return <ul className='my-list'>{children}</ul>;
 };
 ```
 
 ```tsx
-import { List } from "@components/List";
-import { ListItem } from "@components/ListItem";
+import { List } from '@components/List';
+import { ListItem } from '@components/ListItem';
 
 <List>
   <ListItem hasBadge>React</ListItem>
@@ -117,19 +117,19 @@ import { ListItem } from "@components/ListItem";
 Для этого создадим на основе уже имеющихся компонентов новый — `SearchableList`.
 
 ```tsx
-import { List } from "@components/List";
-import { ListItem } from "@components/ListItem";
+import { List } from '@components/List';
+import { ListItem } from '@components/ListItem';
 
 export interface SearchableListProps {
   items: Item[]; // <- компонент принимает данные элементов, поскольку они нужны для фильтрации
 }
 
 export const SearchableList = ({
-  items,
+  items
 }: SearchableListProps): ReactElement => {
   const { items } = props;
 
-  const [searchString, setSearchString] = useState("");
+  const [searchString, setSearchString] = useState('');
 
   const handleSearch: ChangeEventHandler<HTMLInputElement> = (event) => {
     setSearchString(event.currentTarget.value);
@@ -142,7 +142,7 @@ export const SearchableList = ({
 
   return (
     <div>
-      <input type="text" value={searchString} onChange={handleSearch} />
+      <input type='text' value={searchString} onChange={handleSearch} />
 
       <List>
         {searchedItems.map(({ id, title }) => (
@@ -165,7 +165,7 @@ export type RenderListItem = (props: Item) => ReactElement;
 В таком случае компонент списка будет принимать на вход данные для списка.
 
 ```tsx
-import { RenderListItem } from "@interfaces";
+import { RenderListItem } from '@interfaces';
 
 export interface ListProps {
   items: Item[];
@@ -174,7 +174,7 @@ export interface ListProps {
 
 export const List = ({ items, children: Item }: ListProps): ReactElement => {
   return (
-    <ul className="my-list">
+    <ul className='my-list'>
       {items.map((item) => (
         <Item key={item.id} {...item} />
       ))}
@@ -186,15 +186,15 @@ export const List = ({ items, children: Item }: ListProps): ReactElement => {
 Компонент `SearchableList` же расширяет поведение компонента `List`, сохраняя его API.
 
 ```tsx
-import { ListProps, List } from "@components/List";
+import { ListProps, List } from '@components/List';
 
 export interface SearchableListProps extends ListProps {}
 
 export const SearchableList = ({
   items,
-  children,
+  children
 }: SearchableListProps): ReactElement => {
-  const [searchString, setSearchString] = useState("");
+  const [searchString, setSearchString] = useState('');
 
   const handleSearch: ChangeEventHandler<HTMLInputElement> = (event) => {
     setSearchString(event.currentTarget.value);
@@ -207,7 +207,7 @@ export const SearchableList = ({
 
   return (
     <div>
-      <input type="text" value={searchString} onChange={handleSearch} />
+      <input type='text' value={searchString} onChange={handleSearch} />
 
       <List items={searchedItems}>{children}</List>
     </div>
@@ -220,14 +220,14 @@ export const SearchableList = ({
 Теперь при использовании компонента `List` мы можем передать ему любую реализацию элемента списка, соответствующую описанному интерфейсу `RenderListItem`.
 
 ```tsx
-import { SearchableList } from "@components/SearchableList";
-import { ListItem } from "@components/ListItem";
-import { RenderListItem } from "@interfaces";
+import { SearchableList } from '@components/SearchableList';
+import { ListItem } from '@components/ListItem';
+import { RenderListItem } from '@interfaces';
 
 <SearchableList items={items}>{ListItem}</SearchableList>;
 
 const CustomItem: RenderListItem = ({ id, title }) => (
-  <li key={id} className="supercool-item">
+  <li key={id} className='supercool-item'>
     {title}
   </li>
 );
@@ -261,9 +261,9 @@ export interface SearchableListProps extends ListProps {
 export const SearchableList = ({
   items,
   useSearch,
-  renderItem,
+  renderItem
 }: SearchableListProps): ReactElement => {
-  const [searchString, setSearchString] = useState("");
+  const [searchString, setSearchString] = useState('');
 
   const handleSearch: ChangeEventHandler<HTMLInputElement> = (event) => {
     setSearchString(event.currentTarget.value);
@@ -273,7 +273,7 @@ export const SearchableList = ({
 
   return (
     <div>
-      <input type="text" value={searchString} onChange={handleSearch} />
+      <input type='text' value={searchString} onChange={handleSearch} />
 
       <List items={searchedItems} renderItem={renderItem} />
     </div>
@@ -285,7 +285,7 @@ export const SearchableList = ({
 
 ```tsx
 const CustomItem: RenderListItem = ({ id, title }) => (
-  <li key={id} className="supercool-item">
+  <li key={id} className='supercool-item'>
     {title}
   </li>
 );
@@ -312,9 +312,9 @@ const useSearch: SearchLogic = (items, searchString) =>
 Например, создадим контекст для компонента `ListItem`:
 
 ```tsx
-import { createContext, useContext, memo, ReactNode } from "react";
-import { RenderListItem } from "@interfaces";
-import { ListItem } from "@components/ListItem";
+import { createContext, useContext, memo, ReactNode } from 'react';
+import { RenderListItem } from '@interfaces';
+import { ListItem } from '@components/ListItem';
 
 interface IComponentsContext {
   ListItem: RenderListItem;
@@ -324,7 +324,7 @@ interface IComponentsContext {
 // которое будет использоваться в случае,
 // если мы не переопределили компоненты
 const DEFAULT_COMPONENTS: IComponentsContext = {
-  ListItem,
+  ListItem
 };
 
 const ComponentsContext = createContext<IComponentsContext>(DEFAULT_COMPONENTS);
@@ -353,7 +353,7 @@ export const ComponentsProvider = ({
     // Получаем переопределения из вышестоящего контекста
     ...useComponents(),
     // И переопределяем их новыми
-    ...overrides,
+    ...overrides
   };
 
   return (
@@ -367,7 +367,7 @@ export const ComponentsProvider = ({
 Для получения компонентов из контекста просто используем созданный хук:
 
 ```tsx
-import { useComponents } from "@components/context";
+import { useComponents } from '@components/context';
 
 export interface ListProps {
   items: Item[];
@@ -377,7 +377,7 @@ export const List = ({ items }: ListProps): ReactElement => {
   const { ListItem } = useComponents();
 
   return (
-    <ul className="my-list">
+    <ul className='my-list'>
       {items.map((item) => (
         <ListItem key={item.id} {...item} />
       ))}
@@ -390,13 +390,13 @@ export const List = ({ items }: ListProps): ReactElement => {
 
 ```tsx
 const SupercoolItem: RenderItem = ({ id, title }) => (
-  <li key={id} className="supercool-item">
+  <li key={id} className='supercool-item'>
     {title}
   </li>
 );
 
 const AwesomeItem: RenderItem = ({ id, title }) => (
-  <li key={id} className="awesome-item">
+  <li key={id} className='awesome-item'>
     {title}
   </li>
 );

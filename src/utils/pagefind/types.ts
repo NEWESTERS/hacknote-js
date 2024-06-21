@@ -1,7 +1,7 @@
 // Типы скопированы из https://github.com/CloudCannon/pagefind/blob/main/pagefind_web_js/types/index.d.ts
 
 /** Global index options that can be passed to pagefind.options() */
-export type PagefindIndexOptions = {
+export interface PagefindIndexOptions {
   /** Overrides the URL path that Pagefind uses to load its search bundle */
   basePath?: string;
   /** Appends the given baseURL to all search results. May be a path, or a full domain */
@@ -19,7 +19,7 @@ export type PagefindIndexOptions = {
    *
    * Only applies in multisite setups.
    */
-  mergeFilter?: Object;
+  mergeFilter?: object;
   /**
    * If set, will ass the search term as a query parameter under this key, for use with Pagefind's highlighting script.
    */
@@ -35,29 +35,29 @@ export type PagefindIndexOptions = {
    * Provides the ability to fine tune Pagefind's ranking algorithm to better suit your dataset.
    */
   ranking?: PagefindRankingWeights;
-};
+}
 
-export type PagefindRankingWeights = {
+export interface PagefindRankingWeights {
   /**
    * Controls page ranking based on similarity of terms to the search query (in length).
    * Increasing this number means pages rank higher when they contain words very close to the query,
    * e.g. if searching for `part` then `party` will boost a page higher than one containing `partition`.
    * Minimum value is 0.0, where `party` and `partition` would be viewed equally.
    */
-  termSimilarity?: Number;
+  termSimilarity?: number;
   /**
    * Controls how much effect the average page length has on ranking.
    * Maximum value is 1.0, where ranking will strongly favour pages that are shorter than the average page on the site.
    * Minimum value is 0.0, where ranking will exclusively look at term frequency, regardless of how long a document is.
    */
-  pageLength?: Number;
+  pageLength?: number;
   /**
    * Controls how quickly a term saturates on the page and reduces impact on the ranking.
    * Maximum value is 2.0, where pages will take a long time to saturate, and pages with very high term frequencies will take over.
    * As this number trends to 0, it does not take many terms to saturate and allow other paramaters to influence the ranking.
    * Minimum value is 0.0, where terms will saturate immediately and results will not distinguish between one term and many.
    */
-  termSaturation?: Number;
+  termSaturation?: number;
   /**
    * Controls how much ranking uses term frequency versus raw term count.
    * Maximum value is 1.0, where term frequency fully applies and is the main ranking factor.
@@ -65,26 +65,26 @@ export type PagefindRankingWeights = {
    * Values between 0.0 and 1.0 will interpolate between the two ranking methods.
    * Reducing this number is a good way to boost longer documents in your search results, as they no longer get penalized for having a low term frequency.
    */
-  termFrequency?: Number;
-};
+  termFrequency?: number;
+}
 
 /** Options that can be passed to pagefind.search() */
-export type PagefindSearchOptions = {
+export interface PagefindSearchOptions {
   /** If set, this call will load all assets but return before searching. Prefer using pagefind.preload() instead */
   preload?: boolean;
   /** Add more verbose console logging for this search query */
   verbose?: boolean;
   /** The set of filters to execute with this search. Input type is extremely flexible, see the filtering docs for details */
-  filters?: Object;
+  filters?: object;
   /** The set of sorts to use for this search, instead of relevancy */
-  sort?: Object;
-};
+  sort?: object;
+}
 
 /** Filter counts returned from pagefind.filters(), and alongside results from pagefind.search() */
 export type PagefindFilterCounts = Record<string, Record<string, number>>;
 
 /** The main results object returned from a call to pagefind.search() */
-export type PagefindSearchResults = {
+export interface PagefindSearchResults {
   /** All pages that match the search query and filters provided */
   results: PagefindSearchResult[];
   /** How many results would there have been if you had omitted the filters */
@@ -99,10 +99,10 @@ export type PagefindSearchResults = {
     search: number;
     total: number;
   };
-};
+}
 
 /** A single result from a search query, before actual data has been loaded */
-export type PagefindSearchResult = {
+export interface PagefindSearchResult {
   /** Pagefind's internal ID for this page, unique across the site */
   id: string;
   /** Pagefind's internal score for your query matching this page, that is used when ranking these results */
@@ -116,10 +116,10 @@ export type PagefindSearchResult = {
    * (e.g. one page as a time, or in a scroll listener)
    * */
   data: () => Promise<PagefindSearchFragment>;
-};
+}
 
 /** The useful data Pagefind provides for a search result */
-export type PagefindSearchFragment = {
+export interface PagefindSearchFragment {
   /** Pagefind's processed URL for this page. Will include the baseUrl if configured */
   url: string;
   /** Pagefind's unprocessed URL for this page */
@@ -156,10 +156,10 @@ export type PagefindSearchFragment = {
    * implement your own sub result calculations with different semantics.
    */
   anchors: PagefindSearchAnchor[];
-};
+}
 
 /** Data for a matched section within a page */
-export type PagefindSubResult = {
+export interface PagefindSubResult {
   /**
    * Title of this sub result — derived from the heading content.
    *
@@ -190,10 +190,10 @@ export type PagefindSubResult = {
    * before the first heading that had an ID.
    */
   anchor?: PagefindSearchAnchor;
-};
+}
 
 /** Information about a matching word on a page */
-export type PagefindWordLocation = {
+export interface PagefindWordLocation {
   /** The weight that this word was originally tagged as */
   weight: number;
   /**
@@ -210,10 +210,10 @@ export type PagefindWordLocation = {
    * will yield the correct word.
    */
   location: number;
-};
+}
 
 /** Raw data about elements with IDs that Pagefind encountered when indexing the page */
-export type PagefindSearchAnchor = {
+export interface PagefindSearchAnchor {
   /** What element type was this anchor? e.g. `h1`, `div` */
   element: string;
   /** The raw id="..." attribute contents of the element */
@@ -232,7 +232,7 @@ export type PagefindSearchAnchor = {
    * will yield the first word indexed after this element's ID was found.
    */
   location: number;
-};
+}
 
 export interface Pagefind {
   search(
