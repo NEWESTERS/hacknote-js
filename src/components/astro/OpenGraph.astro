@@ -1,15 +1,17 @@
 ---
+import { SITE_DESCRIPTION, SITE_TITLE } from 'src/consts';
+
 export interface Props {
   type?: "website" | "article";
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   image?: string;
 }
 
 const {
   type = "website",
-  title,
-  description,
+  title = SITE_TITLE,
+  description = SITE_DESCRIPTION,
   image = "/hacknote-js/images/logo.png",
 } = Astro.props;
 ---

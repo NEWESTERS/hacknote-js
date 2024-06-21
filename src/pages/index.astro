@@ -1,19 +1,21 @@
 ---
 import { getCollection } from "astro:content";
 
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
-import DefaultPage from "../layouts/DefaultPage.astro";
+import DefaultPage from "@layouts/DefaultPage.astro";
 import BaseLink from "@components/astro/BaseLink.astro";
 import ArticleCard from "@components/astro/ArticleCard.astro";
 import P from "@components/astro/P.astro";
 import H2 from "@components/astro/H2.astro";
+import VideoCard from "@components/astro/VideoCard.astro";
 
-const latestArticle = (await getCollection("articles")).sort(
+const [articles, videos] = await Promise.all([getCollection("articles"), getCollection("videos")]);
+
+const latestPublication = [...articles, ...videos].sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 )[0];
 ---
 
-<DefaultPage title={SITE_TITLE} description={SITE_DESCRIPTION}>
+<DefaultPage>
   <figure>
     <img src="/hacknote-js/images/logo.svg" />
   </figure>
@@ -23,11 +25,17 @@ const latestArticle = (await getCollection("articles")).sort(
     <BaseLink href="https://t.me/hacknote_js">Hacknote.js</BaseLink>.
   </P>
 
-  <H2 class="header">Последняя статья</H2>
+  <H2 class="header">Последняя публикация</H2>
 
-  <a href={`/hacknote-js/articles/${latestArticle.slug}`}>
-    <ArticleCard {...latestArticle.data} id={latestArticle.id} />
-  </a>
+  {
+    "url" in latestPublication.data ? 
+      <a href={`/hacknote-js/videos/${latestPublication.slug}`}>
+        <VideoCard {...latestPublication.data} id={latestPublication.id} />
+      </a> :
+      <a href={`/hacknote-js/articles/${latestPublication.slug}`}>
+        <ArticleCard {...latestPublication.data} id={latestPublication.id} />
+      </a>
+  }
 </DefaultPage>
 
 <style>
