@@ -5,7 +5,7 @@ import FormattedDuration from "@components/astro/FormattedDuration.astro";
 import DefaultPage from "./DefaultPage.astro";
 import TelegramComments from "@components/astro/TelegramComments.astro";
 
-interface Props  {
+interface Props {
   id: string;
   title: string;
   pubDate: Date;
@@ -13,9 +13,10 @@ interface Props  {
   heroImage: string;
   description: string;
   telegramPostId?: string;
-};
+}
 
-const { title, description, pubDate, id, duration, heroImage, telegramPostId } = Astro.props;
+const { title, description, pubDate, id, duration, heroImage, telegramPostId } =
+  Astro.props;
 ---
 
 <style>
@@ -55,10 +56,10 @@ const { title, description, pubDate, id, duration, heroImage, telegramPostId } =
 </style>
 
 <DefaultPage
-    title={title}
-    description={description}
-    image={heroImage}
-    type="article"
+  title={title}
+  description={description}
+  image={heroImage}
+  type="article"
 >
   <article transition:name={id} data-pagefind-body>
     <H1>{title}</H1>
