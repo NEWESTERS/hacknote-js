@@ -15,25 +15,25 @@ const { id } = Astro.props;
   img {
     width: 24px;
     height: 24px;
-
-    position: absolute;
-    left: -28px;
-    height: 100%;
+    margin-left: -28px;
     padding-right: 4px;
     display: none;
   }
 
   h3 {
-    position: relative;
     font: var(--font_h3);
+    color: var(--color_text-white);
   }
 
   a {
     text-decoration: none;
     color: var(--color_text-white);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
 
   a:hover > img {
-    display: inline;
+    display: block;
   }
 </style>

@@ -1,8 +1,7 @@
 ---
-import HeaderLink from "./HeaderLink.astro";
 import { SITE_TITLE } from "../../consts";
 
-import { GlobalSearchModal } from "@components/react/GlobalSearch";
+import NavBar from "./NavBar.astro";
 
 export interface Props {
   class?: string;
@@ -16,13 +15,7 @@ const { class: className } = Astro.props;
     {SITE_TITLE}
   </div>
 
-  <nav>
-    <HeaderLink href="/hacknote-js/" exact>Главная</HeaderLink>
-    <HeaderLink href="/hacknote-js/articles">Статьи</HeaderLink>
-    <HeaderLink href="/hacknote-js/videos">Доклады</HeaderLink>
-
-    <GlobalSearchModal className="search" client:only="react" />
-  </nav>
+  <NavBar class="nav-bar" />
 </header>
 
 <style>
@@ -40,16 +33,7 @@ const { class: className } = Astro.props;
     margin: 0;
   }
 
-  nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    gap: 8px;
+  .nav-bar {
     width: 100%;
-    height: 48px;
-  }
-
-  .search {
-    margin-left: auto;
   }
 </style>

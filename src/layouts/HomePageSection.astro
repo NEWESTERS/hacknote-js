@@ -1,0 +1,47 @@
+---
+import H2 from "@components/astro/H2.astro";
+import { Icon } from "@components/react";
+
+interface Props {
+  class?: string;
+  titleIconUrl?: string;
+  title: string;
+  titleHref: string;
+}
+
+const { class: className, titleIconUrl, title, titleHref } = Astro.props;
+---
+
+<style>
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-title {
+    font: var(--font_h1);
+    margin: 0;
+    width: 100%;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--color_text-white);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+</style>
+<section class={className}>
+  <H2 class="section-title">
+    <a href={titleHref}>
+      {titleIconUrl && <Icon url={titleIconUrl} size={32} />}
+      {title}
+    </a>
+  </H2>
+
+  <slot />
+</section>

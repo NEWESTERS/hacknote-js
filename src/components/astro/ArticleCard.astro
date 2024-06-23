@@ -1,17 +1,22 @@
 ---
 import type { CollectionEntry } from "astro:content";
 
-import PublicationCard from "./PublicationCard.astro";
+import PublicationCard, {
+  type Props as PublicationCardProps,
+} from "./PublicationCard.astro";
 
-type Props = CollectionEntry<"articles">["data"] & {
-  class?: string;
-  id: string;
-};
+type Props = CollectionEntry<"articles">["data"] & PublicationCardProps;
 
-const { pubDate, title, heroImage, class: className, id } = Astro.props;
+const { pubDate, title, heroImage, class: className, id, url } = Astro.props;
 ---
 
-<PublicationCard title={title} pubDate={pubDate} class={className} id={id}>
+<PublicationCard
+  title={title}
+  pubDate={pubDate}
+  class={className}
+  id={id}
+  url={url}
+>
   <img
     class="image"
     src={heroImage}
@@ -29,8 +34,10 @@ const { pubDate, title, heroImage, class: className, id } = Astro.props;
     height: 160px;
     object-fit: contain;
     border-radius: 16px;
+    pointer-events: none;
   }
-  @media screen and (max-width: 500px) {
+
+  @media (max-width: 500px) {
     .image {
       width: 100%;
       max-width: 300px;

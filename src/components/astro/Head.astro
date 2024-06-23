@@ -4,14 +4,24 @@
 import "../../styles/global.css";
 
 import { ViewTransitions } from "astro:transitions";
+
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 import GoogleFonts from "./GoogleFonts.astro";
 import OpenGraph, { type Props as OpenGraphProps } from "./OpenGraph.astro";
 
-export interface Props extends OpenGraphProps {}
+export interface Props extends Omit<OpenGraphProps, "title" | "description"> {
+  title?: string;
+  description?: string;
+}
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { type, title, description, image } = Astro.props;
+const {
+  type,
+  title = SITE_TITLE,
+  description = SITE_DESCRIPTION,
+  image,
+} = Astro.props;
 ---
 
 <head>
@@ -47,6 +57,7 @@ const { type, title, description, image } = Astro.props;
 
   <meta name="msapplication-TileColor" content="#FFD865" />
   <meta name="theme-color" content="#1F1F1F" />
+  <meta name="color-scheme" content="dark" />
 
   <meta name="generator" content={Astro.generator} />
 
@@ -65,5 +76,5 @@ const { type, title, description, image } = Astro.props;
     type={type}
   />
 
-  <ViewTransitions />
+  <ViewTransitions fallback="none" />
 </head>

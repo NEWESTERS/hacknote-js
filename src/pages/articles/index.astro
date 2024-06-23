@@ -1,8 +1,9 @@
 ---
 import { getCollection } from "astro:content";
 
-import DefaultPage from "@layouts/DefaultPage.astro";
+import { SITE_TITLE } from "../../consts";
 import ArticleCard from "@components/astro/ArticleCard.astro";
+import ContentPage from "@layouts/ContentPage.astro";
 
 const articles = (await getCollection("articles")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -34,18 +35,20 @@ const articles = (await getCollection("articles")).sort(
   }
 </style>
 
-<DefaultPage>
+<ContentPage title={`Статьи | ${SITE_TITLE}`}>
   <section>
     <ul>
       {
         articles.map(({ data, slug, id }) => (
           <li>
-            <a href={`/hacknote-js/articles/${slug}`}>
-              <ArticleCard {...data} id={id} />
-            </a>
+            <ArticleCard
+              {...data}
+              id={id}
+              url={`/hacknote-js/articles/${slug}`}
+            />
           </li>
         ))
       }
     </ul>
   </section>
-</DefaultPage>
+</ContentPage>
