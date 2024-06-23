@@ -1,0 +1,70 @@
+.Text {
+  font: var(--font_body);
+  color: var(--color_background-light);
+  text-align: start;
+}
+
+.Shortcut {
+  font: var(--font_caption);
+  color: var(--color_text-white);
+  border: 1px solid currentColor;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+}
+
+.Button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--color_background-light);
+  border: solid 2px var(--color_background-light);
+  height: 48px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  transition: transform 0.1s ease-out;
+  cursor: pointer;
+}
+
+.Button:hover {
+  transform: scale(1.05);
+}
+
+.Button > .Text {
+  flex-grow: 1;
+}
+
+.Button > .Text,
+.Button > .Shortcut {
+  display: none;
+}
+
+.Layout {
+  container-type: inline-size;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@container (min-width: 300px) {
+  .Button {
+    background-color: var(--color_background-regular);
+    width: 100%;
+    transition: border-color 0.1s ease-out;
+    cursor: text;
+  }
+
+  .Button:hover {
+    transform: scale(1);
+    border-color: var(--color_text-white);
+  }
+
+  .Button > .Text {
+    display: initial;
+  }
+
+  .Button > .Shortcut {
+    display: initial;
+  }
+}

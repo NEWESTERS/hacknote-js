@@ -1,72 +1,137 @@
 ---
 import { getCollection } from "astro:content";
 
-import DefaultPage from "@layouts/DefaultPage.astro";
-import BaseLink from "@components/astro/BaseLink.astro";
+import { SITE_TITLE } from "../consts";
 import ArticleCard from "@components/astro/ArticleCard.astro";
-import P from "@components/astro/P.astro";
-import H2 from "@components/astro/H2.astro";
 import VideoCard from "@components/astro/VideoCard.astro";
+import BasePage from "@layouts/BasePage.astro";
+import TelegramPost from "@components/astro/TelegramPost.astro";
+import { GlobalSearchModal } from "@components/react/GlobalSearch";
+import LinkButton from "@components/astro/LinkButton.astro";
+import { Icon } from "@components/react";
+import albumsIcon from "@components/icons/albums.svg";
+import megaphoneIcon from "@components/icons/megaphone.svg";
+import bookIcon from "@components/icons/book.svg";
+import youtubeIcon from "@components/icons/youtube.svg";
+import chatIcon from "@components/icons/chat.svg";
+import HomePageSection from "@layouts/HomePageSection.astro";
 
 const [articles, videos] = await Promise.all([
   getCollection("articles"),
   getCollection("videos"),
 ]);
 
-const latestPublication = [...articles, ...videos].sort(
+const latestArticle = articles.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+)[0];
+
+const latestVideo = videos.sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 )[0];
 ---
 
-<DefaultPage>
-  <figure>
-    <img src="/hacknote-js/images/logo.svg" />
-  </figure>
+<BasePage>
+  <header>
+    <h1 class="title" transition:name="siteTitle">
+      {SITE_TITLE}
+    </h1>
 
-  <P class="description">
-    Блог Telegram-канала
-    <BaseLink href="https://t.me/hacknote_js">Hacknote.js</BaseLink>.
-  </P>
+    <GlobalSearchModal client:load className="search" />
+  </header>
 
-  <H2 class="header">Последняя публикация</H2>
+  <main>
+    <HomePageSection
+      title="Статьи"
+      titleIconUrl={bookIcon.src}
+      titleHref="/hacknote-js/articles"
+      class="section"
+    >
+      <ArticleCard
+        {...latestArticle.data}
+        id={latestArticle.id}
+        class="card"
+        url={`/hacknote-js/articles/${latestArticle.slug}`}
+      />
 
-  {
-    "url" in latestPublication.data ? (
-      <a href={`/hacknote-js/videos/${latestPublication.slug}`}>
-        <VideoCard {...latestPublication.data} id={latestPublication.id} />
-      </a>
-    ) : (
-      <a href={`/hacknote-js/articles/${latestPublication.slug}`}>
-        <ArticleCard {...latestPublication.data} id={latestPublication.id} />
-      </a>
-    )
-  }
-</DefaultPage>
+      <LinkButton class="call-to-action" href="/hacknote-js/articles">
+        <Icon url={albumsIcon.src} />
+        Посмотреть все
+      </LinkButton>
+    </HomePageSection>
+
+    <HomePageSection
+      title="Видео"
+      titleIconUrl={youtubeIcon.src}
+      titleHref="/hacknote-js/videos"
+      class="section"
+    >
+      <VideoCard
+        {...latestVideo.data}
+        id={latestVideo.id}
+        class="card"
+        url={`/hacknote-js/videos/${latestVideo.slug}`}
+      />
+
+      <LinkButton class="call-to-action" href="/hacknote-js/videos">
+        <Icon url={albumsIcon.src} />
+        Посмотреть все
+      </LinkButton>
+    </HomePageSection>
+
+    <HomePageSection
+      title="Telegram-канал"
+      titleIconUrl={chatIcon.src}
+      titleHref="https://t.me/hacknote_js"
+      class="section"
+    >
+      <TelegramPost postId="5" class="card" />
+
+      <LinkButton
+        class="call-to-action"
+        href="https://t.me/hacknote_js"
+        kind="primary"
+      >
+        <Icon url={megaphoneIcon.src} color="currentColor" />
+        Подписаться
+      </LinkButton>
+    </HomePageSection>
+  </main>
+</BasePage>
 
 <style>
-  figure {
-    margin: 0;
+  main {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    margin-top: 16px;
+  }
+
+  main,
+  header {
     width: 100%;
-    background-color: var(--color_accent-yellow);
-    border-radius: 16px;
-  }
-  img {
-    max-width: 100%;
-    display: block;
-    margin: auto;
-    border-radius: 32px;
+    max-width: 800px;
   }
 
-  .description {
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  header .search {
+    width: 100%;
+  }
+
+  .title {
+    color: var(--color_accent-yellow);
+    font: var(--font_h1);
+    font-size: clamp(2.5rem, 10vw, 128px);
     text-align: center;
+    margin: 0;
   }
 
-  .header {
-    text-align: center;
-    margin-bottom: 16px;
-  }
-
-  a {
-    text-decoration: none;
+  .section > .card {
+    width: 100%;
   }
 </style>

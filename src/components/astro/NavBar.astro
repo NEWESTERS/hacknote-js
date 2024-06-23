@@ -1,0 +1,33 @@
+---
+import { GlobalSearchModal } from "../react/GlobalSearch";
+import HeaderLink from "./HeaderLink.astro";
+
+export interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<nav class={className}>
+  <HeaderLink href="/hacknote-js/articles">Статьи</HeaderLink>
+  <HeaderLink href="/hacknote-js/videos">Видео</HeaderLink>
+
+  <GlobalSearchModal client:visible className="search" />
+</nav>
+
+<style>
+  nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 8px;
+    height: 48px;
+  }
+
+  .search {
+    margin-left: auto;
+    flex-grow: 1;
+    max-width: 300px;
+  }
+</style>

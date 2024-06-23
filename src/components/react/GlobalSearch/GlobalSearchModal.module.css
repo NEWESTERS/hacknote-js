@@ -5,3 +5,13 @@
 .Modal .Search {
   height: 100%;
 }
+
+.SearchRightIcon {
+  display: inline-block;
+  padding: 1px 8px;
+  color: var(--color_accent-yellow);
+  border: solid 2px currentColor;
+  border-radius: 4px;
+  font: var(--font_caption);
+  font-weight: bold;
+}

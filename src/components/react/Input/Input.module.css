@@ -27,6 +27,7 @@
 }
 
 .InputBox .Input {
+  width: 0;
   flex-grow: 1;
 }
 

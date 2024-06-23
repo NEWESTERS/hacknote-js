@@ -1,12 +1,10 @@
-import { useEffect, useState, type ReactElement } from "react";
+import { useState, type ReactElement } from "react";
 
-import { Button } from "../Button";
+import { useKeyboardShortcut } from "@utils/react";
 import { ModalDialog } from "../ModalDialog";
 import { PagefindSearchField } from "../PagefindSearchField";
-import { Icon } from "../Icon";
-import searchIcon from "../../icons/search.svg";
+import { GlobalSearchTrigger } from "../GlobalSearchTrigger";
 import Styles from "./GlobalSearchModal.module.css";
-import { useEventCallback, useKeyboardShortcut } from "@utils/react";
 
 export interface GlobalSearchModalProps {
   className?: string;
@@ -17,7 +15,9 @@ export const GlobalSearchModal = ({
 }: GlobalSearchModalProps): ReactElement => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const openModal = (): void => setIsOpen(true);
+  const openModal = (): void => {
+    setIsOpen(true);
+  };
 
   const closeModal = (): void => setIsOpen(false);
 
@@ -28,16 +28,14 @@ export const GlobalSearchModal = ({
 
   return (
     <>
-      <Button
+      <GlobalSearchTrigger
         className={className}
         title="Поиск"
         onClick={(event) => {
           event.stopPropagation();
           openModal();
         }}
-      >
-        <Icon url={searchIcon.src} />
-      </Button>
+      />
 
       {isOpen && (
         <ModalDialog

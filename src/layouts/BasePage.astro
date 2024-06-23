@@ -1,10 +1,9 @@
 ---
 import Head, { type Props as HeadProps } from "@components/astro/Head.astro";
 import Footer from "@components/astro/Footer.astro";
-import Header from "@components/astro/Header.astro";
 import WebComponentsDefinitions from "@components/web-components/index.astro";
 
-type Props = HeadProps;
+export type Props = HeadProps;
 
 const { title, description, image, type } = Astro.props;
 ---
@@ -26,22 +25,12 @@ const { title, description, image, type } = Astro.props;
       overflow-y: scroll;
       overflow-x: hidden;
     }
-
-    main,
-    .header {
-      width: 100%;
-      max-width: 800px;
-    }
   </style>
 
   <body>
     <WebComponentsDefinitions />
 
-    <Header class="header" />
-
-    <main>
-      <slot />
-    </main>
+    <slot />
 
     <Footer />
   </body>

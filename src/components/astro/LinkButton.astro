@@ -1,0 +1,47 @@
+---
+interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
+  kind?: "primary" | "secondary";
+}
+
+const { class: className, kind = "secondary", ...props } = Astro.props;
+---
+
+<style>
+  a {
+    background-color: var(--color_background-light);
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font: var(--font_body);
+    color: var(--color_text-white);
+    height: 48px;
+    padding: 0 12px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 8px;
+    transition:
+      transform 0.1s ease-out,
+      opacity 0.1s ease-out;
+  }
+
+  a:hover {
+    transform: scale(1.05);
+  }
+
+  a:active {
+    transform: scale(0.95);
+  }
+
+  a.primary {
+    background-color: var(--color_accent-yellow);
+    color: var(--color_text-black);
+  }
+</style>
+<a {...props} class:list={[className, kind]}>
+  <slot name="left" />
+  <slot />
+  <slot name="right" />
+</a>
