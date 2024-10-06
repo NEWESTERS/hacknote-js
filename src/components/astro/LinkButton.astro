@@ -27,8 +27,10 @@ const { class: className, kind = "secondary", ...props } = Astro.props;
       opacity 0.1s ease-out;
   }
 
-  a:hover {
-    transform: scale(1.05);
+  @media (hover: hover) {
+    a:hover {
+      transform: scale(1.05);
+    }
   }
 
   a:active {

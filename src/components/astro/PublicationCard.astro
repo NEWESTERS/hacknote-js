@@ -54,11 +54,13 @@ const { pubDate, title, class: className, id, url } = Astro.props;
     height: 100%;
   }
 
-  .card:hover {
-    transform: scale(1.05);
+  @media (hover: hover) {
+    .card:hover {
+      transform: scale(1.05);
+    }
   }
 
-  .card:active {
+  .card:has(:active) {
     transform: scale(0.95);
   }
 

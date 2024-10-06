@@ -25,6 +25,8 @@
   --font_body: normal 1rem / 1.75 var(--font-family);
   --font_code: normal 0.9rem / 1.75 var(--font-family-mono);
   --font_caption: normal 0.8rem / 1.5 var(--font-family);
+
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
