@@ -61,13 +61,15 @@ const { title, description, pubDate, id, duration, heroImage, telegramPostId } =
   image={heroImage}
   type="article"
 >
-  <article transition:name={id} data-pagefind-body>
-    <H1 transition:name={`${id}__title`}>{title}</H1>
+  <article data-pagefind-body>
+    <div transition:name={id}>
+      <H1 transition:name={`${id}__title`}>{title}</H1>
 
-    <div class="tags">
-      <FormattedDate date={pubDate} />
+      <div class="tags">
+        <FormattedDate date={pubDate} />
 
-      <FormattedDuration duration={duration} />
+        <FormattedDuration duration={duration} />
+      </div>
     </div>
 
     <slot />
