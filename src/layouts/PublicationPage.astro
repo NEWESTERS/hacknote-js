@@ -31,6 +31,10 @@ const { title, description, pubDate, id, duration, heroImage, telegramPostId } =
   }
 
   @media screen and (max-width: 375px) {
+    .header {
+      font-size: 1.9rem;
+    }
+
     article {
       margin: 0 -16px;
       width: calc(100% + 32px);
@@ -63,7 +67,7 @@ const { title, description, pubDate, id, duration, heroImage, telegramPostId } =
 >
   <article data-pagefind-body>
     <div transition:name={id}>
-      <H1 transition:name={`${id}__title`}>{title}</H1>
+      <H1 class="header" transition:name={`${id}__title`}>{title}</H1>
 
       <div class="tags">
         <FormattedDate date={pubDate} />
