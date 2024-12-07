@@ -35,6 +35,9 @@ dependencies:
   '@types/styled-components':
     specifier: ^5.1.26
     version: 5.1.26
+  '@zachleat/snow-fall':
+    specifier: ^1.0.2
+    version: 1.0.2
   astro:
     specifier: 4.9.1
     version: 4.9.1(typescript@5.3.3)
@@ -2136,6 +2139,10 @@ packages:
       vite: 4.4.9
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@zachleat/snow-fall@1.0.2:
+    resolution: {integrity: sha512-nyNeliowryq+roSMktyV3o14DduSuU4BvBzruVSPV6e8U8Eid2zNzSj1AzCQByPId7Q4MrIP2QWL2UHeHGfmcA==}
     dev: false
 
   /acorn-jsx@5.3.2(acorn@8.11.3):

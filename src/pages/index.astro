@@ -15,6 +15,7 @@ import bookIcon from "@components/icons/book.svg";
 import youtubeIcon from "@components/icons/youtube.svg";
 import chatIcon from "@components/icons/chat.svg";
 import HomePageSection from "@layouts/HomePageSection.astro";
+import StripedText from "@components/astro/StripedText.astro";
 
 const [articles, videos] = await Promise.all([
   getCollection("articles"),
@@ -33,7 +34,9 @@ const latestVideo = videos.sort(
 <BasePage>
   <header>
     <h1 class="title" transition:name="siteTitle">
-      {SITE_TITLE}
+      <StripedText>
+        {SITE_TITLE}
+      </StripedText>
     </h1>
 
     <GlobalSearchModal client:load className="search" />

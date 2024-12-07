@@ -2,6 +2,7 @@
 import Head, { type Props as HeadProps } from "@components/astro/Head.astro";
 import Footer from "@components/astro/Footer.astro";
 import WebComponentsDefinitions from "@components/web-components/index.astro";
+import SnowFall from "@components/astro/SnowFall.astro";
 
 export type Props = HeadProps;
 
@@ -29,6 +30,8 @@ const { title, description, image, type } = Astro.props;
 
   <body>
     <WebComponentsDefinitions />
+
+    <SnowFall />
 
     <slot />
 

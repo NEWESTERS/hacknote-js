@@ -21,6 +21,7 @@
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "@types/styled-components": "^5.1.26",
+    "@zachleat/snow-fall": "^1.0.2",
     "astro": "4.9.1",
     "astro-expressive-code": "^0.33.2",
     "cheerio": "1.0.0-rc.12",

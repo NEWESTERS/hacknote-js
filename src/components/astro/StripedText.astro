@@ -1,0 +1,27 @@
+---
+export interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<span class={className}><slot /></span>
+
+<style>
+  span {
+    background: repeating-linear-gradient(
+      var(--stripe__angle, 135deg),
+      var(--stripe__color_primary, var(--color_accent-red)),
+      var(--stripe__color_primary, var(--color_accent-red))
+        var(--stripe__width, 0.18em),
+      var(--stripe__color_secondary, var(--color_text-white))
+        var(--stripe__width, 0.18em),
+      var(--stripe__color_secondary, var(--color_text-white))
+        calc(var(--stripe__width, 0.18em) * 2)
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+</style>
