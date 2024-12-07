@@ -3,6 +3,7 @@ import { SITE_TITLE } from "../consts";
 
 import NavBar from "@components/astro/NavBar.astro";
 import BasePage, { type Props as BasePageProps } from "./BasePage.astro";
+import StripedText from "@components/astro/StripedText.astro";
 
 type Props = BasePageProps;
 
@@ -14,6 +15,7 @@ const { title, description, image, type } = Astro.props;
   header {
     width: 100%;
     max-width: 800px;
+    position: relative;
   }
 
   header {
@@ -38,7 +40,9 @@ const { title, description, image, type } = Astro.props;
 <BasePage title={title} description={description} image={image} type={type}>
   <header>
     <a class="title" href="/hacknote-js/" transition:name="siteTitle">
-      {SITE_TITLE}
+      <StripedText>
+        {SITE_TITLE}
+      </StripedText>
     </a>
 
     <NavBar class="nav-bar" />
