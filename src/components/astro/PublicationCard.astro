@@ -13,20 +13,41 @@ export interface Props {
 const { pubDate, title, class: className, id, url } = Astro.props;
 ---
 
-<div class:list={["card", className]} transition:name={id}>
-  <div class="info">
-    <H2 class="title" transition:name={`${id}__title`}
-      ><a href={url}>{title}</a></H2
-    >
+<div class:list={["card", className]}>
+  <div class="card-body" transition:name={id}>
+    <div class="info">
+      <H2 class="title" transition:name={`${id}__title`}
+        ><a href={url}>{title}</a></H2
+      >
 
-    <FormattedDate date={pubDate} />
+      <FormattedDate date={pubDate} />
+    </div>
+
+    <slot name="thumbnail" />
   </div>
-
-  <slot name="thumbnail" />
 </div>
 
 <style>
   .card {
+    border-top: solid 1px var(--color_background-light);
+    box-sizing: border-box;
+    backdrop-filter: blur(8px) brightness(1.2);
+    box-shadow: var(--shadow_default);
+    border-radius: 16px;
+    transition: transform 0.2s ease;
+    background: linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, 0)
+    );
+  }
+
+  .card > .card-body {
+    width: 100%;
+  }
+
+  .card-body {
     position: relative;
     display: flex;
     flex-direction: row;
@@ -34,15 +55,14 @@ const { pubDate, title, class: className, id, url } = Astro.props;
     gap: 32px;
     padding: 32px;
     border-radius: 16px;
-    background-color: var(--color_background-regular);
-    box-shadow: var(--shadow_default);
-    box-sizing: border-box;
     transition: transform 0.2s ease;
+    box-sizing: border-box;
   }
 
   a {
     text-decoration: none;
     color: var(--color_text-white);
+    border-radius: 16px;
   }
 
   a:before {
@@ -55,13 +75,19 @@ const { pubDate, title, class: className, id, url } = Astro.props;
   }
 
   @media (hover: hover) {
-    .card:hover {
-      transform: scale(1.05);
+    .card:hover,
+    .card:focus-within {
+      transform: scale(1.02);
+    }
+
+    .card:hover > .card-body,
+    .card:focus-within > .card-body {
+      transform: scale(1.03);
     }
   }
 
   .card:has(:active) {
-    transform: scale(0.95);
+    transform: scale(0.96);
   }
 
   .title {
@@ -87,7 +113,7 @@ const { pubDate, title, class: className, id, url } = Astro.props;
       align-items: center;
     }
 
-    .card {
+    .card-body {
       flex-direction: column;
     }
   }
