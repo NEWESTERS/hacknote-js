@@ -4,11 +4,16 @@ export interface Props {
 }
 
 const { class: className } = Astro.props;
+
+const currentDate = new Date();
+
+const isNewYear =
+  currentDate.getMonth() === 11 || currentDate.getMonth() === 0;
 ---
 
 <span class={className}><slot /></span>
 
-<style>
+{isNewYear && <style>
   span {
     background: repeating-linear-gradient(
       var(--stripe__angle, 135deg),
@@ -24,4 +29,4 @@ const { class: className } = Astro.props;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-</style>
+</style>}

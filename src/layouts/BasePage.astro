@@ -7,6 +7,10 @@ import SnowFall from "@components/astro/SnowFall.astro";
 export type Props = HeadProps;
 
 const { title, description, image, type } = Astro.props;
+
+const currentDate = new Date();
+
+const hasSnow = currentDate.getMonth() >= 10 || currentDate.getMonth() <= 2;
 ---
 
 <html lang="ru">
@@ -31,7 +35,7 @@ const { title, description, image, type } = Astro.props;
   <body>
     <WebComponentsDefinitions />
 
-    <SnowFall />
+    {hasSnow && <SnowFall />}
 
     <slot />
 
