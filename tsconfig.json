@@ -12,5 +12,7 @@
       "@utils/*": ["src/utils/*"],
       "@articleAssets/*": ["src/articleAssets/*"]
     }
-  }
+  },
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"]
 }
