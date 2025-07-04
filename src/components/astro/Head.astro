@@ -3,7 +3,7 @@
 // all pages through the use of the <BaseHead /> component.
 import "../../styles/global.css";
 
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 import GoogleFonts from "./GoogleFonts.astro";
@@ -76,5 +76,5 @@ const {
     type={type}
   />
 
-  <ViewTransitions fallback="none" />
+  <ClientRouter fallback="none" />
 </head>
