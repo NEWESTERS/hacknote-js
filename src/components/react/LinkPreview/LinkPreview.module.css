@@ -1,0 +1,48 @@
+.Layout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.Content {
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+  max-width: 400px;
+  gap: 8px;
+}
+
+.Title {
+  font: var(--font_h4);
+  color: var(--color_text-white);
+  margin: 0;
+}
+
+.Description {
+  font: var(--font_body);
+  color: var(--color_text-white);
+  margin: 0;
+}
+
+.Source {
+  font: var(--font_body);
+  color: var(--color_accent-yellow);
+}
+
+.Source::before {
+  content: attr(href);
+}
+
+.Thumbnail {
+  background-color: white;
+  border-radius: 16px;
+  padding: 8px;
+  height: 100px;
+  width: auto;
+  object-fit: contain;
+}
+
+.Thumbnail:not([src]) {
+  display: none;
+}

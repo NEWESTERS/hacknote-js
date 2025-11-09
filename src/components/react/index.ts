@@ -5,3 +5,5 @@ export * from "./Timeline";
 export * from "./MarbleDiagram";
 export * from "./PlaybackControls";
 export * from "./GlobalSearch";
+export * from "./BaseLink";
+export * from "./LinkWithPreview";

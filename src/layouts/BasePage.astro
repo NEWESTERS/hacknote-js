@@ -1,7 +1,6 @@
 ---
 import Head, { type Props as HeadProps } from "@components/astro/Head.astro";
 import Footer from "@components/astro/Footer.astro";
-import WebComponentsDefinitions from "@components/web-components/index.astro";
 import SnowFall from "@components/astro/SnowFall.astro";
 
 export type Props = HeadProps;
@@ -33,8 +32,6 @@ const hasSnow = currentDate.getMonth() >= 10 || currentDate.getMonth() <= 2;
   </style>
 
   <body>
-    <WebComponentsDefinitions />
-
     {hasSnow && <SnowFall />}
 
     <slot />
