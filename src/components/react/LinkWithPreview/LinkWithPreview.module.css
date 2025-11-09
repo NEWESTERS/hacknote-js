@@ -1,0 +1,11 @@
+.LinkWithPreview {
+  box-sizing: border-box;
+  padding: 2px 4px;
+  border-radius: 8px;
+  margin: 0 -4px;
+  transition: background-color 0.2s ease-out;
+
+  &:hover {
+    background-color: var(--color_background-light);
+  }
+}
