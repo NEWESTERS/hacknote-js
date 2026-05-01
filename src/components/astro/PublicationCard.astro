@@ -31,16 +31,20 @@ const { pubDate, title, class: className, id, url } = Astro.props;
   .card {
     border-top: solid 1px var(--color_background-light);
     box-sizing: border-box;
-    backdrop-filter: blur(8px) brightness(1.2);
+    backdrop-filter: blur(8px);
     box-shadow: var(--shadow_default);
     border-radius: 16px;
-    transition: transform 0.2s ease;
+    transition:
+      transform 0.8s var(--spring-interpolation),
+      background-position 0.3s ease-out;
     background: linear-gradient(
       160deg,
       rgba(255, 255, 255, 0.08) 0%,
       rgba(255, 255, 255, 0) 40%,
       rgba(255, 255, 255, 0)
     );
+    background-size: 200% 200%;
+    background-position: 50% 20%;
   }
 
   .card > .card-body {
@@ -78,6 +82,7 @@ const { pubDate, title, class: className, id, url } = Astro.props;
     .card:hover,
     .card:focus-within {
       transform: scale(1.02);
+      background-position: 0% 0%;
     }
 
     .card:hover > .card-body,

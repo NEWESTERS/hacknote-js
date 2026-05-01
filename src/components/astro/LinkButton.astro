@@ -23,11 +23,12 @@ const { class: className, kind = "secondary", ...props } = Astro.props;
     border-radius: 8px;
     opacity: 0.85;
     transition:
-      transform 0.15s ease-out,
-      opacity 0.1s ease-out;
+      transform 1s,
+      opacity 1s;
+    transition-timing-function: var(--spring-interpolation);
 
     :first-child {
-      transition: transform 0.2s ease-out;
+      transition: transform 1s var(--spring-interpolation);
     }
   }
 
