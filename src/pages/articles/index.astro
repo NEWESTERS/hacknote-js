@@ -15,6 +15,17 @@ const articles = (await getCollection("articles")).sort(
     text-decoration: none;
   }
 
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      scale: 0.8;
+    }
+    100% {
+      opacity: 1;
+      scale: 1;
+    }
+  }
+
   ul {
     list-style-type: none;
     padding: 0;

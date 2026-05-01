@@ -4,22 +4,16 @@ import { Icon } from "@components/react";
 
 interface Props {
   class?: string;
-  titleIconUrl?: string;
+  iconUrl?: string;
+  iconColor?: string;
   title: string;
   titleHref: string;
 }
 
-const { class: className, titleIconUrl, title, titleHref } = Astro.props;
+const { class: className, iconUrl, iconColor, title, titleHref } = Astro.props;
 ---
 
 <style>
-  section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-  }
-
   .section-title {
     font: var(--font_h1);
     margin: 0;
@@ -33,15 +27,74 @@ const { class: className, titleIconUrl, title, titleHref } = Astro.props;
     flex-direction: row;
     align-items: center;
     gap: 8px;
+    transition: color 0.1s ease-out;
+
+    &:hover {
+      color: var(--icon-color);
+    }
+  }
+
+  .section-icon {
+    opacity: 0.2;
+    transform: rotate(10deg);
+    transition:
+      opacity 0.5s ease-out,
+      transform 0.5s ease-out;
+
+    transition-timing-function: var(--spring-interpolation);
+    transition-duration: 2s;
+
+    @starting-style {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+  }
+
+  html:active-view-transition .section-icon {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+
+    > .section-icon {
+      position: absolute;
+      top: -24px;
+      right: 32px;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        > .section-icon {
+          transform: scale(1.1);
+          opacity: 0.3;
+        }
+      }
+    }
   }
 </style>
 <section class={className}>
   <H2 class="section-title">
-    <a href={titleHref}>
-      {titleIconUrl && <Icon url={titleIconUrl} size={32} />}
+    <a href={titleHref} style={{ "--icon-color": iconColor }}>
       {title}
     </a>
   </H2>
+
+  {
+    iconUrl && (
+      <Icon
+        className="section-icon"
+        url={iconUrl}
+        size={288}
+        color={iconColor}
+      />
+    )
+  }
 
   <slot />
 </section>
