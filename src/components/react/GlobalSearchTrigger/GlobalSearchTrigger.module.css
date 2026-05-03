@@ -1,6 +1,6 @@
 .Text {
   font: var(--font_body);
-  color: var(--color_background-light);
+  color: var(--color_text-white);
   text-align: start;
 }
 
@@ -18,53 +18,66 @@
   flex-direction: row;
   align-items: center;
   gap: 8px;
-  background-color: var(--color_background-light);
-  border: solid 2px var(--color_background-light);
+  border: none;
+  border: solid 1px var(--color_background-light);
+
   height: 48px;
   padding: 0 12px;
   box-sizing: border-box;
   border-radius: 8px;
-  transition: transform 0.1s ease-out;
   cursor: pointer;
-}
 
-.Button:hover {
-  transform: scale(1.05);
-}
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow_default);
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0)
+  );
+  background-size: 200% 200%;
+  background-position: 50% 20%;
 
-.Button > .Text {
-  flex-grow: 1;
-}
+  transition:
+    border-color 0.1s ease-out,
+    background-position 0.3s ease-out;
 
-.Button > .Text,
-.Button > .Shortcut {
-  display: none;
+  &:focus-within {
+    border-color: var(--color_text-white);
+  }
+
+  @media (hover: hover) {
+    &:hover,
+    &:focus-within {
+      background-position: 0% 0%;
+    }
+  }
+
+  > .Text {
+    flex-grow: 1;
+  }
+
+  > .Text,
+  > .Shortcut {
+    display: none;
+  }
+
+  @container (min-width: 300px) {
+    width: 100%;
+    cursor: text;
+
+    > .Text {
+      display: initial;
+    }
+
+    > .Shortcut {
+      display: initial;
+    }
+  }
 }
 
 .Layout {
   container-type: inline-size;
   display: flex;
   justify-content: flex-end;
-}
-
-@container (min-width: 300px) {
-  .Button {
-    background-color: var(--color_background-regular);
-    width: 100%;
-    transition: border-color 0.1s ease-out;
-    cursor: text;
-  }
-
-  .Button:hover {
-    transform: scale(1);
-    border-color: var(--color_text-white);
-  }
-
-  .Button > .Text {
-    display: initial;
-  }
-
-  .Button > .Shortcut {
-    display: initial;
-  }
 }
