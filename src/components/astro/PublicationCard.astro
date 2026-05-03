@@ -81,18 +81,24 @@ const { pubDate, title, class: className, id, url } = Astro.props;
   @media (hover: hover) {
     .card:hover,
     .card:focus-within {
-      transform: scale(1.02);
       background-position: 0% 0%;
+    }
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .card:hover,
+    .card:focus-within {
+      transform: scale(1.02);
     }
 
     .card:hover > .card-body,
     .card:focus-within > .card-body {
       transform: scale(1.03);
     }
-  }
 
-  .card:has(:active) {
-    transform: scale(0.96);
+    .card:has(:active) {
+      transform: scale(0.96);
+    }
   }
 
   .title {
