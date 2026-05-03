@@ -16,7 +16,7 @@ export const GlobalSearchTrigger: FC<GlobalSearchTriggerProps> = ({
   return (
     <div className={clsx(Styles.Layout, className)} style={style}>
       <button className={Styles.Button} {...props}>
-        <Icon url={searchIcon.src} />
+        <Icon className={Styles.Icon} url={searchIcon.src} />
 
         <span className={Styles.Text}>Поиск</span>
 
