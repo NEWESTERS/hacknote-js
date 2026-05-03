@@ -37,22 +37,28 @@ const { class: className, iconUrl, iconColor, title, titleHref } = Astro.props;
   .section-icon {
     opacity: 0.2;
     transform: rotate(10deg);
-    transition:
-      opacity 0.5s ease-out,
-      transform 0.5s ease-out;
+  }
 
-    transition-timing-function: var(--spring-interpolation);
-    transition-duration: 2s;
+  @media (prefers-reduced-motion: no-preference) {
+    .section-icon {
+      transition:
+        opacity 0.5s ease-out,
+        transform 0.5s ease-out;
+      transition-timing-function: var(--spring-interpolation);
+      transition-duration: 2s;
+    }
 
     @starting-style {
+      .section-icon {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+    }
+
+    html:active-view-transition .section-icon {
       opacity: 0;
       transform: translateY(24px);
     }
-  }
-
-  html:active-view-transition .section-icon {
-    opacity: 0;
-    transform: translateY(24px);
   }
 
   section {
@@ -68,7 +74,7 @@ const { class: className, iconUrl, iconColor, title, titleHref } = Astro.props;
       right: 32px;
     }
 
-    @media (hover: hover) {
+    @media (hover: hover) and (prefers-reduced-motion: no-preference) {
       &:hover {
         > .section-icon {
           transform: scale(1.1);

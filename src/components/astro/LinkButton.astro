@@ -30,31 +30,42 @@ const { class: className, kind = "secondary", ...props } = Astro.props;
     :first-child {
       transition: transform 1s var(--spring-interpolation);
     }
-  }
 
-  @media (hover: hover) {
-    a:hover {
-      transform: scaleX(0.95) scaleY(1.1);
-      opacity: 1;
-
-      :first-child {
-        transform: scaleX(1.2) scaleY(1.1) rotate(-15deg);
+    @media (hover: hover) {
+      &:hover {
+        opacity: 1;
       }
     }
-  }
 
-  a:active {
-    transform: scaleX(1.1) scaleY(0.95);
-  }
+    @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+      &:hover {
+        transform: scaleX(0.95) scaleY(1.1);
 
-  a.secondary {
-    background-color: var(--color_background-light);
-    color: var(--color_text-white);
-  }
+        :first-child {
+          transform: scaleX(1.2) scaleY(1.1) rotate(-15deg);
+        }
+      }
+    }
 
-  a.primary {
-    background-color: var(--color_accent-yellow);
-    color: var(--color_text-black);
+    &:active {
+      opacity: 0.6;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      &:active {
+        transform: scaleX(1.1) scaleY(0.95);
+      }
+    }
+
+    &.secondary {
+      background-color: var(--color_background-light);
+      color: var(--color_text-white);
+    }
+
+    &.primary {
+      background-color: var(--color_accent-yellow);
+      color: var(--color_text-black);
+    }
   }
 </style>
 <a {...props} class:list={[className, kind]}>
